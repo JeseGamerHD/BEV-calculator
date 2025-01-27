@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charging Calculator</title>
+    <script type="text/javascript" src="scripts.js"></script>
+</head>
+<body>
+    <label for="rangeInput">Haluttu toimintamatka (km):</label>
+    <input 
+        type="range" 
+        id="rangeInput" 
+        value="180" 
+        min="0" 
+        max="1000" 
+        oninput="updateValuesAndCalculate()"
+    >
+    <output id="rangeamount">180</output>
+    <br>
+
+    <label for="socInput">Latauksen varaustila (State of Charge %):</label>
+    <input 
+        type="range" 
+        id="socInput" 
+        value="50" 
+        min="0" 
+        max="100" 
+        oninput="updateValuesAndCalculate()"
+    >
+    <output id="socamount">50</output>
+    <br>
+
+    <div id="results">Tulos</div>
+    <div id="testi">Testi</div>
+
+</body>
+</html>
