@@ -1,0 +1,72 @@
+.rangeInput-container {
+    
+    display: flex;
+    flex-direction: column;
+
+    .rangeInput-title {
+        margin-bottom: 0;
+    }
+
+    .rangeInput-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        .rangeInput-slider {
+            appearance: none; /* Override default look */
+            height: 15px;
+            width: 50%;
+            border-radius: 5px;
+        }
+        
+        .rangeInput-slider::-webkit-slider-thumb {
+            appearance: none; /* Override default look */
+            width: 30px;
+            height: 30px;
+            background: #589eff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .rangeInput-slider::-moz-range-thumb {
+            appearance: none; /* Override default look */
+            width: 30px;
+            height: 30px;
+            background: #589eff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
+
+    .rangeInput-number-wrapper {
+
+        display: flex;
+        
+        .rangeInput-number {
+            width: 2.5em;
+            border-left: 1px solid;
+            border-right: none;
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+            border-radius: 5px 0 0 5px;
+    
+            padding: 10px 0 10px 10px;
+        }
+    
+        .rangeInput-number:focus {
+            outline: none;
+        }
+        
+        .rangeInput-number-symbol {
+            
+            border-left: none;
+            border-right: 1px solid;
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+            border-radius: 0 5px 5px 0;
+    
+            padding: 10px 10px 10px 0;
+        }
+    }
+}
+
