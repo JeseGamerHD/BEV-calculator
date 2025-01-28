@@ -11,24 +11,30 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+        column-gap: 5px;
 
-        .rangeInput-slider {
+        .rangeInput {
             appearance: none; /* Override default look */
-            height: 15px;
+            height: 10px;
             width: 50%;
             border-radius: 5px;
         }
         
-        .rangeInput-slider::-webkit-slider-thumb {
+        .rangeInput::-webkit-slider-thumb {
             appearance: none; /* Override default look */
             width: 30px;
             height: 30px;
             background: #589eff;
             border-radius: 50%;
             cursor: pointer;
+            -webkit-transition: .1s;
+        }
+
+        .rangeInput::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 0 10px #3b8cf039;
         }
         
-        .rangeInput-slider::-moz-range-thumb {
+        .rangeInput::-moz-range-thumb {
             appearance: none; /* Override default look */
             width: 30px;
             height: 30px;
@@ -38,11 +44,11 @@
         }
     }
 
-    .rangeInput-number-wrapper {
+    .rangeInput-field-wrapper {
 
         display: flex;
         
-        .rangeInput-number {
+        .rangeInput-field {
             width: 2.5em;
             border-left: 1px solid;
             border-right: none;
@@ -53,11 +59,11 @@
             padding: 10px 0 10px 10px;
         }
     
-        .rangeInput-number:focus {
+        .rangeInput-field:focus {
             outline: none;
         }
         
-        .rangeInput-number-symbol {
+        .rangeInput-field-symbol {
             
             border-left: none;
             border-right: 1px solid;
