@@ -59,6 +59,9 @@ function handleRangeInputField(field, index) {
         rangeInputSliders[index].value = maxValue;
         field.value = maxValue;
     }
+    else if(isNaN(value)) {
+        rangeInputSliders[index].value = minValue;
+    }
 
     updateSliderProgressBar(rangeInputSliders[index]);
 }

@@ -1,52 +1,76 @@
+.input-area-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+
+    width: 33%;
+    padding: 20px;
+    background-color: rgb(220, 220, 220);
+}
+
+.numberInput-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .numberInput-field-wrapper {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 30px;
+
+        .numberInput-field {
+            flex: 1; /* Input field grows to take as much width as possible */
+            min-width: 0; /* Required to override input field default behaviour to resist shrinking below their content size */
+            
+            border-left: 1px solid;
+            border-right: none;
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .numberInput-field:focus {
+            outline: none;
+        }
+
+        .numberInput-field-unit {
+            display: flex;
+            align-items: center;
+            
+            border-left: none;
+            border-right: 1px solid;
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+            border-radius: 0 5px 5px 0;
+        }
+    }
+}
+
 .rangeInput-container {
     
     display: flex;
     flex-direction: column;
+    row-gap: 10px;
+    width: 100%;
 
     .rangeInput-title {
         margin-bottom: 0;
     }
 
     .rangeInput-wrapper {
+        
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         column-gap: 5px;
-
-        .rangeInput {
-            appearance: none; /* Override default look */
-            height: 10px;
-            width: 50%;
-            border-radius: 5px;
-        }
-        
-        .rangeInput::-webkit-slider-thumb {
-            appearance: none; /* Override default look */
-            width: 30px;
-            height: 30px;
-            background: #589eff;
-            border-radius: 50%;
-            cursor: pointer;
-            -webkit-transition: .1s;
-        }
-
-        .rangeInput::-webkit-slider-thumb:hover {
-            box-shadow: 0 0 0 10px #3b8cf039;
-        }
-        
-        .rangeInput::-moz-range-thumb {
-            appearance: none; /* Override default look */
-            width: 30px;
-            height: 30px;
-            background: #589eff;
-            border-radius: 50%;
-            cursor: pointer;
-        }
+        width: 90%;
     }
 
     .rangeInput-field-wrapper {
 
         display: flex;
+        flex-direction: row;
         
         .rangeInput-field {
             width: 2.5em;
@@ -72,6 +96,64 @@
             border-radius: 0 5px 5px 0;
     
             padding: 10px 10px 10px 0;
+        }
+    }
+
+    .rangeInput {
+        appearance: none; /* Override default look */
+        height: 10px;
+        border-radius: 5px;
+        width: 100%;
+    }
+    
+    .rangeInput::-webkit-slider-thumb {
+        appearance: none; /* Override default look */
+        width: 30px;
+        height: 30px;
+        background: #589eff;
+        border-radius: 50%;
+        cursor: pointer;
+        -webkit-transition: .1s;
+    }
+
+    .rangeInput::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 0 10px #3b8cf039;
+    }
+    
+    .rangeInput::-moz-range-thumb {
+        appearance: none; /* Override default look */
+        width: 30px;
+        height: 30px;
+        background: #589eff;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+}
+
+.dropdownInput-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    .dropdown-title-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .dropdown-button {
+            height: min-content;
+        }
+    }
+
+    .dropdown-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .dropdown-content {
+            display: none;
+            flex-direction: column;
         }
     }
 }

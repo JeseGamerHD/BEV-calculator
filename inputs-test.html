@@ -5,41 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
     <link rel="stylesheet" href="styles/inputs.css">
-    <script src="scripts/range-input.js" defer></script>
+    <script src="scripts/inputs/range-input.js" defer></script>
+    <script src="scripts/inputs/dropdown.js" defer></script>
 </head>
 <body>
+    
+    <div class="input-area-container">
+        
+        <div class="numberInput-container">
+            <h3 class="numberInput-title">Desired operating range (km)</h3>
+            <div class="numberInput-field-wrapper">
+                <input class="numberInput-field" id="desiredRange-input" type="number" min="0" max="9999" value="0">
+                <span class="numberInput-field-unit">km</span>
+            </div>
+        </div>
 
-    <div class="rangeInput-container">
-        <h3 class="rangeInput-title">State of Charge (SOC)</h3>
-        <div class="rangeInput-wrapper"> 
-            <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" value="50">
+        <div class="rangeInput-container">
+            <h3 class="rangeInput-title">State of Charge (SOC) %</h3>
             <div class="rangeInput-field-wrapper">
                 <input class="rangeInput-field" id="SOC-field" type="text" min="0" max="100" value="50">
                 <span class="rangeInput-field-symbol">%</span>
-            </div>
-            
+            </div> 
+            <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" value="50">
         </div>
-    </div>
-    <div class="rangeInput-container">
-        <h3 class="rangeInput-title">TEST2</h3>
-        <div class="rangeInput-wrapper"> 
-            <input class="rangeInput" id="test-slider" type="range" min="10" max="600" value="30">
-            <div class="rangeInput-field-wrapper">
-                <input class="rangeInput-field" id="test-field" type="text" min="10" max="600" value="30">
-                <span class="rangeInput-field-symbol">kWh</span>
+
+        <div class="dropdownInput-container">
+            <div class="dropdown-title-wrapper">
+                <h3 class="dropdown-title">Battery capacity (kWh)</h3>
+                <button class="dropdown-button" onclick="toggleDropdown('batteryCapacity-options')">V</button>
             </div>
-            
-        </div>
-    </div>
-    <div class="rangeInput-container">
-        <h3 class="rangeInput-title">TEST3</h3>
-        <div class="rangeInput-wrapper"> 
-            <input class="rangeInput" id="test-slider2" type="range" min="0" max="50" value="3" step="0.1">
-            <div class="rangeInput-field-wrapper">
-                <input class="rangeInput-field" id="test-field2" type="text" min="0" max="456" value="3">
-                <span class="rangeInput-field-symbol">unit</span>
+            <div class="dropdown-wrapper">
+                <div class="dropdown-content" id="batteryCapacity-options">
+                    <div class="dropdown-option" onclick="setDropdownValue('batteryCapacity-options', 'batteryCapacity-input', 'Option 1')">
+                        Option 1
+                    </div>
+                    <div class="dropdown-option" onclick="setDropdownValue('batteryCapacity-options', 'batteryCapacity-input', 'Option 2')">
+                        Option 2
+                    </div>
+                    <div class="dropdown-option" onclick="setDropdownValue('batteryCapacity-options', 'batteryCapacity-input', 'Option 3')">
+                        Option 3
+                    </div>
+                </div>
+                <input class="dropdownInput-field" id="batteryCapacity-input" type="text" placeholder="Enter battery capacity (kWh)">
             </div>
-            
         </div>
     </div>
 
