@@ -63,7 +63,7 @@ function handleRangeInputField(field, index) {
     updateSliderProgressBar(rangeInputSliders[index]);
 }
 
-// TODO: progress can some times slightly lack behind the thumb or go slightly past it, 
+// TODO: progress and thumb are offset from each other by a little (below 50% progress progress lacks behind, above 50% it goes slightly beyond thumb)
 // figure out a proper offset based on the thumb
 /** Fills the background of the slider based on its current value and min/max values 
  * @param {HTMLInputElement} slider - The slider element to be updated.
