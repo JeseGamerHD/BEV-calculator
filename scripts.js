@@ -3,6 +3,9 @@ Jos results-pagella siirretään tuloksen numero-osuus omaan HTML-elementtiinsä
 voidaan kutsua ilman kovakoodattua merkkijonoa-> updateValueForResult(maxOperatingRange.toFixed(2), "maxOperatingRange");*/
 
 //TODO: Mietitään miten otetaan parametrit funktioille input-puolelta ja missä kohdissa niitä kutsutaan.
+//Kutsutaanko näitä laskureita range-input.js tiedoston funktioissa ja otetaan sieltä arvot,
+//vai tehdäänkö tänne get-funktioita?
+
 function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumption) {
     const maxOperatingRange = (batteryCapacity / bevEnergyConsumption) * 100; // in km
     
@@ -15,12 +18,13 @@ function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumpti
 
 }
 
+//TODO: Pitäisikö tämän sisällä kutsua calcChargeTimeForRange() ?
 function calcEnergyNeededForRange(range, bevEnergyConsumption) {
     const energyNeededForRange = (bevEnergyConsumption / 100) * range;
 
     updateValueForResult("Energy needed for range: " + energyNeededForRange.toFixed(2), "energyNeededForRange");  
 }
-
+//TODO: Pitäisikö tämän sisällä kutsua calcChargeTimeForFullCharge() ?
 function calcEnergytoFullCharge(batteryCapacity, stateOfCharge) {
     const energyToFullCharge = batteryCapacity - ((stateOfCharge / 100) * batteryCapacity);
 
