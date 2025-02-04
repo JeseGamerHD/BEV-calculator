@@ -1,60 +1,58 @@
-// Function to calculate charging details
-function calculateEVCharging(desiredRange=200, stateOfCharge=50, batteryCapacity=60, bevChargePower=11, bevEnergyConsumption=15, energyBasedPricing=0.5, timeBasedPricing=2) {
-    
-    const maxPossibleRange = (batteryCapacity / bevEnergyConsumption) * 100; // in km
+/*Nykyisellä results-pagen rakenteella päivitetään kentät esim. updateValueForResult("Max operating range: " + maxOperatingRange.toFixed(2), "maxOperatingRange");
+Jos results-pagella siirretään tuloksen numero-osuus omaan HTML-elementtiinsä, esim. div tai p jolla on id="maxOperatingRange"
+voidaan kutsua ilman kovakoodattua merkkijonoa-> updateValueForResult(maxOperatingRange.toFixed(2), "maxOperatingRange");*/
 
-    if (desiredRange > maxPossibleRange) {
+//TODO: Mietitään miten otetaan parametrit funktioille input-puolelta ja missä kohdissa niitä kutsutaan.
+function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumption) {
+    const maxOperatingRange = (batteryCapacity / bevEnergyConsumption) * 100; // in km
+    
+    if (desiredRange > maxOperatingRange) {
         console.warn("Warning: The desired range exceeds the vehicle's maximum possible range on a full charge.");
-        console.log(`Adjusting desired range to the maximum possible range: ${maxPossibleRange.toFixed(2)} km`);
-        desiredRange = maxPossibleRange;
-    }
+        console.log(`Adjusting desired range to the maximum possible range: ${maxOperatingRange.toFixed(2)} km`);
+        desiredRange = maxOperatingRange;
+    } 
+    updateValueForResult("Max operating range: " + maxOperatingRange.toFixed(2), "maxOperatingRange");
 
-    
-    const energyNeededForRange = (bevEnergyConsumption / 100) * desiredRange;
+}
+
+function calcEnergyNeededForRange(range, bevEnergyConsumption) {
+    const energyNeededForRange = (bevEnergyConsumption / 100) * range;
+
+    updateValueForResult("Energy needed for range: " + energyNeededForRange.toFixed(2), "energyNeededForRange");  
+}
+
+function calcEnergytoFullCharge(batteryCapacity, stateOfCharge) {
     const energyToFullCharge = batteryCapacity - ((stateOfCharge / 100) * batteryCapacity);
-    const chargeTimeForRange = energyNeededForRange / bevChargePower; // in hours
-    const chargeTimeForFullCharge = energyToFullCharge / bevChargePower; // in hours
 
-    //
-    const chargeCostEnergy = energyBasedPricing * energyNeededForRange;
-    const chargeCostTime = timeBasedPricing * energyNeededForRange; 
-    
+    updateValueForResult("Energy needed for full charge: " + energyToFullCharge.toFixed(2), "energyToFullCharge");
+}
 
-    // Update results div on page
-    document.getElementById("results").innerHTML = `
-        <strong>EV Laskuri tulokset:</strong><br>
-        Kilowatit halutulle rangelle: ${energyNeededForRange.toFixed(2)} kWh<br>
-        Kilowatit täyteen akkuun: ${energyToFullCharge.toFixed(2)} kWh<br>
-        Latausaika: ${chargeTimeForRange.toFixed(2)} hours<br>
-        Latauksen kustannus (energia): €${chargeCostEnergy.toFixed(2)}<br>
-        Latauksen kustannus (aika): €${chargeCostTime.toFixed(2)}
-    `;
-    
-    //Palautetaan objekti jota voidaan käyttää tietojen sijoittamiseen html puolella
-    //Esim document.getElementById("testi").innerHTML = results.energyNeededForRange
-    return {
-        energyNeededForRange: energyNeededForRange.toFixed(2),
-        energyToFullCharge: energyToFullCharge.toFixed(2),
-        chargeTimeForRange: chargeTimeForRange.toFixed(2),
-        chargeTimeForFullCharge: chargeTimeForFullCharge.toFixed(2),
-        chargeCostEnergy: chargeCostEnergy.toFixed(2),
-        chargeCostTime: chargeCostTime.toFixed(2),
-        
-    };
+function calcChargeTimeForRange(energyNeeded, bevChargePower) {
+    const chargeTimeForRange = energyNeeded / bevChargePower; // in hours
+
+    updateValueForResult("Charge time needed for range: " + chargeTimeForRange.toFixed(2), "chargeTimeForRange");
+}
+
+function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
+    const chargeTimeForFullCharge = energyNeeded / bevChargePower; // in hours
+
+    updateValueForResult("Charge time for full charge: "+ chargeTimeForFullCharge.toFixed(2), "chargeTimeForFullCharge");
+}
+
+function calcChargeCostEnergy(price, energyNeeded) {
+    const chargeCostEnergy = price * energyNeeded;
+
+    updateValueForResult("Charge cost in €/kWh: " + chargeCostEnergy.toFixed(2), "chargeCostEnergy");
+}
+
+function calcChargeCostTime(price, energyNeeded) {
+    const chargeCostTime = price * energyNeeded;
+
+    updateValueForResult("Charge cost in €/h: " + chargeCostTime.toFixed(2), "chargeCostTime");
 }
 
 
-function updateValuesAndCalculate() {
-    // Read values from inputs
-    const desiredRange = parseFloat(document.getElementById("rangeInput").value);
-    const stateOfCharge = parseFloat(document.getElementById("socInput").value);
-
-    // Update output labels
-    document.getElementById("rangeamount").value = desiredRange;
-    document.getElementById("socamount").value = stateOfCharge;
-
-    // Call the calculation function with updated values 
-    results = calculateEVCharging(desiredRange, stateOfCharge);
-
-    document.getElementById("testi").innerHTML = results.energyNeededForRange
+function updateValueForResult(newValue, resultid) {
+    
+    document.getElementById(resultid).innerHTML = newValue
 }
