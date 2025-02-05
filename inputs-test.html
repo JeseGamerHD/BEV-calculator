@@ -35,20 +35,15 @@
                 <button class="dropdown-button" onclick="toggleDropdown('batteryCapacity-options')">V</button>
             </div>
             <div class="dropdown-wrapper">
-                <div class="dropdown-content" id="batteryCapacity-options" style="display: none">
-                    <div class="dropdown-option" onclick="setDropdownValue('batteryCapacity-options', 'batteryCapacity-input', 'Option 1')">
-                        Option 1
-                    </div>
-                    <div class="dropdown-option" onclick="setDropdownValue('batteryCapacity-options', 'batteryCapacity-input', 'Option 2')">
-                        Option 2
-                    </div>
-                    <div class="dropdown-option" onclick="setDropdownValue('batteryCapacity-options', 'batteryCapacity-input', 'Option 3')">
-                        Option 3
-                    </div>
+                <input class="dropdownInput-field" id="batteryCapacity-input" data-value="60" data-options="batteryCapacity-options" type="text" min="1" max="9999" placeholder="Enter or select battery capacity">             
+                <div class="dropdown-content" id="batteryCapacity-options">
+                    <div class="dropdown-option" data-value="30" data-target="batteryCapacity-input">Small (30 kWh)</div>
+                    <div class="dropdown-option" data-value="60" data-target="batteryCapacity-input">Medium (60 kWh)</div>
+                    <div class="dropdown-option" data-value="100" data-target="batteryCapacity-input">Large (100 kWh)</div>
                 </div>
-                <input class="dropdownInput-field" id="batteryCapacity-input" type="text" placeholder="Enter battery capacity (kWh)">
             </div>
         </div>
+
     </div>
 
 </body>
