@@ -44,6 +44,41 @@
             </div>
         </div>
 
+        <div class="dropdownInput-container">
+            <div class="dropdown-title-wrapper">
+                <h3 class="dropdown-title">Energy consumption (kWh / 100 km)</h3>
+                <button class="dropdown-button" onclick="toggleDropdown('energyConsumption-options')">V</button>
+            </div>
+            <div class="dropdown-wrapper">
+                <input class="dropdownInput-field" id="energyConsumption-input" data-value="10" data-options="energyConsumption-options" type="text" min="1" max="999" placeholder="Enter or select energy consumption">             
+                <div class="dropdown-content" id="energyConsumption-options">
+                    <div class="dropdown-option" data-value="10" data-target="energyConsumption-input">10 kWh / 100 km</div>
+                    <div class="dropdown-option" data-value="15" data-target="energyConsumption-input">15 kWh / 100 km</div>
+                    <div class="dropdown-option" data-value="20" data-target="energyConsumption-input">20 kWh / 100 km</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dropdownInput-container">
+            <div class="dropdown-title-wrapper">
+                <h3 class="dropdown-title">Charge power (kW)</h3>
+                <button class="dropdown-button" onclick="toggleDropdown('chargePower-options')">V</button>
+            </div>
+            <div class="dropdown-wrapper">
+                <input class="dropdownInput-field" id="chargePower-input" data-value="15" data-options="chargePower-options" type="text" min="1" max="999" placeholder="Enter or select charge power">             
+                <div class="dropdown-content" id="chargePower-options">
+                    <div class="dropdown-option" data-value="15" data-target="chargePower-input">15 kW</div>
+                    <div class="dropdown-option" data-value="50" data-target="chargePower-input">50 kWh</div>
+                    <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
+                    <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
+                    <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
+                    <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
+                    <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
+                    <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </body>
