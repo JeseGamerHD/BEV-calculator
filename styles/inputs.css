@@ -172,7 +172,8 @@
         }
 
         .dropdown-content.animation {
-            max-height: 100px;
+            /* max-height: 100px; */
+            max-height: var(--dropdownHeight);
         }
 
         .dropdownInput-field {

@@ -1,5 +1,10 @@
 function toggleDropdown(dropdownID) {
     let dropdown = document.getElementById(dropdownID);
+    let height = dropdown.scrollHeight; // Height of all the options inside the container
+    
+    // Set the variable used for max-height of the animation based on the amount of options
+    // Now the animation works smoothly regardless of how many options there are
+    dropdown.style.setProperty("--dropdownHeight", `${height}px`); 
     dropdown.classList.toggle("animation");
 }
 
@@ -27,7 +32,7 @@ document.addEventListener("click", (clickEvent) => {
 document.addEventListener("focusin", (focusinEvent) => {
     if(focusinEvent.target.classList.contains("dropdownInput-field")) {
         let dropdownField = focusinEvent.target;
-        let currentValue = parseInt(dropdownField.value);
+        let currentValue = dropdownField.value;
         
         // Clear the field when clicking if invalid value
         if(isNaN(currentValue) || currentValue < dropdownField.min || currentValue > dropdownField.max) {
