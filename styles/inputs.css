@@ -150,10 +150,37 @@
     .dropdown-wrapper {
         display: flex;
         flex-direction: column;
+        row-gap: 5px;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
 
         .dropdown-content {
-            display: none;
+            /* display: none; */
             flex-direction: column;
+            max-height: 0;
+            transition: max-height 0.1s linear;
+            overflow: hidden;
+            
+            .dropdown-option {
+                height: 30px;
+            }
+
+            .dropdown-option:hover {
+                background-color: #589eff;
+            }
+        }
+
+        .dropdown-content.animation {
+            /* max-height: 100px; */
+            max-height: var(--dropdownHeight);
+        }
+
+        .dropdownInput-field {
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(215, 215, 215, 0.546);
         }
     }
 }
