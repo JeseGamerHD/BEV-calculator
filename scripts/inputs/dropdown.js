@@ -45,7 +45,7 @@ document.addEventListener("focusin", (focusinEvent) => {
 document.addEventListener("input", (inputEvent) => {
     if(inputEvent.target.classList.contains("dropdownInput-field")) {
         let dropdownField = inputEvent.target
-        handleInput(dropdownField);
+        handleDropdownInput(dropdownField);
 
         let dropdownContentID = dropdownField.dataset.options;
         // Close the options if the user starts typing
@@ -67,8 +67,7 @@ document.addEventListener("input", (inputEvent) => {
  * **dropdownField.dataset.value** is the value that should be used in calculations (always min - max).
  * @param {HTMLInputElement} dropdownField - The custom input field of the dropdown.
 */
-function handleInput(dropdownField) {
-    
+function handleDropdownInput(dropdownField) {
     // Allow empty, just don't update any value
     // (User can backspace properly)
     if(dropdownField.value === "") {
