@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
     <link rel="stylesheet" href="styles/inputs.css">
-    <script src="scripts/inputs/number-input.js" defer></script>
+    <!-- <script src="scripts/inputs/number-input.js" defer></script>
     <script src="scripts/inputs/range-input.js" defer></script>
     <script src="scripts/inputs/dropdown.js" defer></script>
-    <script src="scripts/inputs/toggle-switch.js" defer></script>
+    <script src="scripts/inputs/toggle-switch.js" defer></script> -->
+    <script type="module" src="scripts/main.js" defer></script>
 </head>
 <body>
     
@@ -17,7 +18,7 @@
             <div class="numberInput-container">
                 <h3 class="numberInput-title">Desired operating range (km)</h3>
                 <div class="numberInput-field-wrapper">
-                    <input class="numberInput-field" id="desiredRange-input" type="text" min="0" max="9999" value="0" data-value="0" placeholder="Enter target range (optional)">
+                    <input class="numberInput-field" id="desiredRange-input" type="text" min="0" max="9999" data-property="desiredRange" placeholder="Enter target range (optional)">
                     <span class="numberInput-field-unit">km</span>
                 </div>
             </div>
@@ -25,19 +26,19 @@
             <div class="rangeInput-container">
                 <h3 class="rangeInput-title">State of Charge (SOC) %</h3>
                 <div class="rangeInput-field-wrapper">
-                    <input class="rangeInput-field" id="SOC-field" type="text" min="0" max="100" value="50">
+                    <input class="rangeInput-field" id="SOC-field" type="text" min="0" max="100" data-property="stateOfCharge">
                     <span class="rangeInput-field-symbol">%</span>
                 </div> 
-                <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" value="50">
+                <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-property="stateOfCharge">
             </div>
     
             <div class="dropdownInput-container">
                 <div class="dropdown-title-wrapper">
                     <h3 class="dropdown-title">Battery capacity (kWh)</h3>
-                    <button class="dropdown-button" onclick="toggleDropdown('batteryCapacity-options')">V</button>
+                    <button class="dropdown-button" data-options="batteryCapacity-options">V</button>
                 </div>
                 <div class="dropdown-wrapper">
-                    <input class="dropdownInput-field" id="batteryCapacity-input" data-value="60" data-options="batteryCapacity-options" type="text" min="1" max="9999" placeholder="Enter or select battery capacity">             
+                    <input class="dropdownInput-field" id="batteryCapacity-input" data-property="batteryCapacity" data-options="batteryCapacity-options" type="text" min="1" max="9999" placeholder="Enter or select battery capacity">             
                     <div class="dropdown-content" id="batteryCapacity-options">
                         <div class="dropdown-option" data-value="30" data-target="batteryCapacity-input">Small (30 kWh)</div>
                         <div class="dropdown-option" data-value="60" data-target="batteryCapacity-input">Medium (60 kWh)</div>
@@ -49,10 +50,10 @@
             <div class="dropdownInput-container">
                 <div class="dropdown-title-wrapper">
                     <h3 class="dropdown-title">Energy consumption (kWh / 100 km)</h3>
-                    <button class="dropdown-button" onclick="toggleDropdown('energyConsumption-options')">V</button>
+                    <button class="dropdown-button" data-options="energyConsumption-options">V</button>
                 </div>
                 <div class="dropdown-wrapper">
-                    <input class="dropdownInput-field" id="energyConsumption-input" data-value="10" data-options="energyConsumption-options" type="text" min="1" max="999" placeholder="Enter or select energy consumption">             
+                    <input class="dropdownInput-field" id="energyConsumption-input" data-property="bevEnergyConsumption" data-options="energyConsumption-options" type="text" min="1" max="999" placeholder="Enter or select energy consumption">             
                     <div class="dropdown-content" id="energyConsumption-options">
                         <div class="dropdown-option" data-value="10" data-target="energyConsumption-input">10 kWh / 100 km</div>
                         <div class="dropdown-option" data-value="15" data-target="energyConsumption-input">15 kWh / 100 km</div>
@@ -64,10 +65,10 @@
             <div class="dropdownInput-container">
                 <div class="dropdown-title-wrapper">
                     <h3 class="dropdown-title">Charge power (kW)</h3>
-                    <button class="dropdown-button" onclick="toggleDropdown('chargePower-options')">V</button>
+                    <button class="dropdown-button" data-options="chargePower-options">V</button>
                 </div>
                 <div class="dropdown-wrapper">
-                    <input class="dropdownInput-field" id="chargePower-input" data-value="15" data-options="chargePower-options" type="text" min="1" max="999" placeholder="Enter or select charge power">             
+                    <input class="dropdownInput-field" id="chargePower-input" data-property="chargerPower" data-options="chargePower-options" type="text" min="1" max="999" placeholder="Enter or select charge power">             
                     <div class="dropdown-content" id="chargePower-options">
                         <div class="dropdown-option" data-value="15" data-target="chargePower-input">15 kW</div>
                         <div class="dropdown-option" data-value="50" data-target="chargePower-input">50 kWh</div>
@@ -85,7 +86,7 @@
                 
                 <h3>Cost</h3>
                 <div class="toggleInput-wrapper">
-                    <input class="toggleInput-field" type="number" min="0.01" max="999" data-value="0.01" value="0.01" step="0.01" placeholder="Enter cost"></input>
+                    <input class="toggleInput-field" type="number" min="0.01" max="999" data-property="chargeCostEnergy" step="0.01" placeholder="Enter cost"></input>
                     <div class="toggleInput-switch" id="pricing-toggle" data-value="energyBasedPricing" data-left="energyBasedPricing" data-right="timeBasedPricing" data-thumb="pricing-thumb">
                         <div class="toggleInput-track">
                             <div class="toggleInput-thumb" id="pricing-thumb"></div>
