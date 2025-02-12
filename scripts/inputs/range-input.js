@@ -20,6 +20,7 @@ export class RangeInputHandler {
                 this.#rangeInputFields[index].value = slider.value;
                 this.updateSliderProgressBar(slider);
                 // UPDATE CALCULATIONS HERE?
+                calculator.setData(slider.dataset.property, parseInt(slider.value));
             });
         });
 
@@ -28,6 +29,7 @@ export class RangeInputHandler {
             field.addEventListener("input", () => {
                 this.handleRangeInputField(field, index);
                 // UPDATE CALCULATIONS HERE?
+                calculator.setData(field.dataset.property, parseInt(field.value));
             });
         
             // Runs when focus is lost on the field

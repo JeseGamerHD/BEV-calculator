@@ -17,7 +17,7 @@ export class DropdownInputHandler {
                 dropdownField.dataset.value = option.dataset.value; // Set field's data-value to option's data-value
 
                 // TODO: UPDATE CALCULATIONS !!
-
+                this.#calculator.setData(dropdownField.dataset.property, parseInt(option.dataset.value));
                 this.toggleDropdown(option.parentElement.id);
             }
             else if (clickEvent.target.classList.contains("dropdownInput-field")) {
@@ -57,6 +57,7 @@ export class DropdownInputHandler {
                 }
 
                 //TODO: UPDATE CALCULATIONS !!
+                this.#calculator.setData(dropdownField.dataset.property, parseInt(dropdownField.dataset.value));
             }
         });
     }

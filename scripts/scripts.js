@@ -5,14 +5,14 @@ voidaan kutsua ilman kovakoodattua merkkijonoa-> updateValueForResult(maxOperati
 
 class Calculator {
     constructor(values) {
-        this.desiredRange = values.range;
+        this.desiredRange = values.desiredRange;
         this.batteryCapacity = values.batteryCapacity;
         this.bevEnergyConsumption = values.bevEnergyConsumption;
         this.stateOfCharge = values.stateOfCharge;
         this.chargerPower = values.chargerPower;
-        this.chargeCostEnergy = values.chargeCostEnergy;
-        this.chargeCostTime = values.chargeCostTime;
+        this.energyPrice = values.energyPrice;
         this.energyNeededForRange = 0;
+        this.pricingModel = values.pricingModel;
     }
     
     setData(variable, value) {
@@ -25,28 +25,28 @@ class Calculator {
         calcMaxOperatingRange(this.desiredRange, this.batteryCapacity, this.bevEnergyConsumption);
         this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.chargerPower);
         calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPower);
-        calcChargeCostEnergy(this.chargeCostEnergy, this.energyNeededForRange);
-        calcChargeCostTime(this.chargeCostTime, this.energyNeededForRange);
+        calcChargeCost(this.energyPrice, this.energyNeededForRange, this.pricingModel, this.chargerPower);
     }
 }
 
 
-export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumption) { //desiredRange tässä kohtaa vielä redundantti, sitä ei näytetä missään
+export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumption) {
     const maxOperatingRange = (batteryCapacity / bevEnergyConsumption) * 100; // in km
     
     if (desiredRange > maxOperatingRange) {
         console.warn("Warning: The desired range exceeds the vehicle's maximum possible range on a full charge.");
+        console.log("Desired range: ", desiredRange, "Max operating range: ", maxOperatingRange);
         updateChargesRequired(desiredRange, maxOperatingRange);
     } 
     updateValueForResult("Max operating range: " + maxOperatingRange.toFixed(2), "maxOperatingRange");
-
+    updateChargesRequired(desiredRange, maxOperatingRange);
 }
 
 export function calcEnergyNeededForRange(range, bevEnergyConsumption, chargerPower) {
     const energyNeededForRange = (bevEnergyConsumption / 100) * range;
     calcChargeTimeForRange(energyNeededForRange, chargerPower);
     updateValueForResult("Energy needed for range: " + energyNeededForRange.toFixed(2), "energyNeededForRange");
-    return energyNeededForRange; // Return the calculated value
+    return energyNeededForRange; 
 }
 
 export function calcEnergytoFullCharge(batteryCapacity, stateOfCharge, chargePower) {
@@ -68,16 +68,18 @@ export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
     updateValueForResult("Charge time for full charge: "+ chargeTimeForFullCharge.toFixed(2), "chargeTimeForFullCharge");
 }
 
-export function calcChargeCostEnergy(price, energyNeeded) {
-    const chargeCostEnergy = price * energyNeeded;
-
-    updateValueForResult("Charge cost in €/kWh: " + chargeCostEnergy.toFixed(2), "chargeCostEnergy");
-}
-
-export function calcChargeCostTime(price, energyNeeded) {
-    const chargeCostTime = price * energyNeeded;
-
-    updateValueForResult("Charge cost in €/h: " + chargeCostTime.toFixed(2), "chargeCostTime");
+//TODO: Tulossivulla kenties järkevä yhdistää "chargeCostEnergy" ja "chargeCostTime" yhdeksi kentäksi, 
+//joka päivittyy dynaamisesti riippuen käyttäjän valinnasta.
+export function calcChargeCost(price, energyNeeded, pricingModel, chargerPower = null) {
+    let chargeCost;
+    if (pricingModel === "energy") {
+        chargeCost = price * energyNeeded;
+        updateValueForResult("Charge cost in €/kWh: " + chargeCost.toFixed(2), "chargeCostEnergy");
+    } else if (pricingModel === "time" && chargerPower !== null) {
+        const chargeTime = energyNeeded / chargerPower; // Calculate charge time
+        chargeCost = price * chargeTime;
+        updateValueForResult("Charge cost in €/h: " + chargeCost.toFixed(2), "chargeCostTime");
+    }
 }
 
 
@@ -88,7 +90,12 @@ export function updateValueForResult(newValue, resultid) {
 
 function updateChargesRequired(desiredRange, maxOperatingRange) {
     const chargesRequired = Math.ceil(desiredRange / maxOperatingRange);
-    updateValueForResult("Charges required: " + chargesRequired, "chargesRequired");
+    if (chargesRequired > 1) {
+        updateValueForResult("Charges required: " + chargesRequired, "chargesRequired");
+    } else {
+        updateValueForResult("", "chargesRequired");
+    }
+    
 }
 
 //OPTIONAL: Jos halutaan myös budjettitoiminnallisuus, voidaan kutsua tätä funktiota.

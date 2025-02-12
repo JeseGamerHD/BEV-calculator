@@ -23,6 +23,7 @@ export class ToggleInputHandler {
                 this.handleToggleInput(inputField);
         
                 // UPDATE CALC
+                this.#calculator.setData(inputField.dataset.property, parseFloat(inputField.dataset.value));
             }
         });
         

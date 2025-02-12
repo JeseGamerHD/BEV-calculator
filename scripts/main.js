@@ -11,8 +11,8 @@ const BASE_VALUES = {
     bevEnergyConsumption: 15,
     stateOfCharge: 50,
     chargerPower: 22,
-    chargeCostEnergy: 0.2,
-    chargeCostTime: 2
+    energyPrice: 0.2,
+    pricingModel: "energy"
 };
 
 const calculator = new Calculator(BASE_VALUES);
