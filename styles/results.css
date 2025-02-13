@@ -1,0 +1,43 @@
+body, html{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 3vh;
+}
+.oikea-puoli-sivusta{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+.left-side, .middle, .right-side{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5vh;
+}
+
+
+.left-side{background-color: rgb(24, 44, 226);}
+.middle{background-color: rgb(20, 20, 206);}
+.right-side{background-color: rgb(57, 51, 143);}
+
+
+
+.left-side div:nth-child(2), .left-side div:nth-child(4), .left-side div:nth-child(7), .left-side div:nth-child(9){
+    margin-bottom: 2vh;
+}
+
+
+.middle div:nth-child(2), .middle div:nth-child(4), .middle div:nth-child(7) {
+    margin-bottom: 2vh;
+}
+
+
+.right-side div:nth-child(2){
+    margin-bottom: 2vh;
+}
