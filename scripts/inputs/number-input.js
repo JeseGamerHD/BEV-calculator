@@ -5,12 +5,14 @@ export class NumberInputHandler {
     constructor(calculator) {
         this.#calculator = calculator;
 
-        this.initializeFields(document.querySelectorAll("numberInput-field"));
+        this.initializeFields(document.querySelectorAll(".numberInput-field"));
 
         document.addEventListener("input", (inputEvent) => {
             if(inputEvent.target.classList.contains("numberInput-field")) {
                 let inputField = inputEvent.target;
-                this.handleNumberInput(inputField);         
+                this.handleNumberInput(inputField);
+                
+                this.#calculator.setData(inputField.dataset.property, inputField.dataset.value);
             }
         });
     }

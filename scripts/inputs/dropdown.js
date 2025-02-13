@@ -26,7 +26,6 @@ export class DropdownInputHandler {
             }
             else if(clickEvent.target.classList.contains("dropdown-button")) {
                 let button = clickEvent.target;
-                console.log("e");
                 this.toggleDropdown(button.dataset.options);
             }
         });

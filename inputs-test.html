@@ -87,13 +87,13 @@
                 <h3>Cost</h3>
                 <div class="toggleInput-wrapper">
                     <input class="toggleInput-field" type="number" min="0.01" max="999" data-property="energyPrice" step="0.01" placeholder="Enter cost"></input>
-                    <div class="toggleInput-switch" id="pricing-toggle" data-value="energyBasedPricing" data-left="energyBasedPricing" data-right="timeBasedPricing" data-thumb="pricing-thumb">
+                    <div class="toggleInput-switch" id="pricing-toggle" data-property="pricingModel" data-left="energy" data-right="time" data-thumb="pricing-thumb">
                         <div class="toggleInput-track">
                             <div class="toggleInput-thumb" id="pricing-thumb"></div>
                         </div>
                         <div class="toggleInput-content">
-                            <span class="toggle-option" id="energyBasedPricing">€/kWh</span>
-                            <span class="toggle-option" id="timeBasedPricing">€/h</span>
+                            <span class="toggle-option" id="energy">€/kWh</span>
+                            <span class="toggle-option" id="time">€/h</span>
                         </div>
                     </div>
                 </div>
