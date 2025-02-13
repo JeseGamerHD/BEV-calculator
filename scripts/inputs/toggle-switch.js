@@ -1,14 +1,15 @@
-export class ToggleInputHandler {
+import { InputField } from "./inputfield.js";
+
+export class ToggleInputHandler extends InputField {
 
     #calculator = null;
     #toggleSwitches = null;
 
     constructor(calculator) {
+        super();    
         this.#calculator = calculator;
         this.#toggleSwitches = document.querySelectorAll(".toggleInput-switch");
-
-        this.initializeFields(document.querySelectorAll(".toggleInput-field"));
-        this.initializeFields(document.querySelectorAll(".toggleInput-switch"));
+        this.setDefaultValues(document.querySelectorAll(".toggleInput-field, .toggleInput-switch"), calculator);
 
         this.#toggleSwitches.forEach(toggleSwitch => {
             document.getElementById(toggleSwitch.dataset.left).classList.add("active");
@@ -23,8 +24,6 @@ export class ToggleInputHandler {
             if(inputEvent.target.classList.contains("toggleInput-field")){
                 let inputField = inputEvent.target;
                 this.handleToggleInput(inputField);
-        
-                // UPDATE CALC
                 this.#calculator.setData(inputField.dataset.property, parseFloat(inputField.dataset.value));
             }
         });
@@ -39,15 +38,6 @@ export class ToggleInputHandler {
                     inputField.value = parseFloat(inputField.value);
                 }
             }
-        });
-    }
-
-    initializeFields(inputFields) {
-
-        inputFields.forEach(field => {
-            let property = field.dataset.property;
-            field.value = this.#calculator[property];
-            field.dataset.value = this.#calculator[property];
         });
     }
 

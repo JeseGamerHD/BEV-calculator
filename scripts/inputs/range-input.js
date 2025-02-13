@@ -1,14 +1,20 @@
-export class RangeInputHandler {
+import { InputField } from "./inputfield.js";
+
+export class RangeInputHandler extends InputField {
 
     #calculator = null;
     #rangeInputSliders = null; // VALUES IN SLIDERS SHOULD BE VALID; Only gets values within min-max limits
     #rangeInputFields = null; // VALUES IN FIELDS CAN BE INVALID; User can type anything or leave it empty, gets set to a proper value once focus is lost
 
     constructor(calculator) {
+        super();
         this.#calculator = calculator;
         this.#rangeInputSliders = document.querySelectorAll(".rangeInput");
         this.#rangeInputFields = document.querySelectorAll(".rangeInput-field"); 
-        this.initializeRangeInput();
+
+        // Set base values
+        this.setDefaultValues(this.#rangeInputSliders, calculator);
+        this.setDefaultValues(this.#rangeInputFields, calculator);
 
         this.#rangeInputSliders.forEach((slider, index) => {
 
@@ -19,7 +25,6 @@ export class RangeInputHandler {
             slider.addEventListener("input", () => {
                 this.#rangeInputFields[index].value = slider.value;
                 this.updateSliderProgressBar(slider);
-                // UPDATE CALCULATIONS HERE?
                 calculator.setData(slider.dataset.property, parseInt(slider.value));
             });
         });
@@ -28,7 +33,9 @@ export class RangeInputHandler {
     
             field.addEventListener("input", () => {
                 this.handleRangeInputField(field, index);
-                // UPDATE CALCULATIONS HERE?
+                
+                // TODO: field.value can contain NaN, check if fixed once
+                // input validation is ready in InputField class
                 calculator.setData(field.dataset.property, parseInt(field.value));
             });
         
@@ -41,19 +48,6 @@ export class RangeInputHandler {
                     field.value = field.min;
                 }
             });
-        });
-    }
-
-    initializeRangeInput() {
-
-        this.#rangeInputSliders.forEach(slider => {
-            let property = slider.dataset.property;
-            slider.value = this.#calculator[property];
-        });
-
-        this.#rangeInputFields.forEach(field => {
-            let property = field.dataset.property;
-            field.value = this.#calculator[property];
         });
     }
 

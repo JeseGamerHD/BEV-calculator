@@ -1,11 +1,14 @@
-export class DropdownInputHandler {
+import { InputField } from "./inputfield.js";
+
+export class DropdownInputHandler extends InputField {
 
     #calculator = null;
 
     constructor(calculator) {
+        super();
         this.#calculator = calculator;
+        this.setDefaultValues(document.querySelectorAll(".dropdownInput-field"), calculator);
 
-        this.initializeFields(document.querySelectorAll(".dropdownInput-field"));
         // User clicks on an option or the input field
         document.addEventListener("click", (clickEvent) => {
 
@@ -16,7 +19,6 @@ export class DropdownInputHandler {
                 dropdownField.value = option.textContent;
                 dropdownField.dataset.value = option.dataset.value; // Set field's data-value to option's data-value
 
-                // TODO: UPDATE CALCULATIONS !!
                 this.#calculator.setData(dropdownField.dataset.property, parseInt(option.dataset.value));
                 this.toggleDropdown(option.parentElement.id);
             }
@@ -55,17 +57,8 @@ export class DropdownInputHandler {
                     this.toggleDropdown(dropdownContentID);
                 }
 
-                //TODO: UPDATE CALCULATIONS !!
                 this.#calculator.setData(dropdownField.dataset.property, parseInt(dropdownField.dataset.value));
             }
-        });
-    }
-
-    initializeFields(inputFields) {
-        inputFields.forEach(field => {
-            let property = field.dataset.property;
-            field.value = this.#calculator[property];
-            field.dataset.value = this.#calculator[property];
         });
     }
 

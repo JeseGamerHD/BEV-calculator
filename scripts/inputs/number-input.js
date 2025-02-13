@@ -1,11 +1,13 @@
-export class NumberInputHandler {
+import { InputField } from "./inputfield.js";
+
+export class NumberInputHandler extends InputField {
 
     #calculator = null;
 
     constructor(calculator) {
+        super();
         this.#calculator = calculator;
-
-        this.initializeFields(document.querySelectorAll(".numberInput-field"));
+        this.setDefaultValues(document.querySelectorAll(".numberInput-field"), calculator);
 
         document.addEventListener("input", (inputEvent) => {
             if(inputEvent.target.classList.contains("numberInput-field")) {
@@ -14,13 +16,6 @@ export class NumberInputHandler {
                 
                 this.#calculator.setData(inputField.dataset.property, inputField.dataset.value);
             }
-        });
-    }
-
-    initializeFields(inputFields) {
-        inputFields.forEach(field => {
-            let property = field.dataset.property;
-            field.value = this.#calculator[property];
         });
     }
 
