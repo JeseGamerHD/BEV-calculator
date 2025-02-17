@@ -3,83 +3,60 @@ import { InputField } from "./inputfield.js";
 export class RangeInputHandler extends InputField {
 
     #calculator = null;
-    #rangeInputSliders = null; // VALUES IN SLIDERS SHOULD BE VALID; Only gets values within min-max limits
-    #rangeInputFields = null; // VALUES IN FIELDS CAN BE INVALID; User can type anything or leave it empty, gets set to a proper value once focus is lost
 
     constructor(calculator) {
         super();
         this.#calculator = calculator;
-        this.#rangeInputSliders = document.querySelectorAll(".rangeInput");
-        this.#rangeInputFields = document.querySelectorAll(".rangeInput-field"); 
+        let rangeInputSliders = document.querySelectorAll(".rangeInput");
+        let rangeInputFields = document.querySelectorAll(".rangeInput-field");
 
         // Set base values
-        this.setDefaultValues(this.#rangeInputSliders, calculator);
-        this.setDefaultValues(this.#rangeInputFields, calculator);
-
-        this.#rangeInputSliders.forEach((slider, index) => {
-
-            // Initialize slider progress
-            this.updateSliderProgressBar(slider); 
-            
-            // Apply listeners to sliders
-            slider.addEventListener("input", () => {
-                this.#rangeInputFields[index].value = slider.value;
-                this.updateSliderProgressBar(slider);
-                calculator.setData(slider.dataset.property, parseInt(slider.value));
-            });
+        this.setDefaultValues(rangeInputSliders, calculator);
+        this.setDefaultValues(rangeInputFields, calculator);
+        
+        // Initialize slider progress
+        rangeInputSliders.forEach(slider => {
+            this.updateSliderProgressBar(slider);
         });
 
-        this.#rangeInputFields.forEach((field, index) => {
-    
-            field.addEventListener("input", () => {
-                this.handleRangeInputField(field, index);
+        this.attachEventListeners();
+    }
+
+    attachEventListeners() {
+        document.addEventListener("input", (inputEvent) => {
+            // SLIDERS
+            if(inputEvent.target.classList.contains("rangeInput")) {
+                let slider = inputEvent.target;
+                let inputField = document.getElementById(slider.dataset.target);
+
+                // Slider values shouldn't be invalid so safe to set directly
+                // No need to use handleInput
+                inputField.value = slider.value;
+                inputField.dataset.value = slider.value;
                 
-                // TODO: field.value can contain NaN, check if fixed once
-                // input validation is ready in InputField class
-                calculator.setData(field.dataset.property, parseInt(field.value));
-            });
-        
-            // Runs when focus is lost on the field
-            field.addEventListener("blur", () => {
-                field.value = parseInt(field.value); // Remove leading zeros
-                // Set invalid values to min
-                // NOTE1: below min check here to allow the user to backspace properly
-                if(isNaN(parseInt(field.value)) || parseInt(field.value) < parseInt(field.min)){
-                    field.value = field.min;
-                }
-            });
+                this.updateSliderProgressBar(slider);
+                this.#calculator.setData(slider.dataset.property, parseInt(slider.value));
+            }
+            // FIELDS
+            if(inputEvent.target.classList.contains("rangeInput-field")) {
+                let inputField = inputEvent.target;
+                let slider = document.getElementById(inputField.dataset.target);
+
+                this.handleInput(inputField, slider);
+                this.updateSliderProgressBar(slider);
+                this.#calculator.setData(slider.dataset.property, parseInt(slider.value));
+            }
         });
     }
 
-    /**  
-    * @param {HTMLInputElement} field - The field element next to the slider.
-    * @param {number} index - The index of the current element in rangeInputFields
+    /** @inheritdoc This implementation also updates the value of the slider
+    * associated with the field
+    * @param {HTMLInputElement} slider
     */
-    handleRangeInputField(field, index) {
-
-        let minValue = this.#rangeInputSliders[index].min;
-        let maxValue = this.#rangeInputSliders[index].max;
-        let value = parseInt(field.value, 10);
-
-        if (value >= minValue && value <= maxValue && !isNaN(value)) {
-            this.#rangeInputSliders[index].value = value;
-        }
-        // Value below min, set slider to min
-        else if (value < minValue) {
-            this.#rangeInputSliders[index].value = minValue;
-            // NOTE1: Don't set field to min to allow the user to backspace properly
-            // invalid values set to min when focus is lost. TODO: Maybe a better way to do this?
-        }
-        // Value over max, set slider and field to max
-        else if (value > maxValue) {
-            this.#rangeInputSliders[index].value = maxValue;
-            field.value = maxValue;
-        }
-        else if (isNaN(value)) {
-            this.#rangeInputSliders[index].value = minValue;
-        }
-
-        this.updateSliderProgressBar(this.#rangeInputSliders[index]);
+    handleInput(inputField, slider) {
+        super.handleInput(inputField);
+        slider.value = inputField.dataset.value;
+        slider.dataset.value = inputField.dataset.value;
     }
 
     // TODO: progress and thumb are offset from each other by a little (below 50% progress progress lacks behind, above 50% it goes slightly beyond thumb)

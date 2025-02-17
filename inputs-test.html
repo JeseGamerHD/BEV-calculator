@@ -26,10 +26,10 @@
             <div class="rangeInput-container">
                 <h3 class="rangeInput-title">State of Charge (SOC) %</h3>
                 <div class="rangeInput-field-wrapper">
-                    <input class="rangeInput-field" id="SOC-field" type="text" min="0" max="100" data-property="stateOfCharge">
+                    <input class="rangeInput-field" id="SOC-field" type="text" data-target="SOC-slider" min="0" max="100" data-property="stateOfCharge">
                     <span class="rangeInput-field-symbol">%</span>
                 </div> 
-                <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-property="stateOfCharge">
+                <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-target="SOC-field" data-property="stateOfCharge">
             </div>
     
             <div class="dropdownInput-container">

@@ -11,6 +11,9 @@ export class ToggleInputHandler extends InputField {
         this.#toggleSwitches = document.querySelectorAll(".toggleInput-switch");
         this.setDefaultValues(document.querySelectorAll(".toggleInput-field, .toggleInput-switch"), calculator);
 
+        this.attachEventListeners();
+        // TODO: figure out how to move eventlistener to the method
+        // The click has issues activating on the thumb using event delegation
         this.#toggleSwitches.forEach(toggleSwitch => {
             document.getElementById(toggleSwitch.dataset.left).classList.add("active");
             document.getElementById(toggleSwitch.dataset.thumb).style.left = "10px";
@@ -19,11 +22,14 @@ export class ToggleInputHandler extends InputField {
                 this.#calculator.setData(toggleSwitch.dataset.property, toggleSwitch.dataset.value);
             });
         });
+    }
+
+    attachEventListeners() {
         
         document.addEventListener("input", (inputEvent) => {
             if(inputEvent.target.classList.contains("toggleInput-field")){
                 let inputField = inputEvent.target;
-                this.handleToggleInput(inputField);
+                this.handleInput(inputField);
                 this.#calculator.setData(inputField.dataset.property, parseFloat(inputField.dataset.value));
             }
         });
@@ -41,27 +47,11 @@ export class ToggleInputHandler extends InputField {
         });
     }
 
-    handleToggleInput(inputField) {
-        // Allow empty, just don't update any value
-        // (User can backspace properly)
-        if (inputField.value === "") {
-            inputField.dataset.value = inputField.min;
-            return;
-        }
-
-        let newValue = Number(parseFloat(inputField.value));
-        if (newValue >= inputField.min && newValue <= inputField.max) {
-            inputField.dataset.value = newValue;
-        }
-        else if (newValue > inputField.max) {
-            inputField.value = inputField.max;
-            inputField.dataset.value = inputField.max;
-        }
-        else {
-            inputField.dataset.value = inputField.min;
-        }
-    }
-
+    /**
+    * Moves the "thumb" of the switch by toggling a .css class 
+    * and sets the data-value to the selected option.
+    * @param  {HTMLElement } toggleSwitch
+    */
     toggleOptions(toggleSwitch) {
         
         let thumb = document.getElementById(toggleSwitch.dataset.thumb);
