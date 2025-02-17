@@ -23,7 +23,7 @@ class Calculator {
     updateCalculations() {
         console.log("Updating calculations with values:", this);
         calcMaxOperatingRange(this.desiredRange, this.batteryCapacity, this.bevEnergyConsumption);
-        this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.chargerPower);
+        this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPower);
         calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPower);
         calcChargeCost(this.energyPrice, this.energyNeededForRange, this.pricingModel, this.chargerPower);
     }
@@ -42,11 +42,12 @@ export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyCo
     updateChargesRequired(desiredRange, maxOperatingRange);
 }
 
-export function calcEnergyNeededForRange(range, bevEnergyConsumption, chargerPower) {
+export function calcEnergyNeededForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower) {
     const energyNeededForRange = (bevEnergyConsumption / 100) * range;
-    calcChargeTimeForRange(energyNeededForRange, chargerPower);
     updateValueForResult("Energy needed for range: " + energyNeededForRange.toFixed(2), "energyNeededForRange");
-    return energyNeededForRange; 
+
+    calcChargeTimeForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower);
+    return energyNeededForRange;
 }
 
 export function calcEnergytoFullCharge(batteryCapacity, stateOfCharge, chargePower) {
@@ -57,11 +58,21 @@ export function calcEnergytoFullCharge(batteryCapacity, stateOfCharge, chargePow
     updateValueForResult("Energy needed for full charge: " + energyToFullCharge.toFixed(2), "energyToFullCharge");
 }
 
-export function calcChargeTimeForRange(energyNeeded, bevChargePower) {
-    const chargeTimeForRange = energyNeeded / bevChargePower; // in hours
+export function calcChargeTimeForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower) {
+    const energyNeededForRange = (bevEnergyConsumption / 100) * range;
+    const currentEnergy = (stateOfCharge / 100) * batteryCapacity;
+    const energyToCharge = energyNeededForRange - currentEnergy;
 
+    if (energyToCharge <= 0) {
+        updateValueForResult("Charge time needed for range: 0", "chargeTimeForRange");
+        return 0;
+    }
+
+    const chargeTimeForRange = energyToCharge / bevChargePower; // in hours
     updateValueForResult("Charge time needed for range: " + chargeTimeForRange.toFixed(2), "chargeTimeForRange");
+    return chargeTimeForRange;
 }
+
 export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
     const chargeTimeForFullCharge = energyNeeded / bevChargePower; // in hours
 
