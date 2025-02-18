@@ -1,6 +1,15 @@
+:root {
+    --text-color-inputs: rgb(66, 183, 255);
+}
+
 html, body {
     margin: 0;
     padding: 0;
+    font-family: Arial, Verdana, Tahoma;
+
+    /*TODO: remove later, just for quick test */
+    display: flex;
+    width: 100%;
 }
 
 .input-area-container {
@@ -9,7 +18,7 @@ html, body {
 
     width: 33%;
     padding: 20px 0px 20px 0px;
-    background-color: rgb(220, 220, 220);
+    background-color: rgb(228, 228, 228);
 
     .input-area-wrapper {
         display: flex;
@@ -20,6 +29,7 @@ html, body {
     }
 }
 
+/* MOBILE SCREENS, set the container styling, rest will follow */
 @media screen and (max-width: 900px) {
     .input-area-container {
         width: 90%;
@@ -27,6 +37,21 @@ html, body {
     }
 }
 
+/* GENERAL INPUT STYLING */
+input[type=text], input[type=number] {
+    height: 30px;
+    padding: 10px;
+    border-radius: 5px;
+
+    font-size: larger;
+    font-weight: bold;
+}
+
+input::placeholder {
+    font-weight: normal;
+}
+
+/* NUMBER INPUT STYLING (BASIC INPUT FIELDS) */
 .numberInput-container {
     display: flex;
     flex-direction: column;
@@ -36,36 +61,22 @@ html, body {
         display: flex;
         flex-direction: row;
         width: 100%;
-        height: 30px;
+        height: 2.5em;
 
         .numberInput-field {
             flex: 1; /* Input field grows to take as much width as possible */
             min-width: 0; /* Required to override input field default behaviour to resist shrinking below their content size */
-            
-            border-left: 1px solid;
-            border-right: none;
-            border-top: 1px solid;
-            border-bottom: 1px solid;
-            border-radius: 5px 0 0 5px;
+            border: none;
+            color: var(--text-color-inputs);
         }
 
         .numberInput-field:focus {
             outline: none;
         }
-
-        .numberInput-field-unit {
-            display: flex;
-            align-items: center;
-            
-            border-left: none;
-            border-right: 1px solid;
-            border-top: 1px solid;
-            border-bottom: 1px solid;
-            border-radius: 0 5px 5px 0;
-        }
     }
 }
 
+/* RANGE INPUT STYLING */
 .rangeInput-container {
     
     display: flex;
@@ -92,14 +103,15 @@ html, body {
         flex-direction: row;
         
         .rangeInput-field {
+            display: flex;
+            text-align: center;
             width: 2.5em;
-            border-left: 1px solid;
-            border-right: none;
-            border-top: 1px solid;
-            border-bottom: 1px solid;
+            
+            border: none;
             border-radius: 5px 0 0 5px;
+            color: var(--text-color-inputs);
     
-            padding: 10px 0 10px 10px;
+            padding: 10px 0 10px 0px;
         }
     
         .rangeInput-field:focus {
@@ -107,12 +119,17 @@ html, body {
         }
         
         .rangeInput-field-symbol {
+
+            display: flex;
+            align-items: center;
+            background-color: white;
             
-            border-left: none;
-            border-right: 1px solid;
-            border-top: 1px solid;
-            border-bottom: 1px solid;
+            border: none;
             border-radius: 0 5px 5px 0;
+
+            font-size: larger;
+            font-weight: bold;
+            color: var(--text-color-inputs);
     
             padding: 10px 10px 10px 0;
         }
@@ -123,13 +140,15 @@ html, body {
         height: 10px;
         border-radius: 5px;
         width: 100%;
+        background-attachment: fixed;
+        /* box-shadow: 5px 10px 10px #00000040; */
     }
     
     .rangeInput::-webkit-slider-thumb {
         appearance: none; /* Override default look */
         width: 30px;
         height: 30px;
-        background: #589eff;
+        background: #4bb7fe;
         border-radius: 50%;
         cursor: pointer;
         -webkit-transition: .1s;
@@ -149,6 +168,7 @@ html, body {
     }
 }
 
+/* DROPDOWN INPUT STYLING */
 .dropdownInput-container {
     display: flex;
     flex-direction: column;
@@ -160,42 +180,66 @@ html, body {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        height: 2.5em;
 
         .dropdown-button {
-            height: min-content;
+            background-color: rgba(255, 255, 255, 0);
+            border: none;
+            
+            height: 100%;
+            width: 2em;
+            margin-right: 10px;
+            
+            background-image: url("/images/icons/ArrowDown.svg");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            cursor: pointer;
+            transition: transform 0.1s ease-in;
+        }
+
+        .dropdown-button:hover {
+            filter: invert(0.5);
+        }
+
+        .dropdown-button.rotate {
+            transform: rotate(180deg);
         }
     }
 
     .dropdown-wrapper {
         display: flex;
         flex-direction: column;
-        row-gap: 5px;
         background-color: white;
         padding: 10px;
         border-radius: 5px;
 
         .dropdown-content {
-            /* display: none; */
+            display: flex;
+            row-gap: 5px;
             flex-direction: column;
             max-height: 0;
             transition: max-height 0.1s linear;
             overflow: hidden;
             
             .dropdown-option {
-                height: 30px;
+                padding: 10px;
+                height: 2.5em;
+                cursor: pointer;
             }
 
             .dropdown-option:hover {
-                background-color: #589eff;
+                background-color: #85cbfad5;
             }
         }
 
         .dropdown-content.animation {
-            /* max-height: 100px; */
             max-height: var(--dropdownHeight);
         }
 
         .dropdownInput-field {
+            font-weight: normal;
             height: 30px;
             border: none;
             border-radius: 5px;
@@ -204,6 +248,7 @@ html, body {
     }
 }
 
+/* TOGGLE INPUT STYLING */
 .toggleInput-container {
     display: flex;
     flex-direction: column;
@@ -220,13 +265,14 @@ html, body {
         height: 35px;
         border: none;
         border-radius: 5px;
+        color: var(--text-color-inputs);
     }
 
     .toggleInput-switch {
         position: relative;
         width: 66%;
-        border-radius: 15px;
-        background-color: #55b2ffd2;
+        border-radius: 25px;
+        background: linear-gradient(45deg, rgba(29,125,255,1) 0%, rgba(72,214,255,1) 100%);
         cursor: pointer;
         user-select: none;
         margin-right: auto;
@@ -241,9 +287,9 @@ html, body {
     
     .toggleInput-thumb {
         position: absolute;
-        width: 40%;
-        height: 30px;
-        border-radius: 15px;
+        width: 45%;
+        height: 80%;
+        border-radius: 25px;
         background-color: white;
         transition: left 0.2s ease;
     }
@@ -263,13 +309,13 @@ html, body {
     .toggle-option {
         text-align: center;
         width: 50%;
-        color: #666666;
+        color: #000000;
         padding: 0 10px;
     }
     
     /* Selected option */
     .toggle-option.active {
-        color: #333;
+        color: var(--text-color-inputs);
         font-weight: bold;
     }
 }

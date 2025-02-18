@@ -73,7 +73,7 @@ export class RangeInputHandler extends InputField {
         const percentage = parseInt(((slider.value - min) / (max - min)) * 100 + 0.5);
 
         // Update the background:
-        slider.style.background = `linear-gradient(to right,rgb(88, 124, 255) ${percentage}%,rgb(163, 163, 163) ${percentage}%)`;
+        slider.style.background = `linear-gradient(to right, rgba(29,125,255,1) 0%, rgba(72,214,255,1) ${percentage}%, rgb(163, 163, 163) ${percentage}%, rgb(163, 163, 163) 100%)`;
     }
 }
 

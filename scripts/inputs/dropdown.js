@@ -87,12 +87,17 @@ export class DropdownInputHandler extends InputField {
         // Enable scrolling in those cases
         if(height > 150) {
             height = 150;
-            dropdown.style.overflow = "scroll";
+            dropdown.style.overflowY = "scroll";
         }
 
         // Set the variable used for max-height of the animation based on the amount of options
         // Now the animation works smoothly regardless of how many options there are
         dropdown.style.setProperty("--dropdownHeight", `${height}px`); 
         dropdown.classList.toggle("animation");
+
+        // Also rotate the dropdown button:
+        // Each button has data-options which is the same as the id of the dropdown
+        let button = document.querySelector(`.dropdown-button[data-options="${dropdown.id}"]`);
+        button.classList.toggle("rotate");
     }
 }

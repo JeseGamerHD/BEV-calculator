@@ -16,15 +16,15 @@
     <div class="input-area-container">
         <div class="input-area-wrapper">
             <div class="numberInput-container">
-                <h3 class="numberInput-title">Desired operating range (km)</h3>
+                <h3 class="numberInput-title">Target range (km)</h3>
                 <div class="numberInput-field-wrapper">
                     <input class="numberInput-field" id="desiredRange-input" type="text" min="0" max="9999" data-property="desiredRange" placeholder="Enter target range (optional)">
-                    <span class="numberInput-field-unit">km</span>
+                    <!-- <span class="numberInput-field-unit">km</span> -->
                 </div>
             </div>
     
             <div class="rangeInput-container">
-                <h3 class="rangeInput-title">State of Charge (SOC) %</h3>
+                <h3 class="rangeInput-title">State of Charge</h3>
                 <div class="rangeInput-field-wrapper">
                     <input class="rangeInput-field" id="SOC-field" type="text" data-target="SOC-slider" min="0" max="100" data-property="stateOfCharge">
                     <span class="rangeInput-field-symbol">%</span>
@@ -35,7 +35,7 @@
             <div class="dropdownInput-container">
                 <div class="dropdown-title-wrapper">
                     <h3 class="dropdown-title">Battery capacity (kWh)</h3>
-                    <button class="dropdown-button" data-options="batteryCapacity-options">V</button>
+                    <button class="dropdown-button" data-options="batteryCapacity-options"></button>
                 </div>
                 <div class="dropdown-wrapper">
                     <input class="dropdownInput-field" id="batteryCapacity-input" data-property="batteryCapacity" data-options="batteryCapacity-options" type="text" min="1" max="9999" placeholder="Enter or select battery capacity">             
@@ -50,7 +50,7 @@
             <div class="dropdownInput-container">
                 <div class="dropdown-title-wrapper">
                     <h3 class="dropdown-title">Energy consumption (kWh / 100 km)</h3>
-                    <button class="dropdown-button" data-options="energyConsumption-options">V</button>
+                    <button class="dropdown-button" data-options="energyConsumption-options"></button>
                 </div>
                 <div class="dropdown-wrapper">
                     <input class="dropdownInput-field" id="energyConsumption-input" data-property="bevEnergyConsumption" data-options="energyConsumption-options" type="text" min="1" max="999" placeholder="Enter or select energy consumption">             
@@ -65,7 +65,7 @@
             <div class="dropdownInput-container">
                 <div class="dropdown-title-wrapper">
                     <h3 class="dropdown-title">Charge power (kW)</h3>
-                    <button class="dropdown-button" data-options="chargePower-options">V</button>
+                    <button class="dropdown-button" data-options="chargePower-options"></button>
                 </div>
                 <div class="dropdown-wrapper">
                     <input class="dropdownInput-field" id="chargePower-input" data-property="chargerPower" data-options="chargePower-options" type="text" min="1" max="999" placeholder="Enter or select charge power">             

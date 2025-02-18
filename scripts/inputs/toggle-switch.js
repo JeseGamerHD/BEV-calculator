@@ -16,7 +16,7 @@ export class ToggleInputHandler extends InputField {
         // The click has issues activating on the thumb using event delegation
         this.#toggleSwitches.forEach(toggleSwitch => {
             document.getElementById(toggleSwitch.dataset.left).classList.add("active");
-            document.getElementById(toggleSwitch.dataset.thumb).style.left = "10px";
+            document.getElementById(toggleSwitch.dataset.thumb).style.left = "5px";
             toggleSwitch.addEventListener("click", () => {
                 this.toggleOptions(toggleSwitch);
                 this.#calculator.setData(toggleSwitch.dataset.property, toggleSwitch.dataset.value);
@@ -60,13 +60,13 @@ export class ToggleInputHandler extends InputField {
         
         if(toggleSwitch.dataset.value == leftOption) {
             toggleSwitch.dataset.value = rightOption;
-            thumb.style.left = "calc(100% - 40% - 10px)";
+            thumb.style.left = "calc(100% - 45% - 5px)";
             document.getElementById(leftOption).classList.toggle("active");
             document.getElementById(rightOption).classList.toggle("active");
             
         } else {
             toggleSwitch.dataset.value = leftOption;
-            thumb.style.left = "10px";
+            thumb.style.left = "5px";
             document.getElementById(rightOption).classList.toggle("active");
             document.getElementById(leftOption).classList.toggle("active");
         }
