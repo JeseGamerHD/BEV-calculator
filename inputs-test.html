@@ -108,21 +108,51 @@
     </div>
 
     <div class="oikea-puoli-sivusta"> 
-        <style>
-            .oikea-puoli-sivusta div{
-                font-size: 25px;
-                margin-bottom: 40px;
-            }
-        </style>
+        
+        <div class="left-side">
+            <h1>Distance</h1>
+            <div id="maxOperatingRange">TEST</div>
 
-        <div id="maxOperatingRange">Max operating range: </div>
-        <div id="energyNeededForRange">Energy needed for range: </div>
-        <div id="energyToFullCharge">Energy needed for full charge: </div>
-        <div id="chargeTimeForRange">Charge time needed for range: </div>
-        <div id="chargeTimeForFullCharge">Charge time for full charge: </div>
-        <div id="chargeCostEnergy">Charge cost in €/kWh: </div>
-        <div id="chargeCostTime">Charge cost in €/h: </div>
-        <div id="chargesRequired">Charges required: </div>
+            <h3>Charging Time</h3>
+            <div id="chargeTimeForRange">Charge time needed for range: </div>
+           
+            <h3>Charging Costs</h3>
+            <div id="chargeCostEnergyRange">Charge cost in €/kWh for desired range: </div>
+            <div id="chargeCostTimeRange">Charge cost in €/h for desired range: </div>
+
+            <h3>Number of Charges</h3>
+            <div id="numberOfCharges">TEST</div>
+
+            <h3>Energy</h3>
+            <div id="energyNeededForRange">Energy needed for range: </div>
+        </div>
+        
+
+        <div class="middle">
+            <h1>Until Full (SOC)</h1>
+            <div id="fullCharge">100%</div>
+
+            <h3>Charging Time</h3>
+            <div id="chargeTimeForFullCharge">Charge time for full charge: </div>
+
+            <h3>Charging Costs</h3>
+            <div id="chargeCostEnergyFull">Charge cost in €/kWh for full charge: </div>
+            <div id="chargeCostTimeFull">Charge cost in €/h for full charge: </div>
+
+            <h3>Energy</h3>
+            <div id="energyToFullCharge">Energy needed for full charge: </div>
+        </div>
+
+
+        <div class="right-side">
+            <h1>State of Charge</h1>
+            <div id="stateOfCharge">SOC: </div>
+
+            <h3>Distance</h3>
+            <div id="currentOperationRange">Operation range: </div>
+        </div>
+       
+          
     </div>
 </body>
 </html>

@@ -86,17 +86,29 @@ export function calcChargeCost(price, energyNeeded, pricingModel, chargerPower =
     if (pricingModel === "energy") {
         chargeCost = price * energyNeeded;
         updateValueForResult("Charge cost in €/kWh: " + chargeCost.toFixed(2), "chargeCostEnergy");
+        updateValueForResult("", "chargeCostTime");
     } else if (pricingModel === "time" && chargerPower !== null) {
         const chargeTime = energyNeeded / chargerPower; // Calculate charge time
         chargeCost = price * chargeTime;
         updateValueForResult("Charge cost in €/h: " + chargeCost.toFixed(2), "chargeCostTime");
+        updateValueForResult("", "chargeCostEnergy");
     }
 }
 
 
 export function updateValueForResult(newValue, resultid) {
-    
-    document.getElementById(resultid).innerHTML = newValue
+    if(newValue === null || resultid === null) {
+        console.log("Error: updateValueForResult() requires both a value and a result id.");
+        console.log("Value: ", newValue, "Result id: ", resultid);
+        return;
+    } else {
+        try{
+            document.getElementById(resultid).innerHTML = newValue
+        } catch (error) {
+            console.log("Error: Could not update value for result id: ", resultid);
+            console.log(error);
+    }
+} 
 }
 
 function updateChargesRequired(desiredRange, maxOperatingRange) {
