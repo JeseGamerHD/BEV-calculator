@@ -22,25 +22,37 @@ class Calculator {
 
     updateCalculations() {
         console.log("Updating calculations with values:", this);
-        calcMaxOperatingRange(this.desiredRange, this.batteryCapacity, this.bevEnergyConsumption);
+        calcMaxOperatingRange(this.desiredRange, this.batteryCapacity, this.bevEnergyConsumption, this.stateOfCharge);
         this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPower);
         calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPower);
-        calcChargeCost(this.energyPrice, this.energyNeededForRange, this.pricingModel, this.chargerPower);
+        calcChargeCostRange(this.energyPrice, this.energyNeededForRange, this.pricingModel, this.chargerPower);
+        calcChargeCostFullCharge(this.energyPrice, this.batteryCapacity, this.stateOfCharge, this.pricingModel, this.chargerPower);
+        calcOperatingRange(this.batteryCapacity, this.bevEnergyConsumption, this.stateOfCharge);
+        getStateOfCharge (this.stateOfCharge);
     }
 }
 
 
-export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumption) {
+export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumption, stateOfCharge) {
     const maxOperatingRange = (batteryCapacity / bevEnergyConsumption) * 100; // in km
     
     if (desiredRange > maxOperatingRange) {
         console.warn("Warning: The desired range exceeds the vehicle's maximum possible range on a full charge.");
         console.log("Desired range: ", desiredRange, "Max operating range: ", maxOperatingRange);
-        updateChargesRequired(desiredRange, maxOperatingRange);
+        updateChargesRequired(desiredRange, stateOfCharge, batteryCapacity, bevEnergyConsumption);
     } 
     updateValueForResult("Max operating range: " + maxOperatingRange.toFixed(2), "maxOperatingRange");
-    updateChargesRequired(desiredRange, maxOperatingRange);
+    updateChargesRequired(desiredRange, stateOfCharge, batteryCapacity, bevEnergyConsumption);
 }
+
+export function calcOperatingRange(batteryCapacity, bevEnergyConsumption, stateOfCharge) { 
+    const operatingRange = (batteryCapacity / bevEnergyConsumption) * (stateOfCharge); // in km
+    updateValueForResult("Operating range: " + operatingRange.toFixed(2), "currentOperatingRange");
+}
+
+export function getStateOfCharge(stateOfCharge) {
+    updateValueForResult("State of charge: " + stateOfCharge.toFixed(2), "stateOfCharge");
+} 
 
 export function calcEnergyNeededForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower) {
     const energyNeededForRange = (bevEnergyConsumption / 100) * range;
@@ -79,22 +91,34 @@ export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
     updateValueForResult("Charge time for full charge: "+ chargeTimeForFullCharge.toFixed(2), "chargeTimeForFullCharge");
 }
 
-//TODO: Tulossivulla kenties järkevä yhdistää "chargeCostEnergy" ja "chargeCostTime" yhdeksi kentäksi, 
-//joka päivittyy dynaamisesti riippuen käyttäjän valinnasta.
-export function calcChargeCost(price, energyNeeded, pricingModel, chargerPower = null) {
+
+export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPower = null) {
     let chargeCost;
     if (pricingModel === "energy") {
         chargeCost = price * energyNeeded;
-        updateValueForResult("Charge cost in €/kWh: " + chargeCost.toFixed(2), "chargeCostEnergy");
-        updateValueForResult("", "chargeCostTime");
+        updateValueForResult("Charge cost in €/kWh for desired range: " + chargeCost.toFixed(2), "chargeCostRange");
+        
     } else if (pricingModel === "time" && chargerPower !== null) {
         const chargeTime = energyNeeded / chargerPower; // Calculate charge time
         chargeCost = price * chargeTime;
-        updateValueForResult("Charge cost in €/h: " + chargeCost.toFixed(2), "chargeCostTime");
-        updateValueForResult("", "chargeCostEnergy");
+        updateValueForResult("Charge cost in €/h for desired range: " + chargeCost.toFixed(2), "chargeCostRange");   
     }
 }
 
+export function calcChargeCostFullCharge(price, batteryCapacity, stateOfCharge, pricingModel, chargerPower = null) {
+    const energyNeeded = batteryCapacity - ((stateOfCharge / 100) * batteryCapacity);
+    let chargeCost;
+
+    if (pricingModel === "energy") {
+        chargeCost = price * energyNeeded;
+        updateValueForResult("Charge cost in €/kWh for full charge: " + chargeCost.toFixed(2), "chargeCostFullCharge");
+    } else if (pricingModel === "time" && chargerPower !== null) {
+        const chargeTime = energyNeeded / chargerPower; // Calculate charge time
+        chargeCost = price * chargeTime;
+        updateValueForResult("Charge cost in €/h for full charge: " + chargeCost.toFixed(2), "chargeCostFullCharge");
+    }
+    return chargeCost;
+}
 
 export function updateValueForResult(newValue, resultid) {
     if(newValue === null || resultid === null) {
@@ -111,14 +135,20 @@ export function updateValueForResult(newValue, resultid) {
 } 
 }
 
-function updateChargesRequired(desiredRange, maxOperatingRange) {
-    const chargesRequired = Math.ceil(desiredRange / maxOperatingRange);
-    if (chargesRequired > 1) {
-        updateValueForResult("Charges required: " + chargesRequired, "chargesRequired");
-    } else {
-        updateValueForResult("", "chargesRequired");
+
+function updateChargesRequired(desiredRange, stateOfCharge, batteryCapacity, bevEnergyConsumption) {
+    const currentEnergy = (stateOfCharge / 100) * batteryCapacity;
+    const energyNeededForRange = (bevEnergyConsumption / 100) * desiredRange;
+    const energyToCharge = energyNeededForRange - currentEnergy;
+
+    if (energyToCharge <= 0) {
+        updateValueForResult(0, "chargesRequired");
+        return 0;
     }
-    
+
+    const chargesRequired = Math.ceil(energyToCharge / batteryCapacity);
+    updateValueForResult(chargesRequired, "chargesRequired");
+    return chargesRequired;
 }
 
 //OPTIONAL: Jos halutaan myös budjettitoiminnallisuus, voidaan kutsua tätä funktiota.
