@@ -24,8 +24,12 @@ html, body {
         display: flex;
         flex-direction: column;
         align-self: center;
-        row-gap: 20px;
+        row-gap: 30px;
         width: 80%;
+
+        .divider-line {
+            border-bottom: 2px solid #6c6c6c92;
+        }
     }
 }
 

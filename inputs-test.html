@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
     <link rel="stylesheet" href="styles/inputs.css">
-    <!-- <script src="scripts/inputs/number-input.js" defer></script>
-    <script src="scripts/inputs/range-input.js" defer></script>
-    <script src="scripts/inputs/dropdown.js" defer></script>
-    <script src="scripts/inputs/toggle-switch.js" defer></script> -->
     <script type="module" src="scripts/main.js" defer></script>
 </head>
 <body>
@@ -19,7 +15,6 @@
                 <h3 class="numberInput-title">Target range (km)</h3>
                 <div class="numberInput-field-wrapper">
                     <input class="numberInput-field" id="desiredRange-input" type="text" min="0" max="9999" data-property="desiredRange" placeholder="Enter target range (optional)">
-                    <!-- <span class="numberInput-field-unit">km</span> -->
                 </div>
             </div>
     
@@ -31,6 +26,8 @@
                 </div> 
                 <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-target="SOC-field" data-property="stateOfCharge">
             </div>
+
+            <span class="divider-line"></span>
     
             <div class="dropdownInput-container">
                 <div class="dropdown-title-wrapper">
@@ -40,9 +37,12 @@
                 <div class="dropdown-wrapper">
                     <input class="dropdownInput-field" id="batteryCapacity-input" data-property="batteryCapacity" data-options="batteryCapacity-options" type="text" min="1" max="9999" placeholder="Enter or select battery capacity">             
                     <div class="dropdown-content" id="batteryCapacity-options">
-                        <div class="dropdown-option" data-value="30" data-target="batteryCapacity-input">Small (30 kWh)</div>
-                        <div class="dropdown-option" data-value="60" data-target="batteryCapacity-input">Medium (60 kWh)</div>
-                        <div class="dropdown-option" data-value="100" data-target="batteryCapacity-input">Large (100 kWh)</div>
+                        <div class="dropdown-option" data-value="30" data-target="batteryCapacity-input">Small Batteries (30 kWh)</div>
+                        <div class="dropdown-option" data-value="45" data-target="batteryCapacity-input">Light Batteries (45 kWh)</div>
+                        <div class="dropdown-option" data-value="60" data-target="batteryCapacity-input">Mid-size Batteries (60 kWh)</div>
+                        <div class="dropdown-option" data-value="85" data-target="batteryCapacity-input">Mid-size+ Batteries (85 kWh)</div>
+                        <div class="dropdown-option" data-value="120" data-target="batteryCapacity-input">Large Batteries (120 kWh)</div>
+                        <div class="dropdown-option" data-value="150" data-target="batteryCapacity-input">Extra Large Batteries (150 kWh)</div>
                     </div>
                 </div>
             </div>
@@ -55,12 +55,17 @@
                 <div class="dropdown-wrapper">
                     <input class="dropdownInput-field" id="energyConsumption-input" data-property="bevEnergyConsumption" data-options="energyConsumption-options" type="text" min="1" max="999" placeholder="Enter or select energy consumption">             
                     <div class="dropdown-content" id="energyConsumption-options">
-                        <div class="dropdown-option" data-value="10" data-target="energyConsumption-input">10 kWh / 100 km</div>
-                        <div class="dropdown-option" data-value="15" data-target="energyConsumption-input">15 kWh / 100 km</div>
-                        <div class="dropdown-option" data-value="20" data-target="energyConsumption-input">20 kWh / 100 km</div>
+                        <div class="dropdown-option" data-value="12" data-target="energyConsumption-input">Small & City Cars (12 kWh/100 km)</div>
+                        <div class="dropdown-option" data-value="15" data-target="energyConsumption-input">Light Vehicles (15 kWh/100 km)</div>
+                        <div class="dropdown-option" data-value="19" data-target="energyConsumption-input">Mid-size Cars (19 kWh /100 km)</div>
+                        <div class="dropdown-option" data-value="22" data-target="energyConsumption-input">Mid-size SUVs (22 kWh /100 km)</div>
+                        <div class="dropdown-option" data-value="25" data-target="energyConsumption-input">Trucks & Large SUVs (25 kWh /100 km)</div>
+                        <div class="dropdown-option" data-value="30" data-target="energyConsumption-input">Large Trucks (30 kWh /100 km)</div>
                     </div>
                 </div>
             </div>
+
+            <span class="divider-line"></span>
     
             <div class="dropdownInput-container">
                 <div class="dropdown-title-wrapper">
@@ -70,14 +75,14 @@
                 <div class="dropdown-wrapper">
                     <input class="dropdownInput-field" id="chargePower-input" data-property="chargerPower" data-options="chargePower-options" type="text" min="1" max="999" placeholder="Enter or select charge power">             
                     <div class="dropdown-content" id="chargePower-options">
-                        <div class="dropdown-option" data-value="15" data-target="chargePower-input">15 kW</div>
-                        <div class="dropdown-option" data-value="50" data-target="chargePower-input">50 kWh</div>
-                        <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
-                        <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
-                        <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
-                        <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
-                        <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
-                        <div class="dropdown-option" data-value="100" data-target="chargePower-input">100 kWh</div>
+                        <div class="dropdown-option" data-value="1.4" data-target="chargePower-input">[AC] Slow Charging (1.4 kW)</div>
+                        <div class="dropdown-option" data-value="3" data-target="chargePower-input">[AC] Slow Charging (3 kW)</div>
+                        <div class="dropdown-option" data-value="7.4" data-target="chargePower-input">[AC] Medium-speed Charging (7.4 kW)</div>
+                        <div class="dropdown-option" data-value="22" data-target="chargePower-input">[AC] Fast Charging (22 kW)</div>
+                        <div class="dropdown-option" data-value="50" data-target="chargePower-input">[DC] Slow Charging (50 kW)</div>
+                        <div class="dropdown-option" data-value="100" data-target="chargePower-input">[DC] Medium-speed Charging (100 kW)</div>
+                        <div class="dropdown-option" data-value="150" data-target="chargePower-input">[DC] Fast Charging (150 kW)</div>
+                        <div class="dropdown-option" data-value="250" data-target="chargePower-input">[DC] Ultra Fast Charging (250 kW)</div>
                     </div>
                 </div>
             </div>

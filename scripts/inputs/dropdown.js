@@ -85,8 +85,8 @@ export class DropdownInputHandler extends InputField {
         // TODO: adjust if needed
         // Limit the height in cases where there are a lot of options
         // Enable scrolling in those cases
-        if(height > 150) {
-            height = 150;
+        if(height > 180) {
+            height = 180;
             dropdown.style.overflowY = "scroll";
         }
 
