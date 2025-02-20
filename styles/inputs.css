@@ -2,22 +2,12 @@
     --text-color-inputs: rgb(66, 183, 255);
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Verdana, Tahoma;
-
-    /*TODO: remove later, just for quick test */
-    display: flex;
-    width: 100%;
-}
-
 .input-area-container {
     display: flex;
     flex-direction: column;
 
     width: 33%;
-    padding: 20px 0px 20px 0px;
+    padding: 60px 0px 60px 0px;
     background-color: rgb(228, 228, 228);
 
     .input-area-wrapper {
