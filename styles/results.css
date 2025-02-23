@@ -4,46 +4,52 @@
     
     display: flex;
     color: white;
-    font-size: 3vh;
+    font-size: 2.25vh;
+    
+}
+
+.left-side, .middle, .right-side{
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    padding: 5vh;
 }
 
 /* Inputs and results wrap when screen not wide enough */
 @media screen and (max-width: 900px) {
     .oikea-puoli-sivusta {
         width: 100%;
+        font-size: 5vw;
+        display: flex;
+        flex-wrap: wrap;
     }
+
+    .left-side, .middle, .right-side{
+        width: 100%;
+        padding: 3vh;
+    }
+
 }
 
 h1 {
     margin-top: 0; /* Remove default margin from header1s*/
-}
-
-/* TODO: Not mobile friendly, padding causes overflow.
-Maybe wrap sections? Or add padding to parent container? */
-.left-side, .middle, .right-side{
-    display: flex;
-    flex-direction: column;
-    width: 33%;
-    padding: 5vh; 
+    font-size: 3.5vh;
 }
 
 
-.left-side{background-color: rgb(24, 44, 226);}
-.middle{background-color: rgb(20, 20, 206);}
-.right-side{background-color: rgb(57, 51, 143);}
-
-
-/* TODO: add shared class for divs in html, use class here instead */
-.left-side div:nth-child(2), .left-side div:nth-child(4), .left-side div:nth-child(7), .left-side div:nth-child(9){
-    margin-bottom: 2vh;
+.left-side{
+    background: rgb(56,140,204);
+    background: linear-gradient(165deg, rgba(56,140,204,1) 0%, rgba(64,84,180,1) 100%);
+}
+.middle{
+    background: rgb(56,108,172);
+    background: linear-gradient(165deg, rgba(56,108,172,1) 0%, rgba(56,60,156,1) 100%);
+}
+.right-side{
+    background: rgb(64,100,188);
+    background: linear-gradient(165deg, rgba(64,100,188,1) 0%, rgba(64,52,172,1) 100%);
 }
 
-
-.middle div:nth-child(2), .middle div:nth-child(4), .middle div:nth-child(7) {
-    margin-bottom: 2vh;
-}
-
-
-.right-side div:nth-child(2){
-    margin-bottom: 2vh;
+.spaced-div{
+    margin-bottom: 3vh;
 }
