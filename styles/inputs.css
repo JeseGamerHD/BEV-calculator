@@ -51,6 +51,12 @@ input::placeholder {
     flex-direction: column;
     width: 100%;
 
+    .numberInput-title-wrapper {
+        display: flex;
+        column-gap: 10px;
+        align-items: center;
+    }
+
     .numberInput-field-wrapper {
         display: flex;
         flex-direction: row;
@@ -62,10 +68,6 @@ input::placeholder {
             min-width: 0; /* Required to override input field default behaviour to resist shrinking below their content size */
             border: none;
             color: var(--text-color-inputs);
-        }
-
-        .numberInput-field:focus {
-            outline: none;
         }
     }
 }
@@ -247,6 +249,12 @@ input::placeholder {
     display: flex;
     flex-direction: column;
     width: 100%;
+
+    .toggleInput-title-wrapper {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+    }
 
     .toggleInput-wrapper {
         display: flex;
