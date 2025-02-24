@@ -15,8 +15,12 @@ const BASE_VALUES = {
     pricingModel: "energy"
 };
 
+// Initialize the calculator and inputs
 const calculator = new Calculator(BASE_VALUES);
 const dropdownInputHandler = new DropdownInputHandler(calculator);
 const numberInputHandler = new NumberInputHandler(calculator);
 const rangeInputHandler = new RangeInputHandler(calculator);
 const toggleInputHandler = new ToggleInputHandler(calculator);
+
+// Update so results match example values
+calculator.updateCalculations();
