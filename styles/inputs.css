@@ -20,6 +20,28 @@
         .divider-line {
             border-bottom: 2px solid #6c6c6c92;
         }
+
+        .chargerPricingAlt-wrapper {
+            /* display: none; */
+            overflow: hidden;
+            visibility: collapse;
+            max-height: 0;
+            flex-direction: column;
+            row-gap: 30px;
+            transform: translateX(-50%);
+            transition: all 0.2s ease;
+        }
+
+        .chargerPricingAlt-wrapper.animation {
+            visibility: visible;
+            transform: translateX(0%);
+            max-height: 9999px;
+        }
+
+        #addChargerPriceComparison {
+            width: 33%;
+            height: 2.5em;
+        }
     }
 }
 

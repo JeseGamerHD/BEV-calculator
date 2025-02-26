@@ -53,7 +53,6 @@ export class ToggleInputHandler extends InputField {
     * @param  {HTMLElement } toggleSwitch
     */
     toggleOptions(toggleSwitch) {
-        
         let thumb = document.getElementById(toggleSwitch.dataset.thumb);
         let leftOption = toggleSwitch.dataset.left;
         let rightOption = toggleSwitch.dataset.right;
