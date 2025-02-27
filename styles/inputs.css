@@ -22,20 +22,19 @@
         }
 
         .chargerPricingAlt-wrapper {
-            display: flex;
-            overflow: hidden;
             visibility: collapse;
             max-height: 0;
-            flex-direction: column;
-            row-gap: 30px;
-            transform: translateX(-50%);
-            transition: all 0.2s ease;
+            transform: scale(0);
+            transition: all 0.2s ease-in;
         }
 
         .chargerPricingAlt-wrapper.animation {
             visibility: visible;
-            transform: translateX(0%);
-            max-height: 9999px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 30px;
+            transform: scale(1);
+            max-height: 999px;
         }
 
         #addChargerPriceComparison {

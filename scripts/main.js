@@ -30,7 +30,12 @@ document.getElementById("addChargerPriceComparison").addEventListener("click", (
 
 document.getElementById("removeChargerPriceComparison").addEventListener("click", () => {
     document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
-    document.getElementById("addChargerPriceComparison").style.display = "inline-block"; 
+
+    // Give enough time for the above animation to finish, then display the button:
+    setTimeout(() => {
+        document.getElementById("addChargerPriceComparison").style.display = "inline-block"; 
+    }, 200);
+    
 });
 
 // Finally update after everything has been initialized so results match example values
