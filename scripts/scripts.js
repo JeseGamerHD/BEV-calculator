@@ -29,6 +29,7 @@ class Calculator {
         calcChargeCostFullCharge(this.energyPrice, this.batteryCapacity, this.stateOfCharge, this.pricingModel, this.chargerPower);
         calcOperatingRange(this.batteryCapacity, this.bevEnergyConsumption, this.stateOfCharge);
         getStateOfCharge (this.stateOfCharge);
+        getDesiredRange(this.desiredRange);
     }
 }
 
@@ -41,25 +42,37 @@ export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyCo
         console.log("Desired range: ", desiredRange, "Max operating range: ", maxOperatingRange);
         updateChargesRequired(desiredRange, stateOfCharge, batteryCapacity, bevEnergyConsumption);
     } 
-    updateValueForResult("Max operating range: " + maxOperatingRange.toFixed(2), "maxOperatingRange");
+    //updateValueForResult(maxOperatingRange.toFixed(2) + " km", "maxOperatingRange");
     updateChargesRequired(desiredRange, stateOfCharge, batteryCapacity, bevEnergyConsumption);
 }
 
 export function calcOperatingRange(batteryCapacity, bevEnergyConsumption, stateOfCharge) { 
     const operatingRange = (batteryCapacity / bevEnergyConsumption) * (stateOfCharge); // in km
-    updateValueForResult("Operating range: " + operatingRange.toFixed(2), "currentOperatingRange");
+    updateValueForResult(operatingRange.toFixed(2) + " km", "currentOperatingRange");
 }
 
 export function getStateOfCharge(stateOfCharge) {
-    updateValueForResult("State of charge: " + stateOfCharge.toFixed(2), "stateOfCharge");
+    updateValueForResult(stateOfCharge.toFixed(0) + " %", "stateOfCharge");
 } 
+
+export function getDesiredRange(desiredRange) {
+    updateValueForResult(desiredRange + " km", "desiredRange");
+}
 
 export function calcEnergyNeededForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower) {
     const energyNeededForRange = (bevEnergyConsumption / 100) * range;
-    updateValueForResult("Energy needed for range: " + energyNeededForRange.toFixed(2), "energyNeededForRange");
+    const currentEnergy = (stateOfCharge / 100) * batteryCapacity;
+    const energyToCharge = energyNeededForRange - currentEnergy;
 
-    calcChargeTimeForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower);
-    return energyNeededForRange;
+    if (energyToCharge <= 0) {
+        updateValueForResult("0 kWh", "energyNeededForRange");
+        calcChargeTimeForRange(0, bevChargePower);
+        return 0;
+    }
+
+    updateValueForResult(energyToCharge.toFixed(2) + " kWh", "energyNeededForRange");
+    calcChargeTimeForRange(energyToCharge, bevChargePower);
+    return energyToCharge;
 }
 
 export function calcEnergytoFullCharge(batteryCapacity, stateOfCharge, chargePower) {
@@ -67,28 +80,37 @@ export function calcEnergytoFullCharge(batteryCapacity, stateOfCharge, chargePow
     const energyToFullCharge = batteryCapacity - ((stateOfCharge / 100) * batteryCapacity);
     calcChargeTimeForFullCharge(energyToFullCharge, chargePower);
     console.log(energyToFullCharge);
-    updateValueForResult("Energy needed for full charge: " + energyToFullCharge.toFixed(2), "energyToFullCharge");
+    updateValueForResult(energyToFullCharge.toFixed(2) + " kWh", "energyToFullCharge");
 }
 
-export function calcChargeTimeForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower) {
-    const energyNeededForRange = (bevEnergyConsumption / 100) * range;
-    const currentEnergy = (stateOfCharge / 100) * batteryCapacity;
-    const energyToCharge = energyNeededForRange - currentEnergy;
-
+export function calcChargeTimeForRange(energyToCharge, bevChargePower) {
     if (energyToCharge <= 0) {
-        updateValueForResult("Charge time needed for range: 0", "chargeTimeForRange");
+        updateValueForResult("0 min", "chargeTimeForRange");
         return 0;
     }
 
     const chargeTimeForRange = energyToCharge / bevChargePower; // in hours
-    updateValueForResult("Charge time needed for range: " + chargeTimeForRange.toFixed(2), "chargeTimeForRange");
+    const hours = Math.floor(chargeTimeForRange);
+    const minutes = Math.round((chargeTimeForRange - hours) * 60);
+    if (hours > 0) {
+        updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRange");
+    } else {
+        updateValueForResult(`${minutes} min`, "chargeTimeForRange");
+    }
+    
     return chargeTimeForRange;
 }
 
 export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
     const chargeTimeForFullCharge = energyNeeded / bevChargePower; // in hours
-
-    updateValueForResult("Charge time for full charge: "+ chargeTimeForFullCharge.toFixed(2), "chargeTimeForFullCharge");
+    const hours = Math.floor(chargeTimeForFullCharge);
+    const minutes = Math.round((chargeTimeForFullCharge - hours) * 60);
+    if (hours > 0) {
+        updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullCharge");
+    } else {
+        updateValueForResult(`${minutes} min`, "chargeTimeForFullCharge");
+    }
+    return chargeTimeForFullCharge;
 }
 
 
@@ -96,12 +118,12 @@ export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPo
     let chargeCost;
     if (pricingModel === "energy") {
         chargeCost = price * energyNeeded;
-        updateValueForResult("Charge cost in €/kWh for desired range: " + chargeCost.toFixed(2), "chargeCostRange");
+        updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");
         
     } else if (pricingModel === "time" && chargerPower !== null) {
         const chargeTime = energyNeeded / chargerPower; // Calculate charge time
         chargeCost = price * chargeTime;
-        updateValueForResult("Charge cost in €/h for desired range: " + chargeCost.toFixed(2), "chargeCostRange");   
+        updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");   
     }
 }
 
@@ -111,11 +133,11 @@ export function calcChargeCostFullCharge(price, batteryCapacity, stateOfCharge, 
 
     if (pricingModel === "energy") {
         chargeCost = price * energyNeeded;
-        updateValueForResult("Charge cost in €/kWh for full charge: " + chargeCost.toFixed(2), "chargeCostFullCharge");
+        updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
     } else if (pricingModel === "time" && chargerPower !== null) {
         const chargeTime = energyNeeded / chargerPower; // Calculate charge time
         chargeCost = price * chargeTime;
-        updateValueForResult("Charge cost in €/h for full charge: " + chargeCost.toFixed(2), "chargeCostFullCharge");
+        updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
     }
     return chargeCost;
 }
