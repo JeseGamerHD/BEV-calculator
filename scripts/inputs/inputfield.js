@@ -27,10 +27,9 @@ export class InputField {
 
     /**
     * Handles the "input" event for input fields.
-    * Allows the user to empty the field, but does not allow NaN values.
-    * Also blocks values below ```inputField.min``` and above ```inputField.max``` by setting the value to the limit being crossed.
+    * Input elements should specify a ```data-type``` attribute: **"integer"** or **"decimal"** in the HTML document.
+    * If no data-type is specified or it's invalid, input will be treated as an integer.
     * 
-    * Currently only fields with input ```type="number"``` support decimals.
     * @param {HTMLInputElement} inputField - The input element that triggered the event
     */
     handleInput(inputField) {
@@ -42,7 +41,22 @@ export class InputField {
             return;
         }
 
-        let newValue = parseFloat(inputField.value);
+        if(inputField.dataset.type === "integer"){
+            this.handleIntegerInput(inputField);
+        }
+
+        else if(inputField.dataset.type === "decimal") {
+            this.handleDecimalInput(inputField);
+        }
+        else {
+            this.handleIntegerInput(inputField);
+            console.warn(inputField.id + " data-type missing or invalid");
+        }
+    }
+
+    handleIntegerInput(inputField) {
+
+        let newValue = parseInt(inputField.value);
 
         // If the user is typing in NaN values
         // keep the current value
@@ -56,6 +70,40 @@ export class InputField {
         // If over MAX, set to MAX, same with MIN
         if (newValue >= inputField.min && newValue <= inputField.max) {
             inputField.value = newValue;
+            inputField.dataset.value = newValue;
+        }
+        else if (newValue > inputField.max) {
+            inputField.value = inputField.max;
+            inputField.dataset.value = inputField.max;
+        }
+        else {
+            inputField.value = inputField.min;
+            inputField.dataset.value = inputField.min;
+        }
+    }
+
+    handleDecimalInput(inputField) {
+
+        let normalizedValue = inputField.value.replace(',', '.'); // Replace commas, not properly supported
+        let sanitizedValue = normalizedValue.replace(/[^0-9.]/g, ''); // Remove any NaN values
+        
+        let firstDotIndex = sanitizedValue.indexOf(".")
+        if(firstDotIndex !== -1) {
+            // If the decimal has multiple dots: 0..334...44
+            // replace the extra dots with '' and then combine the result with the value up until the first dot.
+            // Example: With value 4.3..4. the first substring is 4. and the second becomes 34
+            // Then they simply combine to 4.34
+            sanitizedValue = sanitizedValue.substring(0, firstDotIndex + 1) + sanitizedValue.substring(firstDotIndex + 1).replace('.', '');
+        }
+
+        let newValue = parseFloat(sanitizedValue);
+        if (isNaN(newValue)) { // Technically not needed, but for safety
+            inputField.value = inputField.dataset.value;
+            return;
+        }
+
+        inputField.value = sanitizedValue; // So that decimal dot is visible, gets removed when focus is lost if user leaves it at X. etc
+        if (newValue >= inputField.min && newValue <= inputField.max) {
             inputField.dataset.value = newValue;
         }
         else if (newValue > inputField.max) {
