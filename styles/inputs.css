@@ -22,7 +22,7 @@
         }
 
         .chargerPricingAlt-wrapper {
-            /* display: none; */
+            display: flex;
             overflow: hidden;
             visibility: collapse;
             max-height: 0;
@@ -40,7 +40,9 @@
 
         #addChargerPriceComparison {
             width: 33%;
-            height: 2.5em;
+            height: 3em;
+            border: 2px solid var(--text-color-inputs);
+            border-radius: 15px;
         }
     }
 }
