@@ -16,33 +16,49 @@
         align-self: center;
         row-gap: 30px;
         width: 80%;
+    }
 
-        .divider-line {
-            border-bottom: 2px solid #6c6c6c92;
-        }
+    /* The ----------- Lines between groups of inputs */
+    .divider-line {
+        border-bottom: 2px solid #6c6c6c92;
+    }
 
-        .chargerPricingAlt-wrapper {
-            visibility: collapse;
-            max-height: 0;
-            transform: scale(0);
-            transition: all 0.2s ease-in;
-        }
+    /* The new pair of charge power & price added to comparison*/
+    .chargerPricingAlt-wrapper {
+        visibility: collapse;
+        max-height: 0;
+        transform: scale(0);
+        transition: all 0.2s ease-in;
+    }
 
-        .chargerPricingAlt-wrapper.animation {
-            visibility: visible;
-            display: flex;
-            flex-direction: column;
-            row-gap: 30px;
-            transform: scale(1);
-            max-height: 999px;
-        }
+    .chargerPricingAlt-wrapper.animation {
+        visibility: visible;
+        display: flex;
+        flex-direction: column;
+        row-gap: 30px;
+        transform: scale(1);
+        max-height: 999px;
+    }
 
-        #addChargerPriceComparison {
-            width: 33%;
-            height: 3em;
-            border: 2px solid var(--text-color-inputs);
-            border-radius: 15px;
-        }
+    /* The button which adds a new pair of charger power + price */
+    #addChargerPriceComparison {
+        width: 33%;
+        min-width: 130px;
+        height: 3em;
+
+        border: none;
+        border-radius: 25px;
+        box-shadow: 0 0 2px 2px;
+
+        color: var(--text-color-inputs);
+        font-size: 1em;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.1s linear;
+    }
+
+    #addChargerPriceComparison:hover {
+        transform: scale(1.05);
     }
 }
 
