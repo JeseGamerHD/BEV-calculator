@@ -1,5 +1,7 @@
 :root {
     --text-color-inputs: rgb(66, 183, 255);
+    --text-color-inputs-hover: rgb(40, 118, 243);
+    --input-area-bg: rgb(228, 228, 228);
 }
 
 .input-area-container {
@@ -8,7 +10,7 @@
 
     width: 33%;
     padding: 60px 0px 60px 0px;
-    background-color: rgb(228, 228, 228);
+    background-color: var(--input-area-bg);
 
     .input-area-wrapper {
         display: flex;
@@ -59,6 +61,12 @@
 
     #addChargerPriceComparison:hover {
         transform: scale(1.05);
+    }
+
+    /* a span which takes as much space as possible */
+    /* Example usage: in comparison between the remove and the dropdown arrow */
+    .filler {
+        flex: 1;
     }
 }
 
@@ -217,20 +225,26 @@ input::placeholder {
         justify-content: space-between;
         height: 2.5em;
 
+        .dropdown-title {
+            font-weight: normal;
+        }
+
         .dropdown-button {
             background-color: rgba(255, 255, 255, 0);
             border: none;
-            
+
             height: 100%;
             width: 2em;
             margin-right: 10px;
-            
+
             background-image: url("/images/icons/ArrowDown.svg");
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
 
             cursor: pointer;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
             transition: transform 0.1s ease-in;
         }
 
@@ -240,6 +254,20 @@ input::placeholder {
 
         .dropdown-button.rotate {
             transform: rotate(180deg);
+        }
+
+        /* The button which removes the alternate pair of charger power + price */
+        #removeChargerPriceComparison {
+            color: var(--text-color-inputs);
+            background-color: var(--input-area-bg);
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            padding-left: 10px;
+        }
+
+        #removeChargerPriceComparison:hover {
+            color: var(--text-color-inputs-hover);
         }
     }
 
@@ -257,11 +285,12 @@ input::placeholder {
             max-height: 0;
             transition: max-height 0.1s linear;
             overflow: hidden;
-            
+
             .dropdown-option {
                 padding: 10px;
                 height: 2.5em;
                 cursor: pointer;
+                touch-action: manipulation;
             }
 
             .dropdown-option:hover {
@@ -279,10 +308,10 @@ input::placeholder {
             border: none;
             border-radius: 5px;
             background-color: rgba(215, 215, 215, 0.546);
+            touch-action: manipulation;
         }
     }
 }
-
 /* TOGGLE INPUT STYLING */
 .toggleInput-container {
     display: flex;
@@ -296,9 +325,14 @@ input::placeholder {
     }
 
     .toggleInput-wrapper {
+        margin-top: 10px;
         display: flex;
         flex-direction: row;
         column-gap: 20px;
+    }
+
+    h3 {
+        margin: 0;
     }
 
     .toggleInput-field {
@@ -317,6 +351,8 @@ input::placeholder {
         cursor: pointer;
         user-select: none;
         margin-right: auto;
+        touch-action: none;
+        -webkit-tap-highlight-color: transparent;
     }
     
     .toggleInput-track {

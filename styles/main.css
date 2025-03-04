@@ -9,18 +9,26 @@ body, html {
     display: flex;
     flex-direction: row;
     padding: 50px;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/images/test.jpg");
+    background-position: center center;
+    background-size: cover;
 
     /* Div wrapping the whole introduction part */
     .introduction {
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: 50px;
-        row-gap: 30px;
+        padding: 100px 50px 100px 50px;
+        row-gap: 60px;
         font-size: large;
         border: none;
         border-radius: 15px;
         box-shadow: 2px 2px 10px 2px gray;
+        /* background-color: rgba(255, 255, 255, 0.9); */
+        background: rgb(0,224,255);
+        background: radial-gradient(circle, rgba(255,255,255, 0.8) 75%, rgba(206, 249, 255, 0.9) 100%);
     }
 
     /* Div containing the header and the paragraph (description) */
@@ -29,6 +37,15 @@ body, html {
         flex-direction: column;
         text-align: center;
         row-gap: 5px;
+
+        h1 {
+            font-size: 4em;
+        }
+
+        p {
+            font-style: italic;
+            font-size: 1.5em;
+        }
     }
 
     /* Div containing the "tutorial" part with the numbers and descriptions */
@@ -58,6 +75,7 @@ body, html {
         width: 32px;
         padding: 15px;
         font-size: xx-large;
+        font-weight: bold;
         text-align: center;
         border-radius: 50%;
         border: 3px solid var(--text-color-inputs);
@@ -66,6 +84,18 @@ body, html {
 
     h1, p {
         margin: 0;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .introduction-title-container {
+        h1 {
+            font-size: 1em;
+        }
+
+        p {
+            font-size: 1em;
+        }
     }
 }
 

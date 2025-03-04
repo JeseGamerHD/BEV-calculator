@@ -46,7 +46,7 @@ export class DropdownInputHandler extends InputField {
                     this.toggleDropdown(dropdownContentID);
                 }
 
-                this.#calculator.setData(dropdownField.dataset.property, parseInt(dropdownField.dataset.value));
+                this.#calculator.setData(dropdownField.dataset.property, parseFloat(dropdownField.dataset.value));
             }
         });
     }
@@ -63,7 +63,7 @@ export class DropdownInputHandler extends InputField {
             dropdownField.dataset.value = option.dataset.value;
 
             // Update calculations, close dropdown
-            this.#calculator.setData(dropdownField.dataset.property, parseInt(option.dataset.value));
+            this.#calculator.setData(dropdownField.dataset.property, parseFloat(option.dataset.value));
             this.toggleDropdown(option.parentElement.id);
         }
         // User clicks on the input field:
