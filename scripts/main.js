@@ -26,11 +26,22 @@ const toggleInputHandler = new ToggleInputHandler(calculator);
 document.getElementById("addChargerPriceComparison").addEventListener("click", (event) => {
     event.target.style.display = "none";
     document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
+    document.querySelectorAll(".single-option").forEach((element) => {
+        element.style.display = "none";
+    });
+    document.querySelectorAll(".multiple-options").forEach((element) => {
+        element.style.display = "flex";
+    });
 });
 
 document.getElementById("removeChargerPriceComparison").addEventListener("click", () => {
     document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
-
+    document.querySelectorAll(".single-option").forEach((element) => {
+        element.style.display = "flex";
+    });
+    document.querySelectorAll(".multiple-options").forEach((element) => {
+        element.style.display = "none";
+    });
     // Give enough time for the above animation to finish, then display the button:
     setTimeout(() => {
         document.getElementById("addChargerPriceComparison").style.display = "inline-block"; 
