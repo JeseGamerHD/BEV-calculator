@@ -10,9 +10,13 @@ class Calculator {
         this.bevEnergyConsumption = values.bevEnergyConsumption;
         this.stateOfCharge = values.stateOfCharge;
         this.chargerPower = values.chargerPower;
+        this.chargerPowerAlt = values.chargerPowerAlt;
         this.energyPrice = values.energyPrice;
+        this.energyPriceAlt = values.energyPriceAlt;
         this.energyNeededForRange = 0;
         this.pricingModel = values.pricingModel;
+        this.pricingModelAlt = values.pricingModelAlt;
+        this.alt = false;
     }
     
     setData(variable, value) {
@@ -22,14 +26,20 @@ class Calculator {
 
     updateCalculations() {
         console.log("Updating calculations with values:", this);
+        // Calculate all values
         calcMaxOperatingRange(this.desiredRange, this.batteryCapacity, this.bevEnergyConsumption, this.stateOfCharge);
-        this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPower);
-        calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPower);
-        calcChargeCostRange(this.energyPrice, this.energyNeededForRange, this.pricingModel, this.chargerPower);
-        calcChargeCostFullCharge(this.energyPrice, this.batteryCapacity, this.stateOfCharge, this.pricingModel, this.chargerPower);
+        this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPower, this.alt = false);
+        calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPower, this.alt = false);
+        calcChargeCostRange(this.energyPrice, this.energyNeededForRange, this.pricingModel, this.chargerPower, this.alt = false);
+        calcChargeCostFullCharge(this.energyPrice, this.batteryCapacity, this.stateOfCharge, this.pricingModel, this.chargerPower, this.alt = false);
         calcOperatingRange(this.batteryCapacity, this.bevEnergyConsumption, this.stateOfCharge);
         getStateOfCharge (this.stateOfCharge);
         getDesiredRange(this.desiredRange);
+        //Calculate alternative values for comparison
+        this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPowerAlt, this.alt = true);
+        calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPowerAlt, this.alt = true);
+        calcChargeCostRange(this.energyPriceAlt, this.energyNeededForRange, this.pricingModelAlt, this.chargerPowerAlt, this.alt = true);
+        calcChargeCostFullCharge(this.energyPriceAlt, this.batteryCapacity, this.stateOfCharge, this.pricingModelAlt, this.chargerPowerAlt, this.alt = true);
     }
 }
 
@@ -69,52 +79,80 @@ export function getDesiredRange(desiredRange) {
     updateValueForResult(desiredRange + " km", "desiredRange");
 }
 
-export function calcEnergyNeededForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower) {
+export function calcEnergyNeededForRange(range, bevEnergyConsumption, stateOfCharge, batteryCapacity, bevChargePower, alt) {
     const energyNeededForRange = (bevEnergyConsumption / 100) * range;
     const currentEnergy = (stateOfCharge / 100) * batteryCapacity;
     const energyToCharge = energyNeededForRange - currentEnergy;
 
     if (energyToCharge <= 0) {
         updateValueForResult("0 kWh", "energyNeededForRange");
-        calcChargeTimeForRange(0, bevChargePower);
+        calcChargeTimeForRange(0, bevChargePower, alt);
         return 0;
     }
 
+    
     updateValueForResult(energyToCharge.toFixed(2) + " kWh", "energyNeededForRange");
-    calcChargeTimeForRange(energyToCharge, bevChargePower);
+    calcChargeTimeForRange(energyToCharge, bevChargePower, alt);
     return energyToCharge;
+    
 }
 
-export function calcEnergytoFullCharge(batteryCapacity, stateOfCharge, chargePower) {
-    console.log("Calculating energy to full charge with:", { batteryCapacity, stateOfCharge, chargePower });
+export function calcEnergytoFullCharge(batteryCapacity, stateOfCharge, chargePower, alt) {
+    console.log("Calculating energy to full charge with:", { batteryCapacity, stateOfCharge, chargePower, alt });
     const energyToFullCharge = batteryCapacity - ((stateOfCharge / 100) * batteryCapacity);
-    calcChargeTimeForFullCharge(energyToFullCharge, chargePower);
+    calcChargeTimeForFullCharge(energyToFullCharge, chargePower, alt);
     console.log(energyToFullCharge);
     updateValueForResult(energyToFullCharge.toFixed(2) + " kWh", "energyToFullCharge");
 }
 
-export function calcChargeTimeForRange(energyToCharge, bevChargePower) {
-    if (energyToCharge <= 0) {
-        updateValueForResult("0 min", "chargeTimeForRange");
-        return 0;
+export function calcChargeTimeForRange(energyToCharge, bevChargePower, alt) {
+    if (!alt && bevChargePower !== 0) {
+        if (energyToCharge <= 0) {
+            updateValueForResult("0 min", "chargeTimeForRange");
+            updateValueForResult("0 min", "chargeTimeForRangeOption1");
+            updateValueForResult("0 min", "chargeTimeForRangeOption2");
+            return;
+        }
+
+        const chargeTimeForRange = energyToCharge / bevChargePower; // in hours
+        const hours = Math.floor(chargeTimeForRange);
+        const minutes = Math.round((chargeTimeForRange - hours) * 60);
+        if (hours > 0) {
+                updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRange");
+                updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRangeOption1");     
+        } else {
+                updateValueForResult(`${minutes} min`, "chargeTimeForRange");
+                updateValueForResult(`${minutes} min`, "chargeTimeForRangeOption1");    
+        }
+    } else if (alt && bevChargePower !== 0) {
+        const chargeTimeForRange = energyToCharge / bevChargePower; // in hours
+        const hours = Math.floor(chargeTimeForRange);
+        const minutes = Math.round((chargeTimeForRange - hours) * 60);
+        if (hours > 0) {
+            updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRangeOption2");
+        } else {
+            updateValueForResult(`${minutes} min`, "chargeTimeForRangeOption2");
+        }
+    } else {
+        console.log("Error: Cannot calculate charge time for range. Charge power is missing.");
+        updateValueForResult("Charge power must be above 0", "chargeTimeForRange");
+        updateValueForResult("Charge power must be above 0", "chargeTimeForRangeOption1");
+        updateValueForResult("Charge power must be above 0", "chargeTimeForRangeOption2");
     }
 
-    const chargeTimeForRange = energyToCharge / bevChargePower; // in hours
-    const hours = Math.floor(chargeTimeForRange);
-    const minutes = Math.round((chargeTimeForRange - hours) * 60);
-    if (hours > 0) {
-        updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRange");
-    } else {
-        updateValueForResult(`${minutes} min`, "chargeTimeForRange");
-    }
+    
+
+   
     
     return chargeTimeForRange;
 }
 
-export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
+export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower, alt) {
     if (bevChargePower === 0) {
         console.log("Error: BEV charge power is 0. Cannot calculate charge time for full charge.");
         updateValueForResult("Charge power has to be above 0", "chargeTimeForFullCharge");
+        updateValueForResult("Charge power has to be above 0", "chargeTimeForFullChargeOption1");
+        updateValueForResult("Charge power has to be above 0", "chargeTimeForFullChargeOption2");
         return;
     }
 
@@ -122,47 +160,93 @@ export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
     const hours = Math.floor(chargeTimeForFullCharge);
     const minutes = Math.round((chargeTimeForFullCharge - hours) * 60);
     if (hours > 0) {
-        updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullCharge");
+        if (!alt) {
+            updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullCharge");
+            updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullChargeOption1");
+        } else{
+            updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullChargeOption2");
+        }
+        
     } else {
-        updateValueForResult(`${minutes} min`, "chargeTimeForFullCharge");
+        if (!alt) {
+            updateValueForResult(`${minutes} min`, "chargeTimeForFullCharge");
+            updateValueForResult(`${minutes} min`, "chargeTimeForFullChargeOption1");
+        } else {
+            updateValueForResult(`${minutes} min`, "chargeTimeForFullChargeOption2");
+        }
+        
     }
     return chargeTimeForFullCharge;
 }
 
 
-export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPower) {
+export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPower, alt) {
     let chargeCost;
-    if (pricingModel === "energy" && chargerPower !== 0) {
-        chargeCost = price * energyNeeded;
-        updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");
-        
-    } else if (pricingModel === "time" && chargerPower !== 0) {
-        const chargeTime = energyNeeded / chargerPower; // Calculate charge time
-        chargeCost = price * chargeTime;
-        updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");   
+    if (!alt) {
+        if (pricingModel === "energy" && chargerPower !== 0) {
+            chargeCost = price * energyNeeded;
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption1");
+            
+        } else if (pricingModel === "time" && chargerPower !== 0) {
+            const chargeTime = energyNeeded / chargerPower; // Calculate charge time
+            chargeCost = price * chargeTime;
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption1");   
+        } else {
+            console.log("Error: Cannot calculate charge cost for range. Pricing model or charger power is missing.");
+            updateValueForResult("Charger power must be above 0", "chargeCostRange");
+        }
     } else {
-        console.log("Error: Cannot calculate charge cost for range. Pricing model or charger power is missing.");
-        updateValueForResult("Charger power must be above 0", "chargeCostRange");
+        if (pricingModel === "energy" && chargerPower !== 0) {
+            chargeCost = price * energyNeeded;
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption2");
+        } else if (pricingModel === "time" && chargerPower !== 0) {
+            const chargeTime = energyNeeded / chargerPower; // Calculate charge time
+            chargeCost = price * chargeTime;
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption2");
+        } else {
+            console.log("Error: Cannot calculate charge cost for range. Pricing model or charger power is missing.");
+            updateValueForResult("Charger power must be above 0", "chargeCostForRangeOption2");
+        }
     }
+    
+    
 }
 
-export function calcChargeCostFullCharge(price, batteryCapacity, stateOfCharge, pricingModel, chargerPower) {
+export function calcChargeCostFullCharge(price, batteryCapacity, stateOfCharge, pricingModel, chargerPower, alt) {
     const energyNeeded = batteryCapacity - ((stateOfCharge / 100) * batteryCapacity);
     let chargeCost;
-
-    if (pricingModel === "energy" && chargerPower !== 0) {
-        chargeCost = price * energyNeeded;
-        updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
-    } else if (pricingModel === "time" && chargerPower !== 0) {
-        const chargeTime = energyNeeded / chargerPower; // Calculate charge time
-        chargeCost = price * chargeTime;
-        updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
+    if (!alt) {
+        if (pricingModel === "energy" && chargerPower !== 0) {
+            chargeCost = price * energyNeeded;
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption1");
+        } else if (pricingModel === "time" && chargerPower !== 0) {
+            const chargeTime = energyNeeded / chargerPower; // Calculate charge time
+            chargeCost = price * chargeTime;
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption1");
+        }
+        else {
+            console.log("Error: Cannot calculate charge cost for FullCharge. Pricing model or charger power is missing.");
+            updateValueForResult("Charger power must be above 0", "chargeCostFullCharge");
+            updateValueForResult("Charger power must be above 0", "chargeCostForFullChargeOption1");
+        }
+    } else {
+        if (pricingModel === "energy" && chargerPower !== 0) {
+            chargeCost = price * energyNeeded;
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption2");
+        } else if (pricingModel === "time" && chargerPower !== 0) {
+            const chargeTime = energyNeeded / chargerPower; // Calculate charge time
+            chargeCost = price * chargeTime;
+            updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption2");
+        } else {
+            console.log("Error: Cannot calculate charge cost for FullCharge. Pricing model or charger power is missing.");
+            updateValueForResult("Charger power must be above 0", "chargeCostForFullChargeOption2");
+        }
+        return chargeCost;
     }
-    else {
-        console.log("Error: Cannot calculate charge cost for FullCharge. Pricing model or charger power is missing.");
-        updateValueForResult("Charger power must be above 0", "chargeCostFullCharge");
-    }
-    return chargeCost;
 }
 
 export function updateValueForResult(newValue, resultid) {

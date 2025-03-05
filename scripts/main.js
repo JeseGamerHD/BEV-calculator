@@ -10,9 +10,12 @@ const BASE_VALUES = {
     bevEnergyConsumption: 15,
     stateOfCharge: 50,
     chargerPower: 22,
+    chargerPowerAlt: 50,
     energyPrice: 0.2,
+    energyPriceAlt: 0.2,
     pricingModel: "energy",
-
+    pricingModelAlt: "energy",
+    
 };
 
 // Initialize the calculator and inputs
