@@ -35,6 +35,11 @@ class Calculator {
 
 
 export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumption, stateOfCharge) {
+    if (bevEnergyConsumption === 0) {
+        console.log("Error: BEV energy consumption is 0. Cannot calculate maxOperatingRange & ChargesRequired.");
+        updateValueForResult("Consumption has to be above 0", "chargesRequired");
+        return;
+    }
     const maxOperatingRange = (batteryCapacity / bevEnergyConsumption) * 100; // in km
     
     if (desiredRange > maxOperatingRange) {
@@ -47,6 +52,11 @@ export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyCo
 }
 
 export function calcOperatingRange(batteryCapacity, bevEnergyConsumption, stateOfCharge) { 
+    if (bevEnergyConsumption === 0) {
+        console.log("Error: BEV energy consumption is 0. Cannot calculate operating range.");
+        updateValueForResult("Consumption has to be above 0" + " km", "currentOperatingRange");
+        return;
+    }
     const operatingRange = (batteryCapacity / bevEnergyConsumption) * (stateOfCharge); // in km
     updateValueForResult(operatingRange.toFixed(2) + " km", "currentOperatingRange");
 }
@@ -102,6 +112,12 @@ export function calcChargeTimeForRange(energyToCharge, bevChargePower) {
 }
 
 export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
+    if (bevChargePower === 0) {
+        console.log("Error: BEV charge power is 0. Cannot calculate charge time for full charge.");
+        updateValueForResult("Charge power has to be above 0", "chargeTimeForFullCharge");
+        return;
+    }
+
     const chargeTimeForFullCharge = energyNeeded / bevChargePower; // in hours
     const hours = Math.floor(chargeTimeForFullCharge);
     const minutes = Math.round((chargeTimeForFullCharge - hours) * 60);
@@ -114,30 +130,37 @@ export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower) {
 }
 
 
-export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPower = null) {
+export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPower) {
     let chargeCost;
-    if (pricingModel === "energy") {
+    if (pricingModel === "energy" && chargerPower !== 0) {
         chargeCost = price * energyNeeded;
         updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");
         
-    } else if (pricingModel === "time" && chargerPower !== null) {
+    } else if (pricingModel === "time" && chargerPower !== 0) {
         const chargeTime = energyNeeded / chargerPower; // Calculate charge time
         chargeCost = price * chargeTime;
         updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");   
+    } else {
+        console.log("Error: Cannot calculate charge cost for range. Pricing model or charger power is missing.");
+        updateValueForResult("Charger power must be above 0", "chargeCostRange");
     }
 }
 
-export function calcChargeCostFullCharge(price, batteryCapacity, stateOfCharge, pricingModel, chargerPower = null) {
+export function calcChargeCostFullCharge(price, batteryCapacity, stateOfCharge, pricingModel, chargerPower) {
     const energyNeeded = batteryCapacity - ((stateOfCharge / 100) * batteryCapacity);
     let chargeCost;
 
-    if (pricingModel === "energy") {
+    if (pricingModel === "energy" && chargerPower !== 0) {
         chargeCost = price * energyNeeded;
         updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
-    } else if (pricingModel === "time" && chargerPower !== null) {
+    } else if (pricingModel === "time" && chargerPower !== 0) {
         const chargeTime = energyNeeded / chargerPower; // Calculate charge time
         chargeCost = price * chargeTime;
         updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
+    }
+    else {
+        console.log("Error: Cannot calculate charge cost for FullCharge. Pricing model or charger power is missing.");
+        updateValueForResult("Charger power must be above 0", "chargeCostFullCharge");
     }
     return chargeCost;
 }
@@ -158,7 +181,7 @@ export function updateValueForResult(newValue, resultid) {
 }
 
 
-function updateChargesRequired(desiredRange, stateOfCharge, batteryCapacity, bevEnergyConsumption) {
+export function updateChargesRequired(desiredRange, stateOfCharge, batteryCapacity, bevEnergyConsumption) {
     const currentEnergy = (stateOfCharge / 100) * batteryCapacity;
     const energyNeededForRange = (bevEnergyConsumption / 100) * desiredRange;
     const energyToCharge = energyNeededForRange - currentEnergy;
@@ -167,17 +190,28 @@ function updateChargesRequired(desiredRange, stateOfCharge, batteryCapacity, bev
         updateValueForResult(0, "chargesRequired");
         return 0;
     }
-
-    const chargesRequired = Math.ceil(energyToCharge / batteryCapacity);
-    updateValueForResult(chargesRequired, "chargesRequired");
-    return chargesRequired;
+    if (batteryCapacity === 0) {
+        console.log("Error: Battery capacity is 0. Cannot calculate charges required.");
+        updateValueForResult("Battery capacity has to be above 0", "chargesRequired");
+        return
+    } else {
+        const chargesRequired = Math.ceil(energyToCharge / batteryCapacity);
+        updateValueForResult(chargesRequired, "chargesRequired");
+        return chargesRequired;
+    }
+    
 }
 
 //OPTIONAL: Jos halutaan myös budjettitoiminnallisuus, voidaan kutsua tätä funktiota.
 export function calcRangeFromBudget(budget, bevEnergyConsumption, bevChargePower, chargeCostEnergy) {
-    const rangeFromBudget = (budget / chargeCostEnergy) * (bevChargePower / bevEnergyConsumption); // in km
-
-    updateValueForResult("Range from budget: " + rangeFromBudget.toFixed(2), "rangeFromBudget");
+    if (chargeCostEnergy !== 0 && bevEnergyConsumption !== 0) {
+        const rangeFromBudget = (budget / chargeCostEnergy) * (bevChargePower / bevEnergyConsumption); // in km
+        updateValueForResult("Range from budget: " + rangeFromBudget.toFixed(2), "rangeFromBudget");
+    } else {
+        console.log("Error: Cannot calculate range from budget. Charge cost or consumption is missing.");
+        updateValueForResult("Charge cost and consumption must be above 0", "rangeFromBudget");
+    }
+      
 }
 
 
