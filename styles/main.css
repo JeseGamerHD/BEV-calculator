@@ -11,7 +11,7 @@ body, html {
     padding: 50px;
     justify-content: center;
     align-items: center;
-    background-image: url("/images/test.jpg");
+    background-image: url("/images/IntroBackground.jpg");
     background-position: center center;
     background-size: cover;
 
@@ -26,7 +26,6 @@ body, html {
         border: none;
         border-radius: 15px;
         box-shadow: 2px 2px 10px 2px gray;
-        /* background-color: rgba(255, 255, 255, 0.9); */
         background: rgb(0,224,255);
         background: radial-gradient(circle, rgba(255,255,255, 0.8) 75%, rgba(206, 249, 255, 0.9) 100%);
     }
@@ -88,15 +87,20 @@ body, html {
 }
 
 @media screen and (max-width: 900px) {
-    .introduction-title-container {
-        h1 {
-            font-size: 1em;
-        }
 
-        p {
-            font-size: 1em;
+    .introduction-container {
+        
+        .introduction-title-container {
+            h1 {
+                font-size: 2.5em;
+            }
+    
+            p {
+                font-size: 1em;
+            }
         }
     }
+
 }
 
 /* Div containing inputs and the results */
