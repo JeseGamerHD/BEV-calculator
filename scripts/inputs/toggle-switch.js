@@ -42,11 +42,8 @@ export class ToggleInputHandler extends InputField {
         document.addEventListener("focusout", (focusoutEvent) => {
             if(focusoutEvent.target.classList.contains("toggleInput-field")){
                 let inputField = focusoutEvent.target;
-        
-                if(inputField.value === "") {
-                    inputField.value = inputField.min;
-                } else {
-                    inputField.value = parseFloat(inputField.value);
+                if (inputField.value != "") {
+                    inputField.value = inputField.dataset.value;
                 }
             }
         });
