@@ -223,7 +223,6 @@ input::placeholder {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        height: 2.5em;
 
         .dropdown-title {
             font-weight: normal;

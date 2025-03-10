@@ -40,6 +40,11 @@ class Calculator {
         calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPowerAlt, this.alt = true);
         calcChargeCostRange(this.energyPriceAlt, this.energyNeededForRange, this.pricingModelAlt, this.chargerPowerAlt, this.alt = true);
         calcChargeCostFullCharge(this.energyPriceAlt, this.batteryCapacity, this.stateOfCharge, this.pricingModelAlt, this.chargerPowerAlt, this.alt = true);
+        //Update comparison bars
+        updateComparisonBars("comparisonBarRangeTime1", "comparisonBarRangeTime2", "chargeTimeForRangeOption1", "chargeTimeForRangeOption2");
+        updateComparisonBars("comparisonBarRangeCost1", "comparisonBarRangeCost2", "chargeCostForRangeOption1", "chargeCostForRangeOption2");
+        updateComparisonBars("comparisonBarFullChargeTime1", "comparisonBarFullChargeTime2", "chargeTimeForFullChargeOption1", "chargeTimeForFullChargeOption2");
+        updateComparisonBars("comparisonBarFullChargeCost1", "comparisonBarFullChargeCost2", "chargeCostForFullChargeOption1", "chargeCostForFullChargeOption2");
     }
 }
 
@@ -47,7 +52,7 @@ class Calculator {
 export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyConsumption, stateOfCharge) {
     if (bevEnergyConsumption === 0) {
         console.log("Error: BEV energy consumption is 0. Cannot calculate maxOperatingRange & ChargesRequired.");
-        updateValueForResult("Consumption has to be above 0", "chargesRequired");
+        updateValueForResult("0", "chargesRequired");
         return;
     }
     const maxOperatingRange = (batteryCapacity / bevEnergyConsumption) * 100; // in km
@@ -64,7 +69,7 @@ export function calcMaxOperatingRange(desiredRange, batteryCapacity, bevEnergyCo
 export function calcOperatingRange(batteryCapacity, bevEnergyConsumption, stateOfCharge) { 
     if (bevEnergyConsumption === 0) {
         console.log("Error: BEV energy consumption is 0. Cannot calculate operating range.");
-        updateValueForResult("Consumption has to be above 0" + " km", "currentOperatingRange");
+        updateValueForResult("0" + " km", "currentOperatingRange");
         return;
     }
     const operatingRange = (batteryCapacity / bevEnergyConsumption) * (stateOfCharge); // in km
@@ -114,9 +119,9 @@ export function calcChargeTimeForRange(energyToCharge, bevChargePower, alt) {
             return;
         }
 
-        const chargeTimeForRange = energyToCharge / bevChargePower; // in hours
-        const hours = Math.floor(chargeTimeForRange);
-        const minutes = Math.round((chargeTimeForRange - hours) * 60);
+        var chargeTimeForRange1 = energyToCharge / bevChargePower; // in hours
+        const hours = Math.floor(chargeTimeForRange1);
+        const minutes = Math.round((chargeTimeForRange1 - hours) * 60);
         if (hours > 0) {
                 updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRange");
                 updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRangeOption1");     
@@ -125,9 +130,9 @@ export function calcChargeTimeForRange(energyToCharge, bevChargePower, alt) {
                 updateValueForResult(`${minutes} min`, "chargeTimeForRangeOption1");    
         }
     } else if (alt && bevChargePower !== 0) {
-        const chargeTimeForRange = energyToCharge / bevChargePower; // in hours
-        const hours = Math.floor(chargeTimeForRange);
-        const minutes = Math.round((chargeTimeForRange - hours) * 60);
+        var chargeTimeForRange2 = energyToCharge / bevChargePower; // in hours
+        const hours = Math.floor(chargeTimeForRange2);
+        const minutes = Math.round((chargeTimeForRange2 - hours) * 60);
         if (hours > 0) {
             updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRangeOption2");
         } else {
@@ -135,24 +140,25 @@ export function calcChargeTimeForRange(energyToCharge, bevChargePower, alt) {
         }
     } else {
         console.log("Error: Cannot calculate charge time for range. Charge power is missing.");
-        updateValueForResult("Charge power must be above 0", "chargeTimeForRange");
-        updateValueForResult("Charge power must be above 0", "chargeTimeForRangeOption1");
-        updateValueForResult("Charge power must be above 0", "chargeTimeForRangeOption2");
+        updateValueForResult("0", "chargeTimeForRange");
+        updateValueForResult("0", "chargeTimeForRangeOption1");
+        updateValueForResult("0", "chargeTimeForRangeOption2");
     }
+    
 
     
 
    
     
-    return chargeTimeForRange;
+    return chargeTimeForRange1, chargeTimeForRange2;
 }
 
 export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower, alt) {
     if (bevChargePower === 0) {
         console.log("Error: BEV charge power is 0. Cannot calculate charge time for full charge.");
-        updateValueForResult("Charge power has to be above 0", "chargeTimeForFullCharge");
-        updateValueForResult("Charge power has to be above 0", "chargeTimeForFullChargeOption1");
-        updateValueForResult("Charge power has to be above 0", "chargeTimeForFullChargeOption2");
+        updateValueForResult("0", "chargeTimeForFullCharge");
+        updateValueForResult("0", "chargeTimeForFullChargeOption1");
+        updateValueForResult("0", "chargeTimeForFullChargeOption2");
         return;
     }
 
@@ -195,7 +201,7 @@ export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPo
             updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption1");   
         } else {
             console.log("Error: Cannot calculate charge cost for range. Pricing model or charger power is missing.");
-            updateValueForResult("Charger power must be above 0", "chargeCostRange");
+            updateValueForResult("0", "chargeCostRange");
         }
     } else {
         if (pricingModel === "energy" && chargerPower !== 0) {
@@ -207,7 +213,7 @@ export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPo
             updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption2");
         } else {
             console.log("Error: Cannot calculate charge cost for range. Pricing model or charger power is missing.");
-            updateValueForResult("Charger power must be above 0", "chargeCostForRangeOption2");
+            updateValueForResult("0", "chargeCostForRangeOption2");
         }
     }
     
@@ -230,8 +236,8 @@ export function calcChargeCostFullCharge(price, batteryCapacity, stateOfCharge, 
         }
         else {
             console.log("Error: Cannot calculate charge cost for FullCharge. Pricing model or charger power is missing.");
-            updateValueForResult("Charger power must be above 0", "chargeCostFullCharge");
-            updateValueForResult("Charger power must be above 0", "chargeCostForFullChargeOption1");
+            updateValueForResult("0", "chargeCostFullCharge");
+            updateValueForResult("0", "chargeCostForFullChargeOption1");
         }
     } else {
         if (pricingModel === "energy" && chargerPower !== 0) {
@@ -243,7 +249,7 @@ export function calcChargeCostFullCharge(price, batteryCapacity, stateOfCharge, 
             updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption2");
         } else {
             console.log("Error: Cannot calculate charge cost for FullCharge. Pricing model or charger power is missing.");
-            updateValueForResult("Charger power must be above 0", "chargeCostForFullChargeOption2");
+            updateValueForResult("0", "chargeCostForFullChargeOption2");
         }
         return chargeCost;
     }
@@ -276,7 +282,7 @@ export function updateChargesRequired(desiredRange, stateOfCharge, batteryCapaci
     }
     if (batteryCapacity === 0) {
         console.log("Error: Battery capacity is 0. Cannot calculate charges required.");
-        updateValueForResult("Battery capacity has to be above 0", "chargesRequired");
+        updateValueForResult("0", "chargesRequired");
         return
     } else {
         const chargesRequired = Math.ceil(energyToCharge / batteryCapacity);
@@ -286,17 +292,56 @@ export function updateChargesRequired(desiredRange, stateOfCharge, batteryCapaci
     
 }
 
-//OPTIONAL: Jos halutaan myös budjettitoiminnallisuus, voidaan kutsua tätä funktiota.
-export function calcRangeFromBudget(budget, bevEnergyConsumption, bevChargePower, chargeCostEnergy) {
-    if (chargeCostEnergy !== 0 && bevEnergyConsumption !== 0) {
-        const rangeFromBudget = (budget / chargeCostEnergy) * (bevChargePower / bevEnergyConsumption); // in km
-        updateValueForResult("Range from budget: " + rangeFromBudget.toFixed(2), "rangeFromBudget");
+export function updateComparisonBars(bar1ID, bar2ID, value1ID, value2ID) {
+    const bar1 = document.getElementById(bar1ID);
+    const bar2 = document.getElementById(bar2ID);
+    
+    // Retrieve and parse the values from the specified elements
+    const value1 = parseValue(document.getElementById(value1ID).innerText);
+    const value2 = parseValue(document.getElementById(value2ID).innerText);
+
+
+    if (value1 > value2 && value1 !== 0) {
+        const bar2Width = (value2 / value1) * 100;
+        bar1.style.background = `#ff00ff`;
+        bar2.style.background = `linear-gradient(to right, rgb(255, 0, 255) 0%,rgb(255, 0, 255) ${bar2Width}%, rgb(0, 83, 151) ${bar2Width}%, rgb(0, 83, 151) 100%)`;
+    } else if (value1 < value2 && value2 !== 0) {
+        const bar1Width = (value1 / value2) * 100;
+        bar1.style.background = `linear-gradient(to right, rgb(255, 0, 255) 0%,rgb(255, 0, 255) ${bar1Width}%, rgb(0, 83, 151) ${bar1Width}%, rgb(0, 83, 151) 100%)`;
+        bar2.style.background = `#ff00ff`;
     } else {
-        console.log("Error: Cannot calculate range from budget. Charge cost or consumption is missing.");
-        updateValueForResult("Charge cost and consumption must be above 0", "rangeFromBudget");
+        // If the values are equal or both are 0, fill both bars to the same color
+        bar1.style.background = `rgb(255, 0, 255)`;
+        bar2.style.background = `rgb(255, 0, 255)`;
     }
-      
 }
 
+/**
+ * Parses a value string and converts it to a numeric value.
+ * Handles values in the format "1h 34min", "41 min", "6.90 €", "0.40 €", etc.
+ * @param {string} valueStr - The value string to parse.
+ * @returns {number} - The parsed numeric value.
+ */
+function parseValue(valueStr) {
+    // Remove currency symbols and trim whitespace
+    let cleanedStr = valueStr.replace(/[€$£]/g, '').trim();
+
+    // Handle time formats like "1h 34min", "41 min"
+    let timeMatch = cleanedStr.match(/(?:(\d+)\s*h)?\s*(\d+)\s*min/);
+    if (timeMatch) {
+        let hours = timeMatch[1] ? parseInt(timeMatch[1], 10) : 0;
+        let minutes = parseInt(timeMatch[2], 10);
+        return hours * 60 + minutes; // Convert to total minutes
+    }
+
+    // Handle regular numeric values like "6.90", "0.40"
+    let numMatch = cleanedStr.match(/\d+(\.\d+)?/);
+    if (numMatch) {
+        return parseFloat(numMatch[0]);
+    }
+
+    // Return NaN if parsing fails
+    return NaN;
+}
 
 export default Calculator;

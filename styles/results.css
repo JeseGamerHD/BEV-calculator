@@ -4,38 +4,68 @@
     
     display: flex;
     color: white;
-    font-size: 2.25vh;
-
-    h1 {
-        margin-top: 0; /* Remove default margin from header1s*/
-        font-size: 3.5vh;
-    }
-    
+    font-size: clamp(1rem, 2vw, 1.75em);
+    white-space: nowrap;
 }
+
+.oikea-puoli-sivusta h1{
+    margin-top: 0; /* Remove default margin from header1s*/
+    font-size: clamp(1rem, 1.8vw, 1.5em);
+    white-space: nowrap;  
+}
+
 
 .left-side, .middle, .right-side{
     display: flex;
     flex-direction: column;
     width: 33%;
-    padding: 5vh;
+    padding: 2vw;
 }
 
 /* Inputs and results wrap when screen not wide enough */
 @media screen and (max-width: 900px) {
     .oikea-puoli-sivusta {
         width: 100%;
-        font-size: 5vw;
+        font-size: 1.5em;
         display: flex;
         flex-wrap: wrap;
     }
 
+    .oikea-puoli-sivusta h1 {
+        font-size: 1.5em;
+    }
+    
     .left-side, .middle, .right-side{
         width: 100%;
-        padding: 3vh;
+        padding: 10vw;
     }
 
 }
+#desiredRange, #fullCharge, #stateOfCharge{
+    font-size: 3em;
+}
 
+.multiple-options{
+    flex-direction: column;
+}
+
+.optionTextWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.option-text{
+    font-size: 0.5em;
+    text-align: right;
+}
+
+.comparison-bar{
+    height: 10px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: fuchsia;
+}
 
 .left-side{
     background: rgb(56,140,204);
@@ -51,5 +81,5 @@
 }
 
 .spaced-div{
-    margin-bottom: 3vh;
+    margin-bottom: 30px;
 }
