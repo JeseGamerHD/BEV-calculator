@@ -23,6 +23,7 @@ export class RangeInputHandler extends InputField {
     }
 
     attachEventListeners() {
+        
         document.addEventListener("input", (inputEvent) => {
             // SLIDERS
             if(inputEvent.target.classList.contains("rangeInput")) {
@@ -47,6 +48,13 @@ export class RangeInputHandler extends InputField {
                 this.#calculator.setData(slider.dataset.property, parseInt(slider.value));
             }
         });
+
+        document.addEventListener("focusout", (focusoutEvent) => {
+            if(focusoutEvent.target.classList.contains("rangeInput-field")){
+                let inputField = focusoutEvent.target;
+                inputField.value = inputField.dataset.value;
+            }
+        });
     }
 
     /** @inheritdoc This implementation also updates the value of the slider
@@ -59,7 +67,6 @@ export class RangeInputHandler extends InputField {
         slider.dataset.value = inputField.dataset.value;
     }
 
-    // TODO: progress and thumb are offset from each other by a little (below 50% progress progress lacks behind, above 50% it goes slightly beyond thumb)
     // figure out a proper offset based on the thumb
     /** Fills the background of the slider based on its current value and min/max values 
      * @param {HTMLInputElement} slider - The slider element to be updated.

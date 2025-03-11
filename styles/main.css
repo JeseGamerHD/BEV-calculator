@@ -4,6 +4,105 @@ body, html {
     font-family: Arial, Verdana, Tahoma;
 }
 
+/* Div containing the whole introduction part */
+.introduction-container {
+    display: flex;
+    flex-direction: row;
+    padding: 50px;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/images/IntroBackground.jpg");
+    background-position: center center;
+    background-size: cover;
+
+    /* Div wrapping the whole introduction part */
+    .introduction {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 100px 50px 100px 50px;
+        row-gap: 60px;
+        font-size: large;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 2px 2px 10px 2px gray;
+        background: rgb(0,224,255);
+        background: radial-gradient(circle, rgba(255,255,255, 0.8) 75%, rgba(206, 249, 255, 0.9) 100%);
+    }
+
+    /* Div containing the header and the paragraph (description) */
+    .introduction-title-container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        row-gap: 5px;
+
+        h1 {
+            font-size: 4em;
+        }
+
+        p {
+            font-style: italic;
+            font-size: 1.5em;
+        }
+    }
+
+    /* Div containing the "tutorial" part with the numbers and descriptions */
+    .introduction-tutorial {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    /* Div containing a number + description */
+    .step-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        row-gap: 10px;
+        max-width: 300px;
+        min-width: 200px;
+        flex-basis: 200px;
+        flex: 1;
+    }
+
+    /* Div containing the number */
+    .step {
+        width: 32px;
+        padding: 15px;
+        font-size: xx-large;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 50%;
+        border: 3px solid var(--text-color-inputs);
+        color: var(--text-color-inputs);
+    }
+
+    h1, p {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .introduction-container {
+        
+        .introduction-title-container {
+            h1 {
+                font-size: 2.5em;
+            }
+    
+            p {
+                font-size: 1em;
+            }
+        }
+    }
+
+}
+
 /* Div containing inputs and the results */
 .calculator-container {
     display: flex;
@@ -14,6 +113,7 @@ body, html {
 }
 
 /* Tooltip styling stuff */
+/* TODO: Better version, this can overlow...*/
 .tooltip-container {
     position: relative;
     display: inline-block;

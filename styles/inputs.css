@@ -1,5 +1,7 @@
 :root {
     --text-color-inputs: rgb(66, 183, 255);
+    --text-color-inputs-hover: rgb(40, 118, 243);
+    --input-area-bg: rgb(228, 228, 228);
 }
 
 .input-area-container {
@@ -8,7 +10,7 @@
 
     width: 33%;
     padding: 60px 0px 60px 0px;
-    background-color: rgb(228, 228, 228);
+    background-color: var(--input-area-bg);
 
     .input-area-wrapper {
         display: flex;
@@ -16,10 +18,55 @@
         align-self: center;
         row-gap: 30px;
         width: 80%;
+    }
 
-        .divider-line {
-            border-bottom: 2px solid #6c6c6c92;
-        }
+    /* The ----------- Lines between groups of inputs */
+    .divider-line {
+        border-bottom: 2px solid #6c6c6c92;
+    }
+
+    /* The new pair of charge power & price added to comparison*/
+    .chargerPricingAlt-wrapper {
+        visibility: collapse;
+        max-height: 0;
+        transform: scale(0);
+        transition: all 0.2s ease-in;
+    }
+
+    .chargerPricingAlt-wrapper.animation {
+        visibility: visible;
+        display: flex;
+        flex-direction: column;
+        row-gap: 30px;
+        transform: scale(1);
+        max-height: 999px;
+    }
+
+    /* The button which adds a new pair of charger power + price */
+    #addChargerPriceComparison {
+        width: 33%;
+        min-width: 130px;
+        height: 3em;
+
+        border: none;
+        border-radius: 25px;
+        box-shadow: 0 0 2px 2px;
+
+        color: var(--text-color-inputs);
+        font-size: 1em;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.1s linear;
+    }
+
+    #addChargerPriceComparison:hover {
+        transform: scale(1.05);
+    }
+
+    /* a span which takes as much space as possible */
+    /* Example usage: in comparison between the remove and the dropdown arrow */
+    .filler {
+        flex: 1;
     }
 }
 
@@ -176,22 +223,27 @@ input::placeholder {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        height: 2.5em;
+
+        .dropdown-title {
+            font-weight: normal;
+        }
 
         .dropdown-button {
             background-color: rgba(255, 255, 255, 0);
             border: none;
-            
+
             height: 100%;
             width: 2em;
             margin-right: 10px;
-            
+
             background-image: url("/images/icons/ArrowDown.svg");
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
 
             cursor: pointer;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
             transition: transform 0.1s ease-in;
         }
 
@@ -201,6 +253,20 @@ input::placeholder {
 
         .dropdown-button.rotate {
             transform: rotate(180deg);
+        }
+
+        /* The button which removes the alternate pair of charger power + price */
+        #removeChargerPriceComparison {
+            color: var(--text-color-inputs);
+            background-color: var(--input-area-bg);
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            padding-left: 10px;
+        }
+
+        #removeChargerPriceComparison:hover {
+            color: var(--text-color-inputs-hover);
         }
     }
 
@@ -218,11 +284,12 @@ input::placeholder {
             max-height: 0;
             transition: max-height 0.1s linear;
             overflow: hidden;
-            
+
             .dropdown-option {
                 padding: 10px;
                 height: 2.5em;
                 cursor: pointer;
+                touch-action: manipulation;
             }
 
             .dropdown-option:hover {
@@ -240,10 +307,10 @@ input::placeholder {
             border: none;
             border-radius: 5px;
             background-color: rgba(215, 215, 215, 0.546);
+            touch-action: manipulation;
         }
     }
 }
-
 /* TOGGLE INPUT STYLING */
 .toggleInput-container {
     display: flex;
@@ -257,9 +324,14 @@ input::placeholder {
     }
 
     .toggleInput-wrapper {
+        margin-top: 10px;
         display: flex;
         flex-direction: row;
         column-gap: 20px;
+    }
+
+    h3 {
+        margin: 0;
     }
 
     .toggleInput-field {
@@ -278,6 +350,8 @@ input::placeholder {
         cursor: pointer;
         user-select: none;
         margin-right: auto;
+        touch-action: none;
+        -webkit-tap-highlight-color: transparent;
     }
     
     .toggleInput-track {
