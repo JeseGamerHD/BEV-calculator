@@ -133,16 +133,16 @@ describe('test suite: calculating cost of charging to full', () => {
     expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0.00 €');
   });
   
-  /* The code does not handle situations like these.
- 
-  it('returns error when using time based pricing, but charge power is not provided', () => {
+ /* Test this in inputs?
+ it('displays 0 when using time based pricing, but charge power is not provided', () => {
      calcChargeCostFullCharge(0.10, 60, 40, 'time', null);
  
-     expect(document.getElementById('chargeCostFullCharge').innerText).toContain('error');
+     expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0');
  
    });
 
    */
+   
 });
 
 describe('test suite: calculating charge time for range', () => {
@@ -174,15 +174,13 @@ describe('test suite: calculating operating range with current battery energy', 
     expect(document.getElementById('currentOperatingRange').textContent).toContain('50.00 km');
   });
 
-  /* The code does not handle situations like these.
  
-   it('displays an error when energy consumption is 0', () => {
-     calcOperatingRange(150, 0, 5);
+   it('displays operating range: 0 when energy consumption is 0', () => {
+     calcOperatingRange(118, 0, 5);
  
-     expect(document.getElementById('currentOperatingRange')).innerText).toContain('error');
+     expect(document.getElementById('currentOperatingRange').textContent).toContain('0 km');
  
    });
-   */
 
   it('calculates range with values containing decimals', () => {
     calcOperatingRange(57.5, 13.7, 10);
@@ -190,7 +188,7 @@ describe('test suite: calculating operating range with current battery energy', 
     expect(document.getElementById('currentOperatingRange').textContent).toContain('41.97 km');
   });
 
-  it('displays range: 0 when charging is not needed', () => {
+  it('displays range: 0 when SOC is 0', () => {
     calcOperatingRange(57.5, 13.7, 0);
 
     expect(document.getElementById('currentOperatingRange').textContent).toContain('0.00 km');
