@@ -25,38 +25,52 @@ const numberInputHandler = new NumberInputHandler(calculator);
 const rangeInputHandler = new RangeInputHandler(calculator);
 const toggleInputHandler = new ToggleInputHandler(calculator);
 
-// Add functionality for add/remove comparison buttons
-document.getElementById("addChargerPriceComparison").addEventListener("click", (event) => {
-    event.target.style.display = "none";
-    document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
-    
-    // Toggle the result options
-    document.querySelectorAll(".single-option").forEach((element) => {
-        element.style.display = "none";
-    });
-    
-    document.querySelectorAll(".multiple-options").forEach((element) => {
-        element.style.display = "flex";
-    });
-});
-
-document.getElementById("removeChargerPriceComparison").addEventListener("click", () => {
-    
-    document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
-    // Give enough time for the above animation to finish, then display the button:
-    setTimeout(() => {
-        document.getElementById("addChargerPriceComparison").style.display = "inline-block";
-    }, 200);
-    
-    // Toggle the result options
-    document.querySelectorAll(".single-option").forEach((element) => {
-        element.style.display = "flex";
-    });
-    
-    document.querySelectorAll(".multiple-options").forEach((element) => {
-        element.style.display = "none";
-    });
-});
-
-// Finally update after everything has been initialized so results match example values
+// Update after everything has been initialized so results match example values
 calculator.updateCalculations();
+
+// Functionality for add comparison button
+document.getElementById("addChargerPriceComparison").addEventListener("click", (event) => {
+    handleComparisonButtons(event.target);
+});
+
+// Functionality for remove comparison button
+document.getElementById("removeChargerPriceComparison").addEventListener("click", (event) => {
+    handleComparisonButtons(event.target);
+});
+
+function handleComparisonButtons(button) {
+
+    // ADD BUTTON
+    if (button.id === "addChargerPriceComparison") {
+        button.style.display = "none"; // Hide the add button
+        document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
+        calculator.toggleComparison();
+
+        // Toggle the result options
+        document.querySelectorAll(".single-option").forEach((element) => {
+            element.style.display = "none";
+        });
+        document.querySelectorAll(".multiple-options").forEach((element) => {
+            element.style.display = "flex";
+        });
+    }
+
+    // REMOVE BUTTON
+    else {
+        document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
+        setTimeout(() => { // Give enough time for the above animation to finish (option 2 to disappear), then display the add button:
+            document.getElementById("addChargerPriceComparison").style.display = "inline-block";
+        }, 200);
+        calculator.toggleComparison();
+
+        // Toggle the result options
+        document.querySelectorAll(".single-option").forEach((element) => {
+            element.style.display = "flex";
+        });
+        document.querySelectorAll(".multiple-options").forEach((element) => {
+            element.style.display = "none";
+        });
+    }
+}
+
+

@@ -24,27 +24,35 @@ class Calculator {
         this.updateCalculations();
     }
 
+    toggleComparison() {
+        this.alt = !this.alt;
+        this.updateCalculations();
+    }
+
     updateCalculations() {
         console.log("Updating calculations with values:", this);
         // Calculate all values
         calcMaxOperatingRange(this.desiredRange, this.batteryCapacity, this.bevEnergyConsumption, this.stateOfCharge);
-        this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPower, this.alt = false);
-        calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPower, this.alt = false);
-        calcChargeCostRange(this.energyPrice, this.energyNeededForRange, this.pricingModel, this.chargerPower, this.alt = false);
-        calcChargeCostFullCharge(this.energyPrice, this.batteryCapacity, this.stateOfCharge, this.pricingModel, this.chargerPower, this.alt = false);
+        this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPower, false);
+        calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPower, false);
+        calcChargeCostRange(this.energyPrice, this.energyNeededForRange, this.pricingModel, this.chargerPower, false);
+        calcChargeCostFullCharge(this.energyPrice, this.batteryCapacity, this.stateOfCharge, this.pricingModel, this.chargerPower, false);
         calcOperatingRange(this.batteryCapacity, this.bevEnergyConsumption, this.stateOfCharge);
         getStateOfCharge (this.stateOfCharge);
         getDesiredRange(this.desiredRange);
-        //Calculate alternative values for comparison
-        this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPowerAlt, this.alt = true);
-        calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPowerAlt, this.alt = true);
-        calcChargeCostRange(this.energyPriceAlt, this.energyNeededForRange, this.pricingModelAlt, this.chargerPowerAlt, this.alt = true);
-        calcChargeCostFullCharge(this.energyPriceAlt, this.batteryCapacity, this.stateOfCharge, this.pricingModelAlt, this.chargerPowerAlt, this.alt = true);
-        //Update comparison bars
-        updateComparisonBars("comparisonBarRangeTime1", "comparisonBarRangeTime2", "chargeTimeForRangeOption1", "chargeTimeForRangeOption2");
-        updateComparisonBars("comparisonBarRangeCost1", "comparisonBarRangeCost2", "chargeCostForRangeOption1", "chargeCostForRangeOption2");
-        updateComparisonBars("comparisonBarFullChargeTime1", "comparisonBarFullChargeTime2", "chargeTimeForFullChargeOption1", "chargeTimeForFullChargeOption2");
-        updateComparisonBars("comparisonBarFullChargeCost1", "comparisonBarFullChargeCost2", "chargeCostForFullChargeOption1", "chargeCostForFullChargeOption2");
+        
+        // Calculate alternative values for comparison if comparison is active
+        if(this.alt) {
+            this.energyNeededForRange = calcEnergyNeededForRange(this.desiredRange, this.bevEnergyConsumption, this.stateOfCharge, this.batteryCapacity, this.chargerPowerAlt, this.alt);
+            calcEnergytoFullCharge(this.batteryCapacity, this.stateOfCharge, this.chargerPowerAlt, this.alt);
+            calcChargeCostRange(this.energyPriceAlt, this.energyNeededForRange, this.pricingModelAlt, this.chargerPowerAlt, this.alt);
+            calcChargeCostFullCharge(this.energyPriceAlt, this.batteryCapacity, this.stateOfCharge, this.pricingModelAlt, this.chargerPowerAlt, this.alt);
+            //Update comparison bars
+            updateComparisonBars("comparisonBarRangeTime1", "comparisonBarRangeTime2", "chargeTimeForRangeOption1", "chargeTimeForRangeOption2");
+            updateComparisonBars("comparisonBarRangeCost1", "comparisonBarRangeCost2", "chargeCostForRangeOption1", "chargeCostForRangeOption2");
+            updateComparisonBars("comparisonBarFullChargeTime1", "comparisonBarFullChargeTime2", "chargeTimeForFullChargeOption1", "chargeTimeForFullChargeOption2");
+            updateComparisonBars("comparisonBarFullChargeCost1", "comparisonBarFullChargeCost2", "chargeCostForFullChargeOption1", "chargeCostForFullChargeOption2");
+        }
     }
 }
 
@@ -138,7 +146,7 @@ export function calcChargeTimeForRange(energyToCharge, bevChargePower, alt) {
         } else {
             updateValueForResult(`${minutes} min`, "chargeTimeForRangeOption2");
         }
-    } else {
+    } else { // TODO: Cause of bug? Sets values to zero even when first option has values
         console.log("Error: Cannot calculate charge time for range. Charge power is missing.");
         updateValueForResult("0", "chargeTimeForRange");
         updateValueForResult("0", "chargeTimeForRangeOption1");
@@ -185,7 +193,11 @@ export function calcChargeTimeForFullCharge(energyNeeded, bevChargePower, alt) {
     return chargeTimeForFullCharge;
 }
 
-
+// TODO: ? Make a variable out of alt instead of passing it around (or move functions inside Calculator class and use this.alt as the variable)
+// Could clean up a lot of code since this function could simply calculate the "option 1" always
+// and then check if alt is active and calculate the second option.
+// ^^ Same thing with calcChargeCostFullCharge.
+// Finally in updateCalculations there would be no need to call these functions twice, only a check before the updateComparisonBars.
 export function calcChargeCostRange(price, energyNeeded, pricingModel, chargerPower, alt) {
     let chargeCost;
     if (!alt) {
@@ -262,7 +274,7 @@ export function updateValueForResult(newValue, resultid) {
         return;
     } else {
         try{
-            document.getElementById(resultid).innerHTML = newValue
+            document.getElementById(resultid).textContent = newValue;
         } catch (error) {
             console.log("Error: Could not update value for result id: ", resultid);
             console.log(error);
@@ -297,8 +309,8 @@ export function updateComparisonBars(bar1ID, bar2ID, value1ID, value2ID) {
     const bar2 = document.getElementById(bar2ID);
     
     // Retrieve and parse the values from the specified elements
-    const value1 = parseValue(document.getElementById(value1ID).innerText);
-    const value2 = parseValue(document.getElementById(value2ID).innerText);
+    const value1 = parseValue(document.getElementById(value1ID).textContent);
+    const value2 = parseValue(document.getElementById(value2ID).textContent);
 
 
     if (value1 > value2 && value1 !== 0) {
