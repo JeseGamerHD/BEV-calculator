@@ -132,16 +132,13 @@
                     </div>
                     <div class="toggleInput-wrapper">
                         <input class="toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-property="energyPrice" step="0.01" placeholder="Enter price"></input>
-                        <div class="toggleInput-switch" id="pricing-toggle" data-property="pricingModel" data-left="energy" data-right="time" data-thumb="pricing-thumb">
-                            <!--data-left & data-right: the data-value of the left/right toggle-option that belongs to this switch -->
+                        <div class="toggleInput-switch" id="pricing-toggle" data-property="pricingModel">
                             <div class="toggleInput-track">
                                 <div class="toggleInput-thumb" id="pricing-thumb"></div>
                             </div>
                             <div class="toggleInput-content">
-                                <!--data-owner: the toggleInput-switch that the options belong to -->
-                                <!-- Used for toggling css classes on the right options -->
-                                <span class="toggle-option" data-owner="pricing-toggle" data-value="energy">€/kWh</span>
-                                <span class="toggle-option" data-owner="pricing-toggle" data-value="time">€/h</span>
+                                <span class="toggle-option left" data-value="energy">€/kWh</span>
+                                <span class="toggle-option right" data-value="time">€/h</span>
                             </div>
                         </div>
                     </div>
@@ -178,16 +175,13 @@
                         </div>
                         <div class="toggleInput-wrapper">
                             <input class="toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-property="energyPriceAlt" step="0.01" placeholder="Enter price"></input>
-                            <div class="toggleInput-switch" id="pricing-toggle-alt" data-property="pricingModelAlt" data-value="energy" data-left="energy" data-right="time" data-thumb="pricing-thumb-alt">
-                                <!--data-left & data-right: the data-value of the left/right toggle-option that belongs to this switch -->
+                            <div class="toggleInput-switch" id="pricing-toggle-alt" data-property="pricingModelAlt" data-value="energy">
                                 <div class="toggleInput-track">
                                     <div class="toggleInput-thumb" id="pricing-thumb-alt"></div>
                                 </div>
                                 <div class="toggleInput-content">
-                                    <!--data-owner: the toggleInput-switch that the options belong to -->
-                                    <!-- Used for toggling css classes on the right options -->
-                                    <span class="toggle-option" data-owner="pricing-toggle-alt" data-value="energy">€/kWh</span>
-                                    <span class="toggle-option" data-owner="pricing-toggle-alt" data-value="time">€/h</span>
+                                    <span class="toggle-option left" data-value="energy">€/kWh</span>
+                                    <span class="toggle-option right" data-value="time">€/h</span>
                                 </div>
                             </div>
                         </div>
