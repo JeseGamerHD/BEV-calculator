@@ -116,7 +116,7 @@ body, html {
 
 @media screen and (max-width: 900px) {
     .calculator-container {
-        flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse; /* On mobile wrap results above inputs */
     }
 }
 
