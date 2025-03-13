@@ -1,7 +1,6 @@
 import { fireEvent } from "@testing-library/dom";
 
 let testContainer;
-let input; 
 
 beforeEach(() => {
 
@@ -172,6 +171,7 @@ afterEach(() => {
   document.body.removeChild(testContainer);
 });
 
+//TODO: figure which function to trigger an event is the best choice, needs to be tested more
 describe('testing special characters as inputs', () => {
   it('changes special characters automatically', () => {
 

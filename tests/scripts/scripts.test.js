@@ -1,11 +1,26 @@
-import { calcEnergyNeededForRange, calcChargeCostFullCharge, calcOperatingRange } from '../../scripts/scripts.js';
+import Calculator from '../../scripts/scripts.js';
+
+const BASE_VALUES = {
+  desiredRange: 250,
+  batteryCapacity: 60,
+  bevEnergyConsumption: 15,
+  stateOfCharge: 50,
+  chargerPower: 22,
+  chargerPowerAlt: 50,
+  energyPrice: 0.2,
+  energyPriceAlt: 0.2,
+  pricingModel: "energy",
+  pricingModelAlt: "energy",
+};
+
+const calculator = new Calculator(BASE_VALUES);
+calculator.updateCalculations();
 
 let testContainer;
 
 beforeEach(() => {
 
   testContainer = document.createElement('div');
-  testContainer.className = 'js-test-container';
   testContainer.innerHTML = `
         
  <div class="oikea-puoli-sivusta"> 
@@ -62,23 +77,47 @@ afterEach(() => {
 describe('test suite: calculating energy to be charged for required range', () => {
 
   it('calculates energy required with valid information', () => {
-    calcEnergyNeededForRange(200, 15, 20, 60, undefined);
+
+    calculator.desiredRange = 200;
+    calculator.stateOfCharge = 20;
+    calculator.batteryCapacity = 60;
+    calculator.bevEnergyConsumption = 15;
+    calculator.updateCalculations();
+
     expect(document.getElementById('energyNeededForRange').textContent).toBe('18.00 kWh');
   });
 
   it('displays energy: 0 when charging is not needed', () => {
-    calcEnergyNeededForRange(100, 12, 100, 60, undefined);
-    expect(document.getElementById('energyNeededForRange').textContent).toContain('0 kWh');
+
+    calculator.stateOfCharge = 100;
+    calculator.desiredRange = 100;
+    calculator.batteryCapacity = 60;
+    calculator.bevEnergyConsumption = 12;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('energyNeededForRange').textContent).toBe('0 kWh');
   });
 
   it('calculates energy with values containing decimals', () => {
-    calcEnergyNeededForRange(200, 13.7, 20, 57.5, undefined);
-    expect(document.getElementById('energyNeededForRange').textContent).toContain('15.90 kWh');
+
+    calculator.stateOfCharge = 20;
+    calculator.desiredRange = 200;
+    calculator.batteryCapacity = 57.5;
+    calculator.bevEnergyConsumption = 13.7;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('energyNeededForRange').textContent).toBe('15.90 kWh');
   });
 
   it('calculates energy with SOC = 0%', () => {
-    calcEnergyNeededForRange(100, 13.7, 0, 57.5, undefined);
-    expect(document.getElementById('energyNeededForRange').textContent).toContain('13.70 kWh');
+
+    calculator.stateOfCharge = 0;
+    calculator.desiredRange = 100;
+    calculator.batteryCapacity = 57.5;
+    calculator.bevEnergyConsumption = 13.7;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('energyNeededForRange').textContent).toBe('13.70 kWh');
   });
 });
 
@@ -86,110 +125,186 @@ describe('test suite: calculating cost of charging to full', () => {
 
   it('calculates cost based on energy based price with valid information', () => {
 
-    calcChargeCostFullCharge(0.20, 60, 30, 'energy', null);
-    expect(document.getElementById('chargeCostFullCharge').textContent).toContain('8.40 €');
+    calculator.stateOfCharge = 30;
+    calculator.pricingModel = 'energy';
+    calculator.energyPrice = 0.20;
+    calculator.batteryCapacity = 60;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('8.40 €');
   });
 
   it('calculates cost based on time based price with valid information', () => {
 
-    calcChargeCostFullCharge(0.10, 60, 40, 'time', 11);
-    expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0.33 €');
+    calculator.stateOfCharge = 40;
+    calculator.pricingModel = 'time';
+    calculator.energyPrice = 0.10;
+    calculator.batteryCapacity = 60;
+    calculator.chargerPower = 11;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.33 €');
   });
 
   it('calculates energy based cost with values containing decimals', () => {
 
-    calcChargeCostFullCharge(0.25, 57.5, 20, 'energy', null);
-    expect(document.getElementById('chargeCostFullCharge').textContent).toContain('11.50 €');
+    calculator.stateOfCharge = 20;
+    calculator.pricingModel = 'energy';
+    calculator.energyPrice = 0.25;
+    calculator.batteryCapacity = 57.5;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('11.50 €');
   });
 
   it('calculates time based cost with values containing decimals', () => {
 
-    calcChargeCostFullCharge(0.37, 57.5, 20, 'time', 7.4);
-    expect(document.getElementById('chargeCostFullCharge').textContent).toContain('2.30 €');
+    calculator.stateOfCharge = 20;
+    calculator.pricingModel = 'time';
+    calculator.energyPrice = 0.37;
+    calculator.batteryCapacity = 57.5;
+    calculator.chargerPower = 7.4;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('2.30 €');
 
   });
 
   it('displays cost: 0 when energy based cost is 0', () => {
 
-    calcChargeCostFullCharge(0, 57.5, 20, 'energy', 7.4);
-    expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0.00 €');
+    calculator.stateOfCharge = 20;
+    calculator.pricingModel = 'energy';
+    calculator.energyPrice = 0;
+    calculator.batteryCapacity = 57.5;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
   });
 
   it('displays cost: 0 when time based cost is 0', () => {
 
-    calcChargeCostFullCharge(0, 57.5, 20, 'time', 7.4);
-    expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0.00 €');
+    calculator.stateOfCharge = 20;
+    calculator.pricingModel = 'time';
+    calculator.energyPrice = 0;
+    calculator.batteryCapacity = 57.5;
+    calculator.chargerPower = 7.4;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
   });
 
   it('displays cost: 0 when charging is not needed (time-based price)', () => {
 
-    calcChargeCostFullCharge(0.20, 57.5, 100, 'time', 7.4);
-    expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0.00 €');
+    calculator.stateOfCharge = 100;
+    calculator.pricingModel = 'time';
+    calculator.energyPrice = 0.20;
+    calculator.batteryCapacity = 57.5;
+    calculator.chargerPower = 7.4;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
   });
 
   it('displays cost: 0 when charging is not needed (energy-based price)', () => {
 
-    calcChargeCostFullCharge(0.20, 57.5, 100, 'energy', 7.4);
-    expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0.00 €');
-  });
-  
- /* Test this in inputs?
- it('displays 0 when using time based pricing, but charge power is not provided', () => {
-     calcChargeCostFullCharge(0.10, 60, 40, 'time', null);
- 
-     expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0');
- 
-   });
+    calculator.stateOfCharge = 100;
+    calculator.pricingModel = 'energy';
+    calculator.energyPrice = 0.20;
+    calculator.batteryCapacity = 57.5;
+    calculator.updateCalculations();
 
-   */
-   
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
+  });
+
+  /* Test this in inputs?
+  it('displays 0 when using time based pricing, but charge power is not provided', () => {
+      calcChargeCostFullCharge(0.10, 60, 40, 'time', null);
+  
+      expect(document.getElementById('chargeCostFullCharge').textContent).toContain('0');
+  
+    });
+ 
+    */
+
 });
 
 describe('test suite: calculating charge time for range', () => {
 
   it('calculates charge time with valid information', () => {
-    calcEnergyNeededForRange(500, 15, 40, 60, 50);
 
-    expect(document.getElementById('chargeTimeForRange').textContent).toContain('1 h 1 min');
+    calculator.stateOfCharge = 40;
+    calculator.desiredRange = 500;
+    calculator.batteryCapacity = 60;
+    calculator.bevEnergyConsumption = 15;
+    calculator.chargerPower = 50;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForRange').textContent).toBe('1 h 1 min');
   });
 
   it('displays charge time: 0 when charging is not needed', () => {
-    calcEnergyNeededForRange(100, 20, 100, 52, null);
+    calculator.stateOfCharge = 100;
+    calculator.desiredRange = 100;
+    calculator.batteryCapacity = 52;
+    calculator.bevEnergyConsumption = 20;
+    calculator.updateCalculations();
 
-    expect(document.getElementById('chargeTimeForRange').textContent).toContain('0 min');
+    expect(document.getElementById('chargeTimeForRange').textContent).toBe('0 min');
   });
 
   it('calculates charge time with values containing decimals', () => {
-    calcEnergyNeededForRange(150, 13.5, 20, 52.5, 7.4);
 
-    expect(document.getElementById('chargeTimeForRange').textContent).toContain('1 h 19 min');
+    calculator.stateOfCharge = 20;
+    calculator.desiredRange = 150;
+    calculator.batteryCapacity = 52.5;
+    calculator.bevEnergyConsumption = 13.5;
+    calculator.chargerPower = 7.4;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForRange').textContent).toBe('1 h 19 min');
   });
 });
 
 describe('test suite: calculating operating range with current battery energy', () => {
 
   it('calculates range with valid information', () => {
-    calcOperatingRange(150, 15, 5);
 
-    expect(document.getElementById('currentOperatingRange').textContent).toContain('50.00 km');
+    calculator.stateOfCharge = 5;
+    calculator.batteryCapacity = 150;
+    calculator.bevEnergyConsumption = 15;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('currentOperatingRange').textContent).toBe('50.00 km');
   });
 
- 
-   it('displays operating range: 0 when energy consumption is 0', () => {
-     calcOperatingRange(118, 0, 5);
- 
-     expect(document.getElementById('currentOperatingRange').textContent).toContain('0 km');
- 
-   });
+
+  it('displays operating range: 0 when energy consumption is 0', () => {
+
+    calculator.stateOfCharge = 5;
+    calculator.batteryCapacity = 118;
+    calculator.bevEnergyConsumption = 0;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('currentOperatingRange').textContent).toBe('0 km');
+
+  });
 
   it('calculates range with values containing decimals', () => {
-    calcOperatingRange(57.5, 13.7, 10);
 
-    expect(document.getElementById('currentOperatingRange').textContent).toContain('41.97 km');
+    calculator.stateOfCharge = 10;
+    calculator.batteryCapacity = 57.5;
+    calculator.bevEnergyConsumption = 13.7;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('currentOperatingRange').textContent).toBe('41.97 km');
   });
 
   it('displays range: 0 when SOC is 0', () => {
-    calcOperatingRange(57.5, 13.7, 0);
+
+    calculator.stateOfCharge = 0;
+    calculator.batteryCapacity = 57.5;
+    calculator.bevEnergyConsumption = 13.7;
+    calculator.updateCalculations();
 
     expect(document.getElementById('currentOperatingRange').textContent).toContain('0.00 km');
   })
