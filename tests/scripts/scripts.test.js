@@ -307,5 +307,42 @@ describe('test suite: calculating operating range with current battery energy', 
     calculator.updateCalculations();
 
     expect(document.getElementById('currentOperatingRange').textContent).toContain('0.00 km');
-  })
+  });
+
+  describe('test suite: calculating energy to full charge', () => {
+    it ('calculates energy to full charge with valid information', () => {
+      calculator.stateOfCharge = 40;
+      calculator.pricingModel = 'energy';
+      calculator.batteryCapacity = 60;
+      calculator.updateCalculations();
+
+      expect(document.getElementById('energyToFullCharge').textContent).toContain('36.00 kWh');
+    });
+
+    it('calculates energy to full charge with values containing decimals', () => {
+
+      calculator.stateOfCharge = 30;
+      calculator.batteryCapacity = 53.5;
+      calculator.updateCalculations();
+
+      expect(document.getElementById('energyToFullCharge').textContent).toContain('37.45 kWh');
+    });
+
+    it('calculates energy to full charge when SOC is 0 %', () => {
+      calculator.stateOfCharge = 0;
+      calculator.batteryCapacity = 53.5;
+      calculator.updateCalculations();
+
+      expect(document.getElementById('energyToFullCharge').textContent).toContain('53.50 kWh');
+
+    });
+
+    it('displays 0 when energy to full charge is not needed', () => {
+      calculator.stateOfCharge = 100;
+      calculator.batteryCapacity = 118;
+      calculator.updateCalculations();
+
+      expect(document.getElementById('energyToFullCharge').textContent).toContain('0 kWh');
+    })
+  });
 });
