@@ -26,25 +26,32 @@ const numberInputHandler = new NumberInputHandler(calculator);
 const rangeInputHandler = new RangeInputHandler(calculator);
 const toggleInputHandler = new ToggleInputHandler(calculator);
 
-//Initialize the localization manager
+// Initialize the localization manager
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        //Initialize localization manager and load language
-        const localization = new LocalizationManager();
-        await localization.loadLanguage('en'); // Default language
-        
-        //Set up language switcher if it exists
+        // Initialize localization manager and load language
+        const localizationManager = new LocalizationManager();
+        await localizationManager.initializeLanguage();
+
+        // Set up language switcher if it exists
         const languageSwitcher = document.getElementById('language-switcher');
         if (languageSwitcher) {
-            languageSwitcher.addEventListener('click', async (e) => {
-                // When language changes, update language first, then recalculate
-                await localization.loadLanguage(e.target.value);
-                calculator.updateCalculations();
+            languageSwitcher.value = localizationManager.currentLanguage; // Change the selected option to the one set in the localization
+            
+            languageSwitcher.addEventListener('click', async (clickEvent) => {
+                let newLanguage = clickEvent.target.value; // The selected language option
+                
+                if (newLanguage != localizationManager.currentLanguage) { // No need to update if same language is picked or options only opened
+                    localStorage.setItem("language", newLanguage); // Store choice
+                    // Update language, then calculations (otherwise placeholder/temp texts show up)
+                    await localizationManager.loadLanguage(newLanguage);
+                    calculator.updateCalculations();
+                }
             });
         }
-        
-        //After localization has completed, now we can update calculations
-        //This ensures calculator results are the last thing to modify the DOM
+
+        // After localization has completed, now we can update calculations
+        // This ensures calculator results are the last thing to modify the DOM
         setTimeout(() => {
             calculator.updateCalculations();
         }, 0);
@@ -54,8 +61,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
   
-
-
 // Functionality for add comparison button
 document.getElementById("addChargerPriceComparison").addEventListener("click", (event) => {
     handleComparisonButtons(event.target);
