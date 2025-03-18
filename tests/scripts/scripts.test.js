@@ -13,9 +13,7 @@ const BASE_VALUES = {
   pricingModelAlt: "energy",
 };
 
-const calculator = new Calculator(BASE_VALUES);
-calculator.updateCalculations();
-
+let calculator;
 let testContainer;
 
 beforeEach(() => {
@@ -68,11 +66,33 @@ beforeEach(() => {
                
     </div>`;
   document.body.appendChild(testContainer);
+  calculator = new Calculator(BASE_VALUES);
 });
 
 afterEach(() => {
   document.body.removeChild(testContainer);
+  calculator = null;
 });
+
+// TODO: Fix errors even though tests pass/fail correctly, probably due to jsdom manipulation timing
+// Currently those "errors" clutter the console making potential real issues hard to see
+// setTimeout with calculator.updateCalculations and expect inside it works, but not good for test performance
+
+// Another option that seems promising is to mock elements, though this is not "easy" due to calculator calling same methods multiple times
+// This works, but needs logic for checking result only on the correct id:
+// At start of file: import {jest} from '@jest/globals'
+// Inside test:
+// const mockElement = {textContent: ""};
+// const mockGetElementById = jest.fn(() => mockElement);
+// global.document.getElementById = mockGetElementById;
+// calculator.desiredRange = 200;
+// calculator.stateOfCharge = 20;
+// calculator.batteryCapacity = 60;
+// calculator.bevEnergyConsumption = 15;
+// calculator.updateCalculations();
+// expect(mockElement.textContent).toBe('18.00 kWh');
+// jest.restoreAllMocks();
+// ^^^ The above will fail since the id used in the mock is the last one used inside calculator
 
 describe('test suite: calculating energy to be charged for required range', () => {
 
