@@ -82,6 +82,7 @@ export class InputField {
         }
     }
 
+    // TODO: Test more later, could still have issues with new approach
     handleDecimalInput(inputField) {
 
         let sanitizedValue = inputField.value.replace(',', '.'); // Replace commas, not properly supported
@@ -96,20 +97,21 @@ export class InputField {
             sanitizedValue = sanitizedValue.substring(0, firstDotIndex + 1) + sanitizedValue.substring(firstDotIndex + 1).replace('.', '');
         }
 
-        if (isNaN(sanitizedValue)) { // Technically not needed, but for safety
-            inputField.value = inputField.dataset.value;
-            return;
-        }
-
         let i = 0; // This removes extra zeros at the start by counting until the "." or a 1-9
         while (i < sanitizedValue.length - 1 && sanitizedValue[i] === '0' && sanitizedValue[i + 1] !== '.') {
             i++;
         }
         sanitizedValue = sanitizedValue.substring(i); // Now "0" and "0." can be typed, but not "0023" or "00.23"
 
+        
         let newValue = parseFloat(sanitizedValue);
+        if (isNaN(newValue)) { // sanitizedValue can be empty, which leads to NaN
+            inputField.value = inputField.dataset.value;
+            return;
+        }
+
         if (newValue >= inputField.min && newValue <= inputField.max) {
-            inputField.value = sanitizedValue;
+            inputField.value = sanitizedValue; // TODO: Check this especially!
             inputField.dataset.value = newValue;
         }
         else if (newValue > inputField.max) {
