@@ -21,12 +21,7 @@ export class DropdownInputHandler extends InputField {
         document.addEventListener("focusout", (focusoutEvent) => {
             if (focusoutEvent.target.classList.contains("dropdownInput-field")) {
                 let inputField = focusoutEvent.target;
-
-                // Allow empty, but otherwise cleanup
-                // Cleaning up empty to zero causes zero to flash when clicking on an option
-                if (inputField.value != "") {
-                    inputField.value = inputField.dataset.value;
-                }
+                this.cleanUpOnFocusout(inputField, true);
             }
         });
 

@@ -35,10 +35,7 @@ export class ToggleInputHandler extends InputField {
             let wrapper = focusoutEvent.target.closest(".toggleInput-wrapper");
             if(wrapper != null && focusoutEvent.target.classList.contains("toggleInput-field")) {
                 let inputField = focusoutEvent.target;
-                // Cleanup values like "023", "0."
-                if(inputField.value != "") {
-                    inputField.value = inputField.dataset.value;
-                }
+                this.cleanUpOnFocusout(inputField, true);
             }
         });
 

@@ -84,10 +84,10 @@ export class InputField {
 
     handleDecimalInput(inputField) {
 
-        let normalizedValue = inputField.value.replace(',', '.'); // Replace commas, not properly supported
-        let sanitizedValue = normalizedValue.replace(/[^0-9.]/g, ''); // Remove any NaN values
+        let sanitizedValue = inputField.value.replace(',', '.'); // Replace commas, not properly supported
+        sanitizedValue = sanitizedValue.replace(/[^0-9.]/g, ''); // Remove any NaN values
         
-        let firstDotIndex = sanitizedValue.indexOf(".")
+        let firstDotIndex = sanitizedValue.indexOf(".");
         if(firstDotIndex !== -1) {
             // If the decimal has multiple dots: 0..334...44
             // replace the extra dots with '' and then combine the result with the value up until the first dot.
@@ -96,14 +96,20 @@ export class InputField {
             sanitizedValue = sanitizedValue.substring(0, firstDotIndex + 1) + sanitizedValue.substring(firstDotIndex + 1).replace('.', '');
         }
 
-        let newValue = parseFloat(sanitizedValue);
-        if (isNaN(newValue)) { // Technically not needed, but for safety
+        if (isNaN(sanitizedValue)) { // Technically not needed, but for safety
             inputField.value = inputField.dataset.value;
             return;
         }
 
-        inputField.value = sanitizedValue; // So that decimal dot is visible, gets removed when focus is lost if user leaves it at X. etc
+        let i = 0; // This removes extra zeros at the start by counting until the "." or a 1-9
+        while (i < sanitizedValue.length - 1 && sanitizedValue[i] === '0' && sanitizedValue[i + 1] !== '.') {
+            i++;
+        }
+        sanitizedValue = sanitizedValue.substring(i); // Now "0" and "0." can be typed, but not "0023" or "00.23"
+
+        let newValue = parseFloat(sanitizedValue);
         if (newValue >= inputField.min && newValue <= inputField.max) {
+            inputField.value = sanitizedValue;
             inputField.dataset.value = newValue;
         }
         else if (newValue > inputField.max) {
@@ -112,6 +118,27 @@ export class InputField {
         }
         else {
             inputField.dataset.value = inputField.min;
+        }
+    }
+
+    /**
+    * Cleans up values by setting them to the ```element.dataset.value```.
+    * This is due to some fields potentially allowing "0." and to ensure "0023" or "00.234" are cleaned up properly
+    * 
+    * The method should be called after focus is lost on a field since input handling should
+    * set ```element.dataset.value``` to only valid clean values (element.value is not as strict at input handling)
+    * 
+    * @param {HTMLInputElement} inputField - The input element that triggered the event
+    * @param {boolean} allowEmpty - Whether the field is allowed to have an empty element.value
+    */
+    cleanUpOnFocusout(inputField, allowEmpty) {   
+        if(!allowEmpty) {
+            inputField.value = inputField.dataset.value;
+        }
+        else {
+            // If the field is empty, don't change value
+            // Otherwise cleanup value to internal value
+            inputField.value = inputField.value !== "" ? inputField.dataset.value : inputField.value; 
         }
     }
 }

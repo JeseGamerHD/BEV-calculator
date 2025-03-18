@@ -52,7 +52,7 @@ export class RangeInputHandler extends InputField {
         document.addEventListener("focusout", (focusoutEvent) => {
             if(focusoutEvent.target.classList.contains("rangeInput-field")){
                 let inputField = focusoutEvent.target;
-                inputField.value = inputField.dataset.value;
+                this.cleanUpOnFocusout(inputField, false);
             }
         });
     }
