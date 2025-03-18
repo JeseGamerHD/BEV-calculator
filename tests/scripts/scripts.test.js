@@ -308,41 +308,152 @@ describe('test suite: calculating operating range with current battery energy', 
 
     expect(document.getElementById('currentOperatingRange').textContent).toContain('0.00 km');
   });
+});
 
-  describe('test suite: calculating energy to full charge', () => {
-    it ('calculates energy to full charge with valid information', () => {
-      calculator.stateOfCharge = 40;
-      calculator.pricingModel = 'energy';
-      calculator.batteryCapacity = 60;
-      calculator.updateCalculations();
+describe('test suite: calculating energy to full charge', () => {
+  it('calculates energy to full charge with valid information', () => {
 
-      expect(document.getElementById('energyToFullCharge').textContent).toContain('36.00 kWh');
-    });
+    calculator.stateOfCharge = 40;
+    calculator.pricingModel = 'energy';
+    calculator.batteryCapacity = 60;
+    calculator.updateCalculations();
 
-    it('calculates energy to full charge with values containing decimals', () => {
+    expect(document.getElementById('energyToFullCharge').textContent).toContain('36.00 kWh');
+  });
 
-      calculator.stateOfCharge = 30;
-      calculator.batteryCapacity = 53.5;
-      calculator.updateCalculations();
+  it('calculates energy to full charge with values containing decimals', () => {
 
-      expect(document.getElementById('energyToFullCharge').textContent).toContain('37.45 kWh');
-    });
+    calculator.stateOfCharge = 30;
+    calculator.batteryCapacity = 53.5;
+    calculator.updateCalculations();
 
-    it('calculates energy to full charge when SOC is 0 %', () => {
-      calculator.stateOfCharge = 0;
-      calculator.batteryCapacity = 53.5;
-      calculator.updateCalculations();
+    expect(document.getElementById('energyToFullCharge').textContent).toContain('37.45 kWh');
+  });
 
-      expect(document.getElementById('energyToFullCharge').textContent).toContain('53.50 kWh');
+  it('calculates energy to full charge when SOC is 0 %', () => {
+    calculator.stateOfCharge = 0;
+    calculator.batteryCapacity = 53.5;
+    calculator.updateCalculations();
 
-    });
+    expect(document.getElementById('energyToFullCharge').textContent).toContain('53.50 kWh');
 
-    it('displays 0 when energy to full charge is not needed', () => {
-      calculator.stateOfCharge = 100;
-      calculator.batteryCapacity = 118;
-      calculator.updateCalculations();
+  });
 
-      expect(document.getElementById('energyToFullCharge').textContent).toContain('0 kWh');
-    })
+  it('displays 0 when energy to full charge is not needed', () => {
+    calculator.stateOfCharge = 100;
+    calculator.batteryCapacity = 118;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('energyToFullCharge').textContent).toContain('0 kWh');
+  });
+});
+
+describe('test suite: calculating charge cost for range', () => {
+
+  it('calculates cost for range with time-based price', () => {
+    calculator.stateOfCharge = 40;
+    calculator.desiredRange = 300;
+    calculator.bevEnergyConsumption = 17.3;
+    calculator.batteryCapacity = 118;
+    calculator.pricingModel = 'time';
+    calculator.energyPrice = 0.10;
+    calculator.chargerPower = 11;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostRange').textContent).toContain('0.04 €');
+  });
+
+
+  it('calculates cost for range with time-based price with values containing decimals', () => {
+    calculator.stateOfCharge = 40;
+    calculator.desiredRange = 300;
+    calculator.bevEnergyConsumption = 17.3;
+    calculator.batteryCapacity = 57.5;
+    calculator.pricingModel = 'time';
+    calculator.energyPrice = 0.15;
+    calculator.chargerPower = 7.4;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostRange').textContent).toContain('0.59 €');
+  });
+
+  it('calculates cost for range with energy-based price', () => {
+
+    calculator.stateOfCharge = 30;
+    calculator.desiredRange = 275;
+    calculator.bevEnergyConsumption = 15;
+    calculator.batteryCapacity = 118;
+    calculator.pricingModel = 'energy';
+    calculator.energyPrice = 0.60;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostRange').textContent).toContain('3.51 €');
+  });
+
+  it('calculates cost for range with energy-based price with values containing decimals', () => {
+
+    calculator.stateOfCharge = 30;
+    calculator.desiredRange = 275;
+    calculator.bevEnergyConsumption = 17.3;
+    calculator.batteryCapacity = 57.5;
+    calculator.pricingModel = 'energy';
+    calculator.energyPrice = 0.20;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostRange').textContent).toContain('6.07 €');
+  });
+
+  it('displays cost: 0 when energy based cost is 0', () => {
+
+    calculator.stateOfCharge = 20;
+    calculator.desiredRange = 200;
+    calculator.pricingModel = 'energy';
+    calculator.energyPrice = 0;
+    calculator.batteryCapacity = 57.5;
+    calculator.bevEnergyConsumption = 20;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
+  });
+
+  it('displays cost: 0 when time based cost is 0', () => {
+
+    calculator.stateOfCharge = 20;
+    calculator.desiredRange = 150;
+    calculator.pricingModel = 'time';
+    calculator.energyPrice = 0;
+    calculator.batteryCapacity = 57.5;
+    calculator.bevEnergyConsumption = 17.5;
+    calculator.chargerPower = 7.4;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
+  });
+
+  it('displays cost: 0 when charging is not needed (time-based price)', () => {
+
+    calculator.stateOfCharge = 100;
+    calculator.desiredRange = 100;
+    calculator.pricingModel = 'time';
+    calculator.energyPrice = 0.20;
+    calculator.batteryCapacity = 57.5;
+    calculator.bevEnergyConsumption = 13.6;
+    calculator.chargerPower = 7.4;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
+  });
+
+  it('displays cost: 0 when charging is not needed (energy-based price)', () => {
+
+    calculator.stateOfCharge = 100;
+    calculator.desiredRange = 50;
+    calculator.pricingModel = 'energy';
+    calculator.energyPrice = 0.20;
+    calculator.batteryCapacity = 57.5;
+    calculator.bevEnergyConsumption = 11.6;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
   });
 });
