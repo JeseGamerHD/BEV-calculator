@@ -153,13 +153,16 @@
                     </div>
                 </div>
 
-                <button id="addChargerPriceComparison" data-localization="inputs.comparison.addButton">+ Add Option</button>
+                <button id="addChargerPriceComparison" data-localization="inputs.comparison.addButton">+ Add Comparison</button>
 
                 <div class="chargerPricingAlt-wrapper" id="chargerPricingAlt-wrapper" style="visibility: none;">
-                    <div class="dropdownInput-container">
+                    <div class="dropdownInput-container">                    
                         <div class="dropdown-title-wrapper">
                             <h3 class="dropdown-title" data-localization="inputs.comparison.option2Title">OPTION 2: <strong>Charge Power</strong> (kW)</h3>
-                            <button class="removeComparison" id="removeChargerPriceComparison" data-localization="inputs.comparison.removeButton" title="Removes the alternate charge power & pricing">Remove</button>
+                            <button class="removeComparison" id="removeChargerPriceComparison" data-localization-tooltip="inputs.comparison.removeButtonTip" title="Removes the alternate charge power & pricing">
+                                <img src="images/icons/deleteIcon1.png">
+                                <span data-localization="inputs.comparison.removeButton">Remove</span>
+                            </button>
                             <span class="filler"></span>
                             <button class="dropdown-button" data-options="chargePower-options-alt"></button>
                         </div>

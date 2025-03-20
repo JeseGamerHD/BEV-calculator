@@ -266,16 +266,26 @@ input[type=text]:focus, input[type=number]:focus {
 
         /* The button which removes the alternate pair of charger power + price */
         #removeChargerPriceComparison {
-            color: var(--text-color-inputs);
+            color: red;
             background-color: var(--input-area-bg);
             border: none;
+            font-size: medium;
             font-weight: bold;
             cursor: pointer;
             padding-left: 10px;
+
+            img {
+                width: 16px;
+                object-fit: cover;
+            }
         }
 
         #removeChargerPriceComparison:hover {
-            color: var(--text-color-inputs-hover);
+            color: rgb(153, 0, 0);
+
+            img {
+                filter: brightness(0.5);
+            }
         }
     }
 
@@ -324,7 +334,8 @@ input[type=text]:focus, input[type=number]:focus {
             border-radius: 5px;
             background-color: rgba(215, 215, 215, 0.546);
             touch-action: manipulation;
-            z-index: 999; /* scrollbar would otherwise be on top of the outline on focus */
+            z-index: 999;
+            /* scrollbar would otherwise be on top of the outline on focus */
             /* alternative way is to add some margin etc */
         }
     }

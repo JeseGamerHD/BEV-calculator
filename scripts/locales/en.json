@@ -66,8 +66,9 @@
       "perHour": "€/h"
     },
     "comparison": {
-      "addButton": "+ Add Option",
+      "addButton": "+ Add Comparison",
       "removeButton": "Remove",
+      "removeButtonTip": "Removes the comparison",
       "option2Title": "OPTION 2: Charge Power (kW)"
     }
   },

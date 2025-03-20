@@ -5,7 +5,7 @@
     },
     "tutorial": {
       "step1": "Aloita syöttämällä haluttu matka ja perustiedot autostasi.",
-      "step2": "Aseta latausteho ja sen käyttöhinta. Voit myös lisätä toisen vaihtoehdon vertailua varten.",
+      "step2": "Aseta latausteho ja sen käyttöhinta. Voit myös lisätä toisen laturin ja hinnan vertailua varten.",
       "step3": "Katso tulokset. Kokeile eri arvoja nähdäksesi, miten ne vaikuttavat tuloksiin."
     },
     "inputs": {
@@ -66,8 +66,9 @@
         "perHour": "€/h"
       },
       "comparison": {
-        "addButton": "+ Lisää vaihtoehto",
+        "addButton": "+ Lisää vertailu",
         "removeButton": "Poista",
+        "removeButtonTip": "Poistaa vertailun",
         "option2Title": "VAIHTOEHTO 2: Latausteho (kW)"
       }
     },
@@ -82,7 +83,7 @@
         "option2": "Latausaika vaihtoehto 2: "
       },
       "chargingCosts": {
-        "title": "Latauskustannukset",
+        "title": "Latauskustannus",
         "forRange": "Latauskustannukset €/kWh halutulle matkalle: ",
         "option1": "Latauskustannukset €/kWh vaihtoehto 1: ",
         "option2": "Latauskustannukset €/kWh vaihtoehto 2: "
@@ -104,7 +105,7 @@
           "option2": "Latausaika täyteen lataukseen vaihtoehto 2: "
         },
         "chargingCosts": {
-          "title": "Latauskustannukset",
+          "title": "Latauskustannus",
           "forFull": "Latauskustannukset €/kWh täyteen lataukseen: ",
           "option1": "Latauskustannukset €/kWh täyteen lataukseen vaihtoehto 1: ",
           "option2": "Latauskustannukset €/kWh täyteen lataukseen vaihtoehto 2: "
