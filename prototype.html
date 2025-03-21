@@ -194,8 +194,19 @@
                     </div>
             
                     <div class="toggleInput-container">
-                        <div class="toggleInput-title-wrapper">
-                            <h3 data-localization="inputs.price.title">Price</h3>
+                        <div class="toggleInput-title-container">
+                            <div class="toggle-title-wrapper left-title">
+                                <h3 data-localization="inputs.price.title">Price</h3>
+                                <div class="tooltip-container">
+                                    <div class="tooltip" data-localization="inputs.price.tooltip">The price of electricity or the hourly rate set by the charger operator.</div>
+                                </div>
+                            </div>
+                            <div class="toggle-title-wrapper right-title">
+                                <h3 data-localization="inputs.pricingModel.title">Pricing model</h3>
+                                <div class="tooltip-container">
+                                    <div class="tooltip" data-localization="inputs.pricingModel.tooltip">What the price is based on: per kilowatt hour or per hour of use. With €/kWh the charging costs are based on total energy charged. With €/h they are based on charging time.</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="toggleInput-wrapper">
                             <input class="toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-property="energyPriceAlt" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
@@ -204,8 +215,8 @@
                                     <div class="toggleInput-thumb" id="pricing-thumb-alt"></div>
                                 </div>
                                 <div class="toggleInput-content">
-                                    <span class="toggle-option left" data-value="energy" data-localization="inputs.price.perKWh">€/kWh</span>
-                                    <span class="toggle-option right" data-value="time" data-localization="inputs.price.perHour">€/h</span>
+                                    <span class="toggle-option left" data-value="energy" data-localization="inputs.price.perKWh" data-localization-tooltip="inputs.pricingModel.tooltipLeft" title="Price of electricity in kilowatt hours. Charging cost will be calculated based on energy charged.">€/kWh</span>
+                                    <span class="toggle-option right" data-value="time" data-localization="inputs.price.perHour" data-localization-tooltip="inputs.pricingModel.tooltipRight" title="Price of electricity per hour of use. Charging cost will be calculated based on charging time.">€/h</span>
                                 </div>
                             </div>
                         </div>
