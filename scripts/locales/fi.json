@@ -65,6 +65,12 @@
         "perKWh": "€/kWh",
         "perHour": "€/h"
       },
+      "pricingModel": {
+        "title": "Hinnoittelumalli",
+         "tooltip": "Mihin hinta perustuu: kilowattituntihintaan tai tuntihintaan. Käyttämällä €/kWh latauskustannus perustuu ladatun energian määrään ja käyttämällä €/h latausaikaan.",
+         "tooltipLeft": "Sähkön kilowattituntihinta. Latauskustannus lasketaan ladatun energian pohjalta.",
+         "tooltipRight": "Sähkön tuntihinta. Latauskustannus lasketaan latausajan mukaan."
+      },
       "comparison": {
         "addButton": "+ Lisää vertailu",
         "removeButton": "Poista",

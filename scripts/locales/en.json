@@ -65,6 +65,12 @@
       "perKWh": "€/kWh",
       "perHour": "€/h"
     },
+    "pricingModel": {
+      "title": "Pricing model",
+       "tooltip": "What the price is based on: per kilowatt hour or per hour of use. With €/kWh the charging costs are based on total energy charged. With €/h they are based on charging time.",
+       "tooltipLeft": "Price of electricity in kilowatt hours. Charging cost will be calculated based on energy charged.",
+       "tooltipRight": "Price of electricity per hour of use. Charging cost will be calculated based on charging time."
+    },
     "comparison": {
       "addButton": "+ Add Comparison",
       "removeButton": "Remove",
