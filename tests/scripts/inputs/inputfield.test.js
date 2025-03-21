@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 
-describe('testing special characters as inputs', () => {
+describe('test suite: testing input handling', () => {
     it('changes special characters automatically', async () => {
 
         let inputFieldHandler = new InputField();
@@ -29,9 +29,7 @@ describe('testing special characters as inputs', () => {
         await userEvent.type(inputElement, '!"#¤%');
 
         expect(inputElement.value).toBe('0');
-
     });
-
 
     it('handles normal input', async () => {
         let inputField = new InputField();
@@ -42,7 +40,6 @@ describe('testing special characters as inputs', () => {
         });
 
         await userEvent.type(inputElement, '999');
-
         expect(inputElement.value).toBe('999');
     });
 
@@ -56,8 +53,46 @@ describe('testing special characters as inputs', () => {
         });
 
         await userEvent.type(inputElement, '!"#¤%999');
-
         expect(inputElement.value).toBe('999');
+    });
+
+    it('handles input containing alphabets', async () => {
+
+        let inputField = new InputField();
+        let inputElement = document.getElementById('testInputField');
+
+        inputElement.addEventListener('input', () => {
+            inputField.handleInput(inputElement);
+        });
+
+        await userEvent.type(inputElement, 'kolmekymmentä');
+        expect(inputElement.value).toBe('0');
+    });
+
+    it('handles input containing alphabets before numbers', async () => {
+
+        let inputField = new InputField();
+        let inputElement = document.getElementById('testInputField');
+
+        inputElement.addEventListener('input', () => {
+            inputField.handleInput(inputElement);
+        });
+
+        await userEvent.type(inputElement, 'kolmekymmentä30');
+        expect(inputElement.value).toBe('30');
+    });
+
+    it('handles input containing negative values', async () => {
+
+        let inputField = new InputField();
+        let inputElement = document.getElementById('testInputField');
+
+        inputElement.addEventListener('input', () => {
+            inputField.handleInput(inputElement);
+        });
+
+        await userEvent.type(inputElement, '-10');
+        expect(inputElement.value).toBe('10');
     });
 
 });

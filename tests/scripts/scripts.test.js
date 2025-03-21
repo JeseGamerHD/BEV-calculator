@@ -21,50 +21,106 @@ beforeEach(() => {
   testContainer = document.createElement('div');
   testContainer.innerHTML = `
         
- <div class="oikea-puoli-sivusta"> 
+        <div class="oikea-puoli-sivusta"> 
         
-        <div class="left-side">
-            <h1>Distance</h1>
-            <div id="maxOperatingRange" class="spaced-div">TEST</div>
-
-            <h3>Charging Time</h3>
-            <div id="chargeTimeForRange" class="spaced-div js-test-charge-time-range">Charge time needed for range: </div>
-           
-            <h3>Charging Costs</h3>
-            <div id="chargeCostRange" class="spaced-div">Charge cost in €/kWh for desired range: </div>
-
-            <h3>Number of Charges</h3>
-            <div id="chargesRequired" class="spaced-div">TEST</div>
-
-            <h3>Energy</h3>
-            <div id="energyNeededForRange" class="js-test-energy">Energy needed for range: </div>
-        </div>
-        
-
-        <div class="middle">
-            <h1>Until Full (SOC)</h1>
-            <div id="fullCharge" class="spaced-div">100%</div>
-
-            <h3>Charging Time</h3>
-            <div id="chargeTimeForFullCharge" class="spaced-div">Charge time for full charge: </div>
-
-            <h3>Charging Costs</h3>
-            <div id="chargeCostFullCharge" class="spaced-div js-test-cost-fullcharge" >Charge cost in €/kWh for full charge: </div>
-
-            <h3>Energy</h3>
-            <div id="energyToFullCharge">Energy needed for full charge: </div>
-        </div>
-
-
-        <div class="right-side">
-            <h1>State of Charge</h1>
-            <div id="stateOfCharge" class="spaced-div">SOC: </div>
-
-            <h3>Distance</h3>
-            <div id="currentOperatingRange" class="js-test-current-operating-range">Operation range: </div>
-        </div>
+            <div class="left-side">
+                <h1 data-localization="results.distance.title">Distance</h1>
+                <div id="desiredRange" class="spaced-div">TEST</div>
+    
+                <h3 data-localization="results.chargingTime.title">Charging Time</h3>
+                <div id="chargeTimeForRange" class="spaced-div single-option" data-localization="results.chargingTime.forRange">Charge time needed for range: </div>
+            
+                <div id="chargeTimeComparisonContainer" class="multiple-options" style="display: none;">
+                    <div class="optionTextWrapper">
+                        <div id="chargeTimeForRangeOption1" data-localization="results.chargingTime.option1">Charge time for range option 1: </div>
+                        <div class="option-text" data-localization="results.optionText.option1">OPTION 1</div>
+                    </div>
+                    <div id="comparisonBarRangeTime1" class="comparison-bar spaced-div"></div>
+                    
+                    <div class="optionTextWrapper">
+                        <div id="chargeTimeForRangeOption2" data-localization="results.chargingTime.option2">Charge time for range option 2: </div>
+                        <div class="option-text" data-localization="results.optionText.option2">OPTION 2</div>
+                    </div>
+                    <div id="comparisonBarRangeTime2" class="comparison-bar spaced-div"></div>
+                </div>
                
-    </div>`;
+                <h3 data-localization="results.chargingCosts.title">Charging Costs</h3>
+                <div id="chargeCostRange" class="spaced-div single-option" data-localization="results.chargingCosts.forRange">Charge cost in €/kWh for desired range: </div>
+
+                <div id="chargeCostComparisonContainer" class="multiple-options" style="display: none;">
+                    <div class="optionTextWrapper">
+                        <div id="chargeCostForRangeOption1" data-localization="results.chargingCosts.option1">Charge cost in €/kWh for range option 1: </div>
+                        <div class="option-text" data-localization="results.optionText.option1">OPTION 1</div>
+                    </div>
+                    <div id="comparisonBarRangeCost1" class="comparison-bar spaced-div"></div>
+
+                    <div class="optionTextWrapper">
+                        <div id="chargeCostForRangeOption2" data-localization="results.chargingCosts.option2">Charge cost in €/kWh for range option 2: </div>
+                        <div class="option-text" data-localization="results.optionText.option2">OPTION 2</div>
+                    </div>
+                    <div id="comparisonBarRangeCost2" class="comparison-bar spaced-div"></div>
+                </div>
+    
+                <h3 data-localization="results.numberOfCharges.title">Number of Charges</h3>
+                <div id="chargesRequired" class="spaced-div">TEST</div>
+    
+                <h3 data-localization="results.energy.title">Energy</h3>
+                <div id="energyNeededForRange" data-localization="results.energy.forRange">Energy needed for range: </div>
+            </div>
+              
+            <div class="middle">
+                <h1 data-localization="results.untilFull.title">Until Full (SOC)</h1>
+                <div id="fullCharge" class="spaced-div" data-localization="results.untilFull.fullCharge">100%</div>
+    
+                <h3 data-localization="results.untilFull.chargingTime.title">Charging Time</h3>
+                <div id="chargeTimeForFullCharge" class="spaced-div single-option" data-localization="results.untilFull.chargingTime.forFull">Charge time for full charge: </div>
+
+                <div id="chargeTimeComparisonContainerFullCharge" class="multiple-options" style="display: none;">
+                    <div class="optionTextWrapper">
+                        <div id="chargeTimeForFullChargeOption1" data-localization="results.untilFull.chargingTime.option1">Charge time for full charge option 1: </div>
+                        <div class="option-text" data-localization="results.optionText.option1">OPTION 1</div>
+                    </div>
+                    <div id="comparisonBarFullChargeTime1" class="comparison-bar spaced-div"></div>
+
+                    <div class="optionTextWrapper">
+                        <div id="chargeTimeForFullChargeOption2" data-localization="results.untilFull.chargingTime.option2">Charge time for full charge option 2: </div>
+                        <div class="option-text" data-localization="results.optionText.option2">OPTION 2</div>
+                    </div>
+                    
+                    <div id="comparisonBarFullChargeTime2" class="comparison-bar spaced-div"></div>
+                </div>
+    
+                <h3 data-localization="results.untilFull.chargingCosts.title">Charging Costs</h3>
+                <div id="chargeCostFullCharge" class="spaced-div single-option" data-localization="results.untilFull.chargingCosts.forFull">Charge cost in €/kWh for full charge: </div>
+            
+                <div id="chargeCostComparisonContainerFullCharge" class="multiple-options" style="display: none;">
+                    <div class="optionTextWrapper">
+                        <div id="chargeCostForFullChargeOption1" data-localization="results.untilFull.chargingCosts.option1">Charge cost in €/kWh for full charge option 1: </div>
+                        <div class="option-text" data-localization="results.optionText.option1">OPTION 1</div>
+                    </div>
+                    <div id="comparisonBarFullChargeCost1" class="comparison-bar spaced-div"></div>
+
+                    <div class="optionTextWrapper">
+                        <div id="chargeCostForFullChargeOption2" data-localization="results.untilFull.chargingCosts.option2">Charge cost in €/kWh for full charge option 2: </div>
+                        <div class="option-text" data-localization="results.optionText.option2">OPTION 2</div>
+                    </div>
+                    <div id="comparisonBarFullChargeCost2" class="comparison-bar spaced-div"></div>
+                </div>
+    
+                <h3 data-localization="results.untilFull.energy.title">Energy</h3>
+                <div id="energyToFullCharge" data-localization="results.untilFull.energy.forFull">Energy needed for full charge: </div>
+            </div>
+    
+            <div class="right-side">
+                <h1 data-localization="results.stateOfCharge.title">State of Charge</h1>
+                <div id="stateOfCharge" class="spaced-div" data-localization="results.stateOfCharge.soc">SOC: </div>
+    
+                <h3 data-localization="results.operatingRange.title">Distance</h3>
+                <div id="currentOperatingRange" data-localization="results.operatingRange.range">Operation range: </div>
+            </div>
+                   
+        </div>`;
+
   document.body.appendChild(testContainer);
   calculator = new Calculator(BASE_VALUES);
 });
@@ -94,6 +150,69 @@ afterEach(() => {
 // jest.restoreAllMocks();
 // ^^^ The above will fail since the id used in the mock is the last one used inside calculator
 
+describe('test suite: displays max. operating range correctly', () => {
+
+  it('displays valid desired range as max operating range', () => {
+
+    calculator.desiredRange = 275;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('desiredRange').textContent).toBe('275 km');
+  });
+
+  it('displays desired range: 0 km as max operating range: 0 km', () => {
+
+    calculator.desiredRange = 0;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('desiredRange').textContent).toBe('0 km');
+  });
+
+  it('displays desired range: 999 km as max operating range: 999 km', () => {
+
+    calculator.desiredRange = 999;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('desiredRange').textContent).toBe('999 km');
+  });
+});
+
+describe('test suite: calculating charge time for range', () => {
+
+  it('calculates charge time with valid information', () => {
+
+    calculator.stateOfCharge = 40;
+    calculator.desiredRange = 500;
+    calculator.batteryCapacity = 60;
+    calculator.bevEnergyConsumption = 15;
+    calculator.chargerPower = 50;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForRange').textContent).toBe('1 h 1 min');
+  });
+
+  it('displays charge time: 0 when charging is not needed', () => {
+    calculator.stateOfCharge = 100;
+    calculator.desiredRange = 100;
+    calculator.batteryCapacity = 52;
+    calculator.bevEnergyConsumption = 20;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForRange').textContent).toBe('0 min');
+  });
+
+  it('calculates charge time with values containing decimals', () => {
+
+    calculator.stateOfCharge = 20;
+    calculator.desiredRange = 150;
+    calculator.batteryCapacity = 52.5;
+    calculator.bevEnergyConsumption = 13.5;
+    calculator.chargerPower = 7.4;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForRange').textContent).toBe('1 h 19 min');
+  });
+});
 describe('test suite: calculating energy to be charged for required range', () => {
 
   it('calculates energy required with valid information', () => {
@@ -192,10 +311,8 @@ describe('test suite: calculating cost of charging to full', () => {
 
   it('displays cost: 0 when energy based cost is 0', () => {
 
-    calculator.stateOfCharge = 20;
     calculator.pricingModel = 'energy';
     calculator.energyPrice = 0;
-    calculator.batteryCapacity = 57.5;
     calculator.updateCalculations();
 
     expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
@@ -203,11 +320,8 @@ describe('test suite: calculating cost of charging to full', () => {
 
   it('displays cost: 0 when time based cost is 0', () => {
 
-    calculator.stateOfCharge = 20;
     calculator.pricingModel = 'time';
     calculator.energyPrice = 0;
-    calculator.batteryCapacity = 57.5;
-    calculator.chargerPower = 7.4;
     calculator.updateCalculations();
 
     expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
@@ -248,42 +362,7 @@ describe('test suite: calculating cost of charging to full', () => {
 
 });
 
-describe('test suite: calculating charge time for range', () => {
 
-  it('calculates charge time with valid information', () => {
-
-    calculator.stateOfCharge = 40;
-    calculator.desiredRange = 500;
-    calculator.batteryCapacity = 60;
-    calculator.bevEnergyConsumption = 15;
-    calculator.chargerPower = 50;
-    calculator.updateCalculations();
-
-    expect(document.getElementById('chargeTimeForRange').textContent).toBe('1 h 1 min');
-  });
-
-  it('displays charge time: 0 when charging is not needed', () => {
-    calculator.stateOfCharge = 100;
-    calculator.desiredRange = 100;
-    calculator.batteryCapacity = 52;
-    calculator.bevEnergyConsumption = 20;
-    calculator.updateCalculations();
-
-    expect(document.getElementById('chargeTimeForRange').textContent).toBe('0 min');
-  });
-
-  it('calculates charge time with values containing decimals', () => {
-
-    calculator.stateOfCharge = 20;
-    calculator.desiredRange = 150;
-    calculator.batteryCapacity = 52.5;
-    calculator.bevEnergyConsumption = 13.5;
-    calculator.chargerPower = 7.4;
-    calculator.updateCalculations();
-
-    expect(document.getElementById('chargeTimeForRange').textContent).toBe('1 h 19 min');
-  });
-});
 
 describe('test suite: calculating operating range with current battery energy', () => {
 
@@ -300,8 +379,6 @@ describe('test suite: calculating operating range with current battery energy', 
 
   it('displays operating range: 0 when energy consumption is 0', () => {
 
-    calculator.stateOfCharge = 5;
-    calculator.batteryCapacity = 118;
     calculator.bevEnergyConsumption = 0;
     calculator.updateCalculations();
 
@@ -322,8 +399,6 @@ describe('test suite: calculating operating range with current battery energy', 
   it('displays range: 0 when SOC is 0', () => {
 
     calculator.stateOfCharge = 0;
-    calculator.batteryCapacity = 57.5;
-    calculator.bevEnergyConsumption = 13.7;
     calculator.updateCalculations();
 
     expect(document.getElementById('currentOperatingRange').textContent).toContain('0.00 km');
@@ -425,12 +500,8 @@ describe('test suite: calculating charge cost for range', () => {
 
   it('displays cost: 0 when energy based cost is 0', () => {
 
-    calculator.stateOfCharge = 20;
-    calculator.desiredRange = 200;
     calculator.pricingModel = 'energy';
     calculator.energyPrice = 0;
-    calculator.batteryCapacity = 57.5;
-    calculator.bevEnergyConsumption = 20;
     calculator.updateCalculations();
 
     expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
@@ -438,13 +509,8 @@ describe('test suite: calculating charge cost for range', () => {
 
   it('displays cost: 0 when time based cost is 0', () => {
 
-    calculator.stateOfCharge = 20;
-    calculator.desiredRange = 150;
     calculator.pricingModel = 'time';
     calculator.energyPrice = 0;
-    calculator.batteryCapacity = 57.5;
-    calculator.bevEnergyConsumption = 17.5;
-    calculator.chargerPower = 7.4;
     calculator.updateCalculations();
 
     expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
