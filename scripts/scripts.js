@@ -34,8 +34,8 @@ class Calculator {
         this.calcChargeCostRange(false);
         this.calcChargeCostFullCharge(false);
         this.calcOperatingRange();
-        this.getStateOfCharge();
-        this.getDesiredRange();
+        this.setStateOfCharge();
+        this.setDesiredRange();
         
         // Calculate alternative values for comparison if toggle is active
         if(this.alt) {
@@ -80,14 +80,38 @@ class Calculator {
         return operatingRange;
     }
     
-    getStateOfCharge() {
+    setStateOfCharge() {
         this.updateValueForResult(this.stateOfCharge.toFixed(0) + " %", "stateOfCharge");
     }
     
-    getDesiredRange() {
+    setDesiredRange() {
         this.updateValueForResult(this.desiredRange + " km", "desiredRange");
     }
-    
+    getChargerPower() {
+        return this.chargerPower.toFixed(1);
+    }
+    getChargerPowerAlt() {
+        return this.chargerPowerAlt.toFixed(1);
+    }
+    getEnergyPrice() {
+        let model = "";
+        if (this.pricingModel === "energy") {
+            model = "€/kWh";
+        } else if (this.pricingModel === "time") {
+            model = "€/h";
+        }
+        return this.energyPrice.toFixed(2) + " " + model;
+    }
+    getEnergyPriceAlt() {
+        let model = "";
+        if (this.pricingModelAlt === "energy") {
+            model = "€/kWh";
+        } else if (this.pricingModelAlt === "time") {
+            model = "€/h";
+        }
+        return this.energyPriceAlt.toFixed(2) + " " + model;
+    }
+
     calcEnergyNeededForRange(isAlt) {
         const energyNeededForRange = (this.bevEnergyConsumption / 100) * this.desiredRange;
         const currentEnergy = (this.stateOfCharge / 100) * this.batteryCapacity;
@@ -131,8 +155,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult("0 min", "chargeTimeForRange");
                 this.updateValueForResult("0 min", "chargeTimeForRangeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-1");
             } else {
                 this.updateValueForResult("0 min", "chargeTimeForRangeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
             }
             return 0;
         }
@@ -141,8 +167,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult("0 min", "chargeTimeForRange");
                 this.updateValueForResult("0 min", "chargeTimeForRangeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-1");
             } else {
                 this.updateValueForResult("0 min", "chargeTimeForRangeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
             }
             return 0;
         }
@@ -155,15 +183,19 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRange");
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRangeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-1");
             } else {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRangeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
             }
         } else {
             if (!isAlt) {
                 this.updateValueForResult(`${minutes} min`, "chargeTimeForRange");
                 this.updateValueForResult(`${minutes} min`, "chargeTimeForRangeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-1");
             } else {
                 this.updateValueForResult(`${minutes} min`, "chargeTimeForRangeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
             }
         }
         
@@ -178,8 +210,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult("0 min", "chargeTimeForFullCharge");
                 this.updateValueForResult("0 min", "chargeTimeForFullChargeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-2");
             } else {
                 this.updateValueForResult("0 min", "chargeTimeForFullChargeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-2");
             }
             return 0;
         }
@@ -192,15 +226,19 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullCharge");
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullChargeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-2");
             } else {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullChargeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-2");
             }
         } else {
             if (!isAlt) {
                 this.updateValueForResult(`${minutes} min`, "chargeTimeForFullCharge");
                 this.updateValueForResult(`${minutes} min`, "chargeTimeForFullChargeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-2");
             } else {
                 this.updateValueForResult(`${minutes} min`, "chargeTimeForFullChargeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-2");
             }
         }
         
@@ -224,8 +262,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult("0 €", "chargeCostRange");
                 this.updateValueForResult("0 €", "chargeCostForRangeOption1");
+                this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-1");
             } else {
                 this.updateValueForResult("0 €", "chargeCostForRangeOption2");
+                this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-1");
             }
             return 0;
         }
@@ -240,8 +280,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult("0 €", "chargeCostRange");
                 this.updateValueForResult("0 €", "chargeCostForRangeOption1");
+                this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-1");
             } else {
                 this.updateValueForResult("0 €", "chargeCostForRangeOption2");
+                this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-1");
             }
             return 0;
         }
@@ -249,8 +291,10 @@ class Calculator {
         if (!isAlt) {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption1");
+            this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-1");
         } else {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption2");
+            this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-1");
         }
         
         return chargeCost;
@@ -269,8 +313,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult("0 €", "chargeCostFullCharge");
                 this.updateValueForResult("0 €", "chargeCostForFullChargeOption1");
+                this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-2");
             } else {
                 this.updateValueForResult("0 €", "chargeCostForFullChargeOption2");
+                this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-2");
             }
             return 0;
         }
@@ -285,8 +331,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult("0 €", "chargeCostFullCharge");
                 this.updateValueForResult("0 €", "chargeCostForFullChargeOption1");
+                this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-2");
             } else {
                 this.updateValueForResult("0 €", "chargeCostForFullChargeOption2");
+                this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-2");
             }
             return 0;
         }
@@ -294,8 +342,10 @@ class Calculator {
         if (!isAlt) {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption1");
+            this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-2");
         } else {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption2");
+            this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-2");
         }
         
         return chargeCost;

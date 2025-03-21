@@ -58,6 +58,15 @@
 .option-text{
     font-size: 0.5em;
     text-align: right;
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto; /* Push to the right */
+}
+.option-span {
+    font-size: 0.5em;
+    text-align: right;
+    display: inline-flex;
+    margin-left: 5px;
 }
 
 .comparison-bar{
