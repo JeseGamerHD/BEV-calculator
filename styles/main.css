@@ -4,9 +4,42 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100vh;
+    width: 100%;
+    /* overflow-x: hidden; TODO: Temp fix for white space on the right on mobile */
+    /* This is caused by the tooltips*/
     font-family: Arial, Verdana, Tahoma;
 }
 
+.topbar {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 60px 20px 60px;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(4,36,130);
+    background: linear-gradient(180deg, rgba(4,36,130,1) 0%, rgba(0,72,171,1) 100%);
+}
+
+.topbar-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    color: white;
+
+    h3 {
+        margin: 0;
+        font-size: 1.5em;
+    }
+
+    p {
+        font-style: italic;
+        color: lightgray;
+        margin: 0;
+    }
+}
+
+/* TODO Either remove or new styling depending on which approach for tutorial is chosen */
 /* Div containing the whole introduction part */
 .introduction-container {
     display: flex;
@@ -111,6 +144,7 @@ body, html {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    flex: 1; /* Important so there is no empty white-space below the calculator on larger monitors */
     width: 100%;
 }
 
@@ -122,6 +156,7 @@ body, html {
 
 /* Tooltip styling stuff */
 /* TODO: Better version, this can overlow...*/
+/* Currently broken on mobile, see todo on body */
 .tooltip-container {
     position: relative;
     display: inline-block;
