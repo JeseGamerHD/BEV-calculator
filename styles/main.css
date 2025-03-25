@@ -8,6 +8,7 @@ body, html {
     /* overflow-x: hidden; TODO: Temp fix for white space on the right on mobile */
     /* This is caused by the tooltips*/
     font-family: Arial, Verdana, Tahoma;
+    scroll-behavior: smooth;
 }
 
 .topbar {

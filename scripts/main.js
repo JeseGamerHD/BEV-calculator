@@ -71,12 +71,22 @@ document.getElementById("removeChargerPriceComparison").addEventListener("click"
     handleComparisonButtons(event.target);
 });
 
+// TODO: Figure out a better way to animate the add button and the comparison fields
 function handleComparisonButtons(button) {
 
     // ADD BUTTON
     if (button.id === "addChargerPriceComparison") {
-        button.style.display = "none"; // Hide the add button
-        document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
+        button.style.opacity = 0; // Hide the add button
+        button.style.maxHeight = "0px";
+        setTimeout(() => { // Set display to none after the transition (button smoothly fades and height goes to zero)
+            button.style.display = "none"; // Removes it from the document flow, takes no space
+        }, 100);
+        
+        document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation"); // Display the alternate charger & pricing
+        setTimeout(() => { // So scrollIntoView doesnt jump when the above animation is still in progress
+            document.getElementById("chargerPricingAlt-wrapper").scrollIntoView();
+        }, 100);
+
         calculator.toggleComparison();
 
         // Toggle the result options
@@ -85,15 +95,21 @@ function handleComparisonButtons(button) {
         });
         document.querySelectorAll(".multiple-options").forEach((element) => {
             element.style.display = "flex";
-        });
+        });  
     }
 
     // REMOVE BUTTON
     else {
-        document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation");
-        setTimeout(() => { // Give enough time for the above animation to finish (option 2 to disappear), then display the add button:
-            document.getElementById("addChargerPriceComparison").style.display = "inline-block";
-        }, 200);
+        document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation"); // Hide the altenate charger and pricing:
+        
+        // Bring the add button back:
+        let addButton = document.getElementById("addChargerPriceComparison");
+        addButton.style.display = "inline-block"; // Now first set the display
+        setTimeout(() => { // Then begin animating (button fades in and smoothly takes space)
+            addButton.style.opacity = 1;
+            addButton.style.maxHeight = "60px";
+        }, 100);
+
         calculator.toggleComparison();
 
         // Toggle the result options
