@@ -84,9 +84,10 @@
     },
     "chargingTime": {
       "title": "Charging Time",
-      "forRange": "Charge time needed for range: ",
+      "multipleCharges": "(Multiple Charges)",
       "option1": "Charge time for range option 1: ",
-      "option2": "Charge time for range option 2: "
+      "option2": "Charge time for range option 2: ",
+      "notNeeded": "Charging not needed"
     },
     "chargingCosts": {
       "title": "Charging Costs",

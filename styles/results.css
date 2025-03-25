@@ -69,6 +69,20 @@
     margin-left: 5px;
 }
 
+.header-wrapper{
+    display: flex;
+    justify-content:baseline;
+    align-items: baseline;
+}
+.header-span{
+    font-size: 0.8em;
+    color: lightgray;
+    text-align: right;
+    display: inline-flex;
+    margin-left: 5px;
+    display: none;
+}
+
 .comparison-bar{
     height: 10px;
     width: 100%;

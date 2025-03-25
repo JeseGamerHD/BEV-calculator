@@ -149,7 +149,9 @@ class Calculator {
     
     calcChargeTimeForRange(energyToCharge, isAlt) {
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
-        
+        // Get the localization key for "Charging not needed"
+        const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
+
         if (chargerPower === 0) {
             console.log("Error: Cannot calculate charge time for range. Charge power is missing.");
             if (!isAlt) {
@@ -164,12 +166,13 @@ class Calculator {
         }
         
         if (energyToCharge <= 0) {
+            
             if (!isAlt) {
-                this.updateValueForResult("0 min", "chargeTimeForRange");
-                this.updateValueForResult("0 min", "chargeTimeForRangeOption1");
+                this.updateValueForResult(notNeededMessage, "chargeTimeForRange");
+                this.updateValueForResult(notNeededMessage, "chargeTimeForRangeOption1");
                 this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-1");
             } else {
-                this.updateValueForResult("0 min", "chargeTimeForRangeOption2");
+                this.updateValueForResult(notNeededMessage, "chargeTimeForRangeOption2");
                 this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
             }
             return 0;
@@ -179,6 +182,17 @@ class Calculator {
         const hours = Math.floor(chargeTimeForRange);
         const minutes = Math.round((chargeTimeForRange - hours) * 60);
         
+        if (hours === 0 && minutes === 0) {
+            if (!isAlt) {
+                this.updateValueForResult("<1 min", "chargeTimeForRange");
+                this.updateValueForResult("<1 min", "chargeTimeForRangeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-1");
+            } else {
+                this.updateValueForResult("<1 min", "chargeTimeForRangeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
+            }
+            return chargeTimeForRange;
+        }
         if (hours > 0) {
             if (!isAlt) {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRange");
@@ -204,7 +218,9 @@ class Calculator {
     
     calcChargeTimeForFullCharge(energyNeeded, isAlt) {
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
-        
+        // Get the localization key for "Charging not needed"
+        const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
+            
         if (chargerPower === 0) {
             console.log("Error: BEV charge power is 0. Cannot calculate charge time for full charge.");
             if (!isAlt) {
@@ -217,11 +233,34 @@ class Calculator {
             }
             return 0;
         }
-        
+        if (energyNeeded <= 0) {
+            
+            if (!isAlt) {
+                this.updateValueForResult(notNeededMessage, "chargeTimeForFullCharge");
+                this.updateValueForResult(notNeededMessage, "chargeTimeForFullChargeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-2");
+            } else {
+                this.updateValueForResult(notNeededMessage, "chargeTimeForFullChargeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-2");
+            }
+            return 0;
+        }
+
         const chargeTimeForFullCharge = energyNeeded / chargerPower; // in hours
         const hours = Math.floor(chargeTimeForFullCharge);
         const minutes = Math.round((chargeTimeForFullCharge - hours) * 60);
         
+        if (hours === 0 && minutes === 0) {
+            if (!isAlt) {
+                this.updateValueForResult("<1 min", "chargeTimeForFullCharge");
+                this.updateValueForResult("<1 min", "chargeTimeForFullChargeOption1");
+                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-2");
+            } else {
+                this.updateValueForResult("<1 min", "chargeTimeForFullChargeOption2");
+                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-2");
+            }
+            return chargeTimeForFullCharge;
+        }
         if (hours > 0) {
             if (!isAlt) {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullCharge");
@@ -356,20 +395,15 @@ class Calculator {
         const energyNeededForRange = (this.bevEnergyConsumption / 100) * this.desiredRange;
         const energyToCharge = energyNeededForRange - currentEnergy;
 
-        if (energyToCharge <= 0) {
-            this.updateValueForResult(0, "chargesRequired");
-            return 0;
-        }
         
-        if (this.batteryCapacity === 0) {
-            console.log("Error: Battery capacity is 0. Cannot calculate charges required.");
-            this.updateValueForResult("0", "chargesRequired");
-            return 0;
-        } else {
             const chargesRequired = Math.ceil(energyToCharge / this.batteryCapacity);
-            this.updateValueForResult(chargesRequired, "chargesRequired");
+            if (chargesRequired > 1) {
+                document.getElementById("header-span").style.display = "block";
+            } else {
+                document.getElementById("header-span").style.display = "none";
+            }
             return chargesRequired;
-        }
+        
     }
     
     updateComparisonBars(bar1ID, bar2ID, value1ID, value2ID) {
@@ -394,7 +428,8 @@ class Calculator {
         const value2 = this.parseValue(value2Element.textContent);
         
         if (isNaN(value1) || isNaN(value2)) {
-            console.error("Error: Failed to parse values.", { value1, value2 });
+            bar1.style.background = `rgb(255, 0, 255)`;
+            bar2.style.background = `rgb(255, 0, 255)`;
             return;
         }
 
