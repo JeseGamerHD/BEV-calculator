@@ -84,9 +84,10 @@
       },
       "chargingTime": {
         "title": "Latausaika",
-        "forRange": "Tarvittava latausaika matkalle: ",
+        "multipleCharges": "(Useita latauksia)",
         "option1": "Latausaika vaihtoehto 1: ",
-        "option2": "Latausaika vaihtoehto 2: "
+        "option2": "Latausaika vaihtoehto 2: ",
+        "notNeeded": "Latausta ei tarvita"
       },
       "chargingCosts": {
         "title": "Latauskustannus",
