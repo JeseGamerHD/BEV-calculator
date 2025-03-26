@@ -1,4 +1,6 @@
 import Calculator from '../../scripts/scripts.js';
+import fs from 'fs';
+import path from 'path';
 
 const BASE_VALUES = {
   desiredRange: 250,
@@ -18,7 +20,13 @@ let testContainer;
 
 beforeEach(() => {
 
-  testContainer = document.createElement('div');
+  const __dirname = path.dirname(new URL(import.meta.url).pathname);
+  const correctedDirname = __dirname.startsWith('/') ? __dirname.slice(1) : __dirname;
+
+  const html = fs.readFileSync(path.resolve(correctedDirname, '../../prototype.html'), 'utf8');
+  document.body.innerHTML = html;
+
+ /* testContainer = document.createElement('div');
   testContainer.innerHTML = `
         
         <div class="oikea-puoli-sivusta"> 
@@ -123,11 +131,13 @@ beforeEach(() => {
         </div>`;
 
   document.body.appendChild(testContainer);
+  */
   calculator = new Calculator(BASE_VALUES);
 });
 
 afterEach(() => {
-  document.body.removeChild(testContainer);
+  document.body.innerHTML = '';
+ // document.body.removeChild(testContainer);
   calculator = null;
 });
 
