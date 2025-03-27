@@ -4,10 +4,10 @@ export class DropdownInputHandler extends InputField {
 
     #calculator = null;
 
-    constructor(calculator) {
+    constructor(calculator, initialValues) {
         super();
         this.#calculator = calculator;
-        this.setDefaultValues(document.querySelectorAll(".dropdownInput-field"), calculator);
+        this.setDefaultValues(document.querySelectorAll(".dropdownInput-field"), initialValues);
         this.attachEventListeners();
     }
 
@@ -22,6 +22,7 @@ export class DropdownInputHandler extends InputField {
             if (focusoutEvent.target.classList.contains("dropdownInput-field")) {
                 let inputField = focusoutEvent.target;
                 this.cleanUpOnFocusout(inputField, true);
+                this.storeInputValue(inputField.dataset.property, parseFloat(inputField.dataset.value));
             }
         });
 
@@ -32,7 +33,6 @@ export class DropdownInputHandler extends InputField {
                 let dropdownContentID = dropdownField.dataset.options;
                 this.handleInput(dropdownField);
 
-                // TODO: should it?
                 // Close the options if the user starts typing
                 if (document.getElementById(dropdownContentID).classList.contains("animation")) {
                     this.toggleDropdown(dropdownContentID);
@@ -53,8 +53,9 @@ export class DropdownInputHandler extends InputField {
             dropdownField.value = option.textContent;
             dropdownField.dataset.value = option.dataset.value;
 
-            // Update calculations, close dropdown
+            // Update calculations, store data, close dropdown
             this.#calculator.setData(dropdownField.dataset.property, parseFloat(option.dataset.value));
+            this.storeInputValue(dropdownField.dataset.property, parseFloat(option.dataset.value));
             this.toggleDropdown(option.parentElement.id);
         }
         // User clicks on the input field:

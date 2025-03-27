@@ -16,15 +16,23 @@ const BASE_VALUES = {
     energyPriceAlt: 0.2,
     pricingModel: "energy",
     pricingModelAlt: "energy",
-    
+};
+
+// Access saved input data, merge it with BASE_VALUES
+// If some value is not stored base is used.
+// If value is stored, it replaces the base.
+const savedInputData = JSON.parse(localStorage.getItem("inputData")) || {};
+const initialValues = {
+    ...BASE_VALUES,
+    ...savedInputData
 };
 
 // Initialize the calculator and inputs
-const calculator = new Calculator(BASE_VALUES);
-const dropdownInputHandler = new DropdownInputHandler(calculator);
-const numberInputHandler = new NumberInputHandler(calculator);
-const rangeInputHandler = new RangeInputHandler(calculator);
-const toggleInputHandler = new ToggleInputHandler(calculator);
+const calculator = new Calculator(initialValues);
+const dropdownInputHandler = new DropdownInputHandler(calculator, initialValues);
+const numberInputHandler = new NumberInputHandler(calculator, initialValues);
+const rangeInputHandler = new RangeInputHandler(calculator, initialValues);
+const toggleInputHandler = new ToggleInputHandler(calculator, initialValues);
 
 // Initialize the localization manager
 document.addEventListener('DOMContentLoaded', async () => {

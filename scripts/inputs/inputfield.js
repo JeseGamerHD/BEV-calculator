@@ -2,25 +2,28 @@
  */
 export class InputField {
 
-    /** Sets the default values for the given elements based on their data-property. 
+    #defaultValues = null;
+
+    /** Sets the default values for the given elements based on their data-property.
     * @param {NodeList} elements - A List of all the elements that the handler is responsible for.
-    * @param {Calculator} calculator - The calculator object
+    * @param {Object} defaultValues - The object holding the default values that the fields should be initialized with
     */
-    setDefaultValues(elements, calculator) {
+    setDefaultValues(elements, defaultValues) {
+        this.#defaultValues = defaultValues;
+        
         elements.forEach(element => {
-            
             if(element.hasAttribute("data-property")) { // Check if they have a data-property
                 let property = element.dataset.property;
-                if(calculator.hasOwnProperty(element.dataset.property)) { // Check if the calculator's and the element's property matches
-                    element.value = calculator[property];
-                    element.dataset.value = calculator[property];
+                if(defaultValues.hasOwnProperty(element.dataset.property)) { // Check if the defaultValue contains the property set for the element
+                    element.value = defaultValues[property];
+                    element.dataset.value = defaultValues[property];
                 }
                 else {
-                    console.warn(element.id + ": data-property mismatch (or missing from calculator)");
+                    console.warn(element.id + ": data-property mismatch (or missing from defaultValues)");
                 }
             }
             else {
-                console.warn(element.id + ": data-property missing");
+                console.warn(element.id + ": data-property missing from element");
             }
         });
     }
@@ -82,7 +85,6 @@ export class InputField {
         }
     }
 
-    // TODO: Test more later, could still have issues with new approach
     handleDecimalInput(inputField) {
 
         let sanitizedValue = inputField.value.replace(',', '.'); // Replace commas, not properly supported
@@ -111,7 +113,7 @@ export class InputField {
         }
 
         if (newValue >= inputField.min && newValue <= inputField.max) {
-            inputField.value = sanitizedValue; // TODO: Check this especially!
+            inputField.value = sanitizedValue;
             inputField.dataset.value = newValue;
         }
         else if (newValue > inputField.max) {
@@ -142,5 +144,15 @@ export class InputField {
             // Otherwise cleanup value to internal value
             inputField.value = inputField.value !== "" ? inputField.dataset.value : inputField.value; 
         }
+    }
+
+    /**
+    * Updates a value from the initial/default input values and stores it in localStorage inside the "inputData" object
+    * @param {string} property - The property being updated & stored
+    * @param value - The new value for the property
+    */
+    storeInputValue(property, value) {
+        this.#defaultValues[property] = value;
+        localStorage.setItem("inputData", JSON.stringify(this.#defaultValues));
     }
 }

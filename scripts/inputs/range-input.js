@@ -4,15 +4,15 @@ export class RangeInputHandler extends InputField {
 
     #calculator = null;
 
-    constructor(calculator) {
+    constructor(calculator, initialValues) {
         super();
         this.#calculator = calculator;
         let rangeInputSliders = document.querySelectorAll(".rangeInput");
         let rangeInputFields = document.querySelectorAll(".rangeInput-field");
 
         // Set base values
-        this.setDefaultValues(rangeInputSliders, calculator);
-        this.setDefaultValues(rangeInputFields, calculator);
+        this.setDefaultValues(rangeInputSliders, initialValues);
+        this.setDefaultValues(rangeInputFields, initialValues);
         
         // Initialize slider progress
         rangeInputSliders.forEach(slider => {
@@ -53,6 +53,12 @@ export class RangeInputHandler extends InputField {
             if(focusoutEvent.target.classList.contains("rangeInput-field")){
                 let inputField = focusoutEvent.target;
                 this.cleanUpOnFocusout(inputField, false);
+                this.storeInputValue(inputField.dataset.property, parseFloat(inputField.dataset.value));
+            }
+
+            if(focusoutEvent.target.classList.contains("rangeInput")) {
+                let slider = focusoutEvent.target;
+                this.storeInputValue(slider.dataset.property, parseFloat(slider.value));
             }
         });
     }
