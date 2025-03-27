@@ -8,7 +8,6 @@ body, html {
     /* overflow-x: hidden; TODO: Temp fix for white space on the right on mobile */
     /* This is caused by the tooltips*/
     font-family: Arial, Verdana, Tahoma;
-    scroll-behavior: smooth;
 }
 
 .topbar {
@@ -147,6 +146,7 @@ body, html {
     flex-wrap: wrap;
     flex: 1; /* Important so there is no empty white-space below the calculator on larger monitors */
     width: 100%;
+    max-width: 100vw;
 }
 
 @media screen and (max-width: 900px) {
@@ -213,14 +213,18 @@ body, html {
    
    /* Move tooltip to below the (?) */
     .tooltip-container {
+        width: 100%;
+
         .tooltip {
             padding: 10px;
             margin-top: 15px;
             margin-left: 0;
             transform: translateX(-50%);
             top: 100%;
-            left: 50%;
+            left: 13px;
             right: 0;
+            width: 200px;
+            max-width: 80vw;
         }
     
         .tooltip::after {
