@@ -19,8 +19,8 @@ afterEach(() => {
 describe('test suite: testing input handling', () => {
     it('changes special characters automatically', async () => {
 
-        let inputFieldHandler = new InputField();
-        let inputElement = document.getElementById('testInputField');
+        const inputFieldHandler = new InputField();
+        const inputElement = document.getElementById('testInputField');
 
         inputElement.addEventListener('input', () => {
             inputFieldHandler.handleInput(inputElement);
@@ -32,8 +32,8 @@ describe('test suite: testing input handling', () => {
     });
 
     it('handles normal input', async () => {
-        let inputField = new InputField();
-        let inputElement = document.getElementById('testInputField');
+        const inputField = new InputField();
+        const inputElement = document.getElementById('testInputField');
 
         inputElement.addEventListener('input', () => {
             inputField.handleInput(inputElement);
@@ -45,8 +45,8 @@ describe('test suite: testing input handling', () => {
 
     it('handles input containing special characters before numbers', async () => {
 
-        let inputField = new InputField();
-        let inputElement = document.getElementById('testInputField');
+        const inputField = new InputField();
+        const inputElement = document.getElementById('testInputField');
 
         inputElement.addEventListener('input', () => {
             inputField.handleInput(inputElement);
@@ -58,8 +58,8 @@ describe('test suite: testing input handling', () => {
 
     it('handles input containing alphabets', async () => {
 
-        let inputField = new InputField();
-        let inputElement = document.getElementById('testInputField');
+        const inputField = new InputField();
+        const inputElement = document.getElementById('testInputField');
 
         inputElement.addEventListener('input', () => {
             inputField.handleInput(inputElement);
@@ -71,8 +71,8 @@ describe('test suite: testing input handling', () => {
 
     it('handles input containing alphabets before numbers', async () => {
 
-        let inputField = new InputField();
-        let inputElement = document.getElementById('testInputField');
+        const inputField = new InputField();
+        const inputElement = document.getElementById('testInputField');
 
         inputElement.addEventListener('input', () => {
             inputField.handleInput(inputElement);
@@ -84,8 +84,8 @@ describe('test suite: testing input handling', () => {
 
     it('handles input containing negative values', async () => {
 
-        let inputField = new InputField();
-        let inputElement = document.getElementById('testInputField');
+        const inputField = new InputField();
+        const inputElement = document.getElementById('testInputField');
 
         inputElement.addEventListener('input', () => {
             inputField.handleInput(inputElement);
