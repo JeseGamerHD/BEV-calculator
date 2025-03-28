@@ -14,6 +14,9 @@
     white-space: nowrap;  
 }
 
+.oikea-puoli-sivusta h5{
+    font-size: clamp(0.8rem, 1.2vw, 1.5em);
+}
 
 .left-side, .middle, .right-side{
     display: flex;
@@ -43,7 +46,14 @@
 }
 #desiredRange, #fullCharge, #stateOfCharge{
     font-size: 3em;
+    font-weight: bold;
 }
+
+#currentOperatingRange, #energyToFullCharge, #energyNeededForRange{
+    font-size: larger;
+    font-weight: bold;
+}
+
 
 .multiple-options{
     flex-direction: column;
@@ -91,16 +101,13 @@
 }
 
 .left-side{
-    background: rgb(56,140,204);
-    background: linear-gradient(165deg, rgba(56,140,204,1) 0%, rgba(64,84,180,1) 100%);
+    background: linear-gradient(165deg, rgb(56,140,204) 0%, rgb(64,84,180) 100%);
 }
 .middle{
-    background: rgb(56,108,172);
-    background: linear-gradient(165deg, rgba(56,108,172,1) 0%, rgba(56,60,156,1) 100%);
+    background: linear-gradient(165deg, rgb(40,76,124) 0%, rgb(48,44,116) 100%);
 }
 .right-side{
-    background: rgb(64,100,188);
-    background: linear-gradient(165deg, rgba(64,100,188,1) 0%, rgba(64,52,172,1) 100%);
+    background: linear-gradient(165deg, rgb(64,100,188) 0%, rgb(64,52,172,1) 100%);
 }
 
 .spaced-div{

@@ -429,22 +429,22 @@ class Calculator {
         
         if (isNaN(value1) || isNaN(value2)) {
             bar1.style.background = `rgb(255, 0, 255)`;
-            bar2.style.background = `rgb(255, 0, 255)`;
+            bar2.style.background = `rgb(208,252,68)`;
             return;
         }
 
         if (value1 > value2 && value1 !== 0) {
             const bar2Width = (value2 / value1) * 100;
             bar1.style.background = `#ff00ff`;
-            bar2.style.background = `linear-gradient(to right, rgb(255, 0, 255) 0%,rgb(255, 0, 255) ${bar2Width}%, rgb(0, 83, 151) ${bar2Width}%, rgb(0, 83, 151) 100%)`;
+            bar2.style.background = `linear-gradient(to right, rgb(208,252,68) 0%,rgb(208,252,68) ${bar2Width}%, rgb(0, 83, 151) ${bar2Width}%, rgb(0, 83, 151) 100%)`;
         } else if (value1 < value2 && value2 !== 0) {
             const bar1Width = (value1 / value2) * 100;
             bar1.style.background = `linear-gradient(to right, rgb(255, 0, 255) 0%,rgb(255, 0, 255) ${bar1Width}%, rgb(0, 83, 151) ${bar1Width}%, rgb(0, 83, 151) 100%)`;
-            bar2.style.background = `#ff00ff`;
+            bar2.style.background = `#D0FC44`;
         } else {
             // If the values are equal or both are 0, fill both bars to the same color
             bar1.style.background = `rgb(255, 0, 255)`;
-            bar2.style.background = `rgb(255, 0, 255)`;
+            bar2.style.background = `rgb(208,252,68)`;
         }
     }
     
