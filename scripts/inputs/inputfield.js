@@ -1,4 +1,6 @@
 /** Base class for all input components that contain an `<input>` field.
+ * This class **does not** attach event listeners, each input component should attach their own listeners
+ * in order utilize most methods in this class.
  */
 export class InputField {
 
