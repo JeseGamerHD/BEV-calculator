@@ -34,11 +34,11 @@ const numberInputHandler = new NumberInputHandler(calculator, initialValues);
 const rangeInputHandler = new RangeInputHandler(calculator, initialValues);
 const toggleInputHandler = new ToggleInputHandler(calculator, initialValues);
 
+const localizationManager = new LocalizationManager();
 // Initialize the localization manager
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // Initialize localization manager and load language
-        const localizationManager = new LocalizationManager();
         await localizationManager.initializeLanguage();
 
         // Set up language switcher if it exists
@@ -130,4 +130,76 @@ function handleComparisonButtons(button) {
     }
 }
 
+// ** TOOLTIP FUNCTIONALITY **
+const tooltip = document.getElementById("tooltip");
+const elementsWithTooltip = document.querySelectorAll(".tooltip-container");
 
+elementsWithTooltip.forEach(element => element.addEventListener("mouseover", (e) => {
+    handleTooltipActivation(e.target); // Pass element being hovered over => the (?) cicle
+}));
+
+// ^^ Mobile support:
+elementsWithTooltip.forEach(element => element.addEventListener("touchstart", (e) => {
+    handleTooltipActivation(e.target);
+}));
+
+elementsWithTooltip.forEach(element => element.addEventListener("mouseout", () => {
+    hideTooltip();
+}));
+
+function handleTooltipActivation(element) {
+   
+    const tooltipKey = element.getAttribute("data-tooltipkey"); // Each tooltip-container should define a key for localization so the text can be set
+    let elementBounds = element.getBoundingClientRect();
+    let tooltipBounds = tooltip.parentElement.getBoundingClientRect();
+
+    let left = elementBounds.left - tooltipBounds.left + (elementBounds.width / 2);
+    let top = elementBounds.top - tooltipBounds.top + (elementBounds.height / 2);
+
+    let position = {
+        top: "auto",
+        right: "auto",
+        bottom: "auto",
+        left: "auto"
+    };
+
+    // Offset the tooltip based on which quadrant of the screen the element being hovered is in
+    // This is to prevent it from overflowing outside of the page
+    const offSet = 10; // TODO: Maybe adjust? Make it more dynamic?
+
+    // Check if element is in the top or bottom half of the screen
+    if (top > tooltipBounds.height / 2) { // Bottom half
+        position.bottom = `${tooltipBounds.height - top + offSet}px`;
+    }
+    else { // Top half
+        position.top = `${top + offSet}px`;
+    }
+
+    // Check if the element is in the left or right half of the screen
+    if (left > tooltipBounds.width / 2) { // Right half
+        position.right = `${tooltipBounds.width - left + offSet}px`;
+    }
+    else { // Left half
+        position.left = `${left + offSet}px`;
+    }
+
+    showTooltip(tooltipKey, position);
+}
+
+function showTooltip(tipKey, position) {
+    // call localization to get the new text using the key
+    tooltip.textContent = localizationManager.getText(tipKey);
+
+    // Adjust position
+    tooltip.style.top = position.top;
+    tooltip.style.right = position.right;
+    tooltip.style.bottom = position.bottom;
+    tooltip.style.left = position.left;
+
+    // Display it
+    tooltip.style.display = "flex";
+}
+
+function hideTooltip() {
+    tooltip.style.display = "none";
+}

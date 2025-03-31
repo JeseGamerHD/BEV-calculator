@@ -61,9 +61,7 @@
                 <div class="numberInput-container">
                     <div class="numberInput-title-wrapper">  
                         <h3 class="numberInput-title" data-localization="inputs.distance.title">Distance (km)</h3>
-                        <div class="tooltip-container">
-                            <div class="tooltip" data-localization="inputs.distance.tooltip">The distance to your destination / The total length of your trip.</div>
-                        </div>
+                        <div class="tooltip-container" data-tooltipkey="inputs.distance.tooltip"></div>
                     </div>
                     <div class="numberInput-field-wrapper">
                         <input class="numberInput-field" id="desiredRange-input" data-type="integer" type="text" min="0" max="9999" data-value="" data-property="desiredRange" data-localization-placeholder="inputs.distance.placeholder" placeholder="Enter target range (optional)">
@@ -147,15 +145,11 @@
                     <div class="toggleInput-title-container">
                         <div class="toggle-title-wrapper left-title">
                             <h3 data-localization="inputs.price.title">Price</h3>
-                            <div class="tooltip-container">
-                                <div class="tooltip" data-localization="inputs.price.tooltip">The price of electricity or the hourly rate set by the charger operator.</div>
-                            </div>
+                            <div class="tooltip-container" data-tooltipkey="inputs.price.tooltip"></div>
                         </div>
                         <div class="toggle-title-wrapper right-title">
                             <h3 data-localization="inputs.pricingModel.title">Pricing model</h3>
-                            <div class="tooltip-container">
-                                <div class="tooltip" data-localization="inputs.pricingModel.tooltip">What the price is based on: per kilowatt hour or per hour of use. With €/kWh the charging costs are based on total energy charged. With €/h they are based on charging time.</div>
-                            </div>
+                            <div class="tooltip-container" data-tooltipkey="inputs.pricingModel.tooltip"></div>
                         </div>
                     </div>
 
@@ -207,15 +201,11 @@
                         <div class="toggleInput-title-container">
                             <div class="toggle-title-wrapper left-title">
                                 <h3 data-localization="inputs.price.title">Price</h3>
-                                <div class="tooltip-container">
-                                    <div class="tooltip" data-localization="inputs.price.tooltip">The price of electricity or the hourly rate set by the charger operator.</div>
-                                </div>
+                                <div class="tooltip-container" data-tooltipkey="inputs.price.tooltip"></div>
                             </div>
                             <div class="toggle-title-wrapper right-title">
                                 <h3 data-localization="inputs.pricingModel.title">Pricing model</h3>
-                                <div class="tooltip-container">
-                                    <div class="tooltip" data-localization="inputs.pricingModel.tooltip">What the price is based on: per kilowatt hour or per hour of use. With €/kWh the charging costs are based on total energy charged. With €/h they are based on charging time.</div>
-                                </div>
+                                <div class="tooltip-container" data-tooltipkey="inputs.pricingModel.tooltip"></div>
                             </div>
                         </div>
                         <div class="toggleInput-wrapper">
@@ -343,6 +333,9 @@
 
     </div>
     <!-- END OF CALCULATOR CONTAINER -->
+
+    <!--All tooltip containers utilize the same html element, a script just changes its position and content -->
+    <div style="display: none;" id="tooltip" data-localization="inputs.pricingModel.tooltip"></div>
 
 </body>
 </html>

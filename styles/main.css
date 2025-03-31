@@ -166,10 +166,34 @@ body, html {
     }
 }
 
-/* Tooltip styling stuff */
-/* TODO: Better version, this can overlow...*/
-/* Currently broken on mobile, see todo on body */
+/* The (?) circle */
 .tooltip-container {
+    position: relative;
+    display: inline-block;
+    
+    background-image: url("/images/icons/HelpIcon.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+    height: 1.5em;
+    width: 1.5em;
+    cursor: pointer;
+}
+
+/* Position is dynamically set using javascript */
+#tooltip {
+    position: absolute;
+    border-radius: 6px;
+    padding: 20px;
+    max-width: 30vh;
+    z-index: 9999;
+    color: white;
+    background: linear-gradient(45deg, rgba(29,125,255,1) 0%, rgba(72,214,255,1) 100%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Old hardcoded version of tooltips, commented incase needed */
+/* .tooltip-container {
     position: relative;
     display: inline-block;
     
@@ -222,8 +246,7 @@ body, html {
 
 @media screen and (max-width: 900px) {
    
-   /* Move tooltip to below the (?) */
-    .tooltip-container {
+    .tooltip-container { Move tooltip to below the (?)
         width: 100%;
 
         .tooltip {
@@ -239,11 +262,11 @@ body, html {
         }
     
         .tooltip::after {
-            bottom: 100%;  /* At the top of the tooltip */
+            bottom: 100%;  At the top of the tooltip
             left: 50%;
             top: -10px;
             transform: translateX(-50%);
             border-color: transparent transparent  rgba(29,125,255,1) transparent;
         }
     }
-}
+} */

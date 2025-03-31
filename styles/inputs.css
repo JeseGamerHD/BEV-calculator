@@ -31,6 +31,10 @@
         /* max-height: 0; */
         transform: scale(0);
         transition: all 0.2s ease-in;
+        z-index: 998; /* transform creates a new stacking context meaning it messes up the stacking of the elements */
+        /* In this case it would mean that the tooltip inside the alternative charger&pricing would render under the results */
+        /* Adding z-index to this seems to fix it */
+        /* ^^ value should be below the one inside a tooltip in main.css (999) to prevent issues where tooltips outside this wrapper render below it */
     }
 
     .chargerPricingAlt-wrapper.animation {
