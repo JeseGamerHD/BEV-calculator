@@ -1,26 +1,31 @@
 /** Base class for all input components that contain an `<input>` field.
+ * This class **does not** attach event listeners, each input component should attach their own listeners
+ * in order utilize most methods in this class.
  */
 export class InputField {
 
-    /** Sets the default values for the given elements based on their data-property. 
+    #defaultValues = null;
+
+    /** Sets the default values for the given elements based on their data-property.
     * @param {NodeList} elements - A List of all the elements that the handler is responsible for.
-    * @param {Calculator} calculator - The calculator object
+    * @param {Object} defaultValues - The object holding the default values that the fields should be initialized with
     */
-    setDefaultValues(elements, calculator) {
+    setDefaultValues(elements, defaultValues) {
+        this.#defaultValues = defaultValues;
+        
         elements.forEach(element => {
-            
             if(element.hasAttribute("data-property")) { // Check if they have a data-property
                 let property = element.dataset.property;
-                if(calculator.hasOwnProperty(element.dataset.property)) { // Check if the calculator's and the element's property matches
-                    element.value = calculator[property];
-                    element.dataset.value = calculator[property];
+                if(defaultValues.hasOwnProperty(element.dataset.property)) { // Check if the defaultValue contains the property set for the element
+                    element.value = defaultValues[property];
+                    element.dataset.value = defaultValues[property];
                 }
                 else {
-                    console.warn(element.id + ": data-property mismatch (or missing from calculator)");
+                    console.warn(element.id + ": data-property mismatch (or missing from defaultValues)");
                 }
             }
             else {
-                console.warn(element.id + ": data-property missing");
+                console.warn(element.id + ": data-property missing from element");
             }
         });
     }
@@ -84,10 +89,10 @@ export class InputField {
 
     handleDecimalInput(inputField) {
 
-        let normalizedValue = inputField.value.replace(',', '.'); // Replace commas, not properly supported
-        let sanitizedValue = normalizedValue.replace(/[^0-9.]/g, ''); // Remove any NaN values
+        let sanitizedValue = inputField.value.replace(',', '.'); // Replace commas, not properly supported
+        sanitizedValue = sanitizedValue.replace(/[^0-9.]/g, ''); // Remove any NaN values
         
-        let firstDotIndex = sanitizedValue.indexOf(".")
+        let firstDotIndex = sanitizedValue.indexOf(".");
         if(firstDotIndex !== -1) {
             // If the decimal has multiple dots: 0..334...44
             // replace the extra dots with '' and then combine the result with the value up until the first dot.
@@ -96,14 +101,21 @@ export class InputField {
             sanitizedValue = sanitizedValue.substring(0, firstDotIndex + 1) + sanitizedValue.substring(firstDotIndex + 1).replace('.', '');
         }
 
+        let i = 0; // This removes extra zeros at the start by counting until the "." or a 1-9
+        while (i < sanitizedValue.length - 1 && sanitizedValue[i] === '0' && sanitizedValue[i + 1] !== '.') {
+            i++;
+        }
+        sanitizedValue = sanitizedValue.substring(i); // Now "0" and "0." can be typed, but not "0023" or "00.23"
+
+        
         let newValue = parseFloat(sanitizedValue);
-        if (isNaN(newValue)) { // Technically not needed, but for safety
+        if (isNaN(newValue)) { // sanitizedValue can be empty, which leads to NaN
             inputField.value = inputField.dataset.value;
             return;
         }
 
-        inputField.value = sanitizedValue; // So that decimal dot is visible, gets removed when focus is lost if user leaves it at X. etc
         if (newValue >= inputField.min && newValue <= inputField.max) {
+            inputField.value = sanitizedValue;
             inputField.dataset.value = newValue;
         }
         else if (newValue > inputField.max) {
@@ -113,5 +125,36 @@ export class InputField {
         else {
             inputField.dataset.value = inputField.min;
         }
+    }
+
+    /**
+    * Cleans up values by setting them to the ```element.dataset.value```.
+    * This is due to some fields potentially allowing "0." and to ensure "0023" or "00.234" are cleaned up properly
+    * 
+    * The method should be called after focus is lost on a field since input handling should
+    * set ```element.dataset.value``` to only valid clean values (element.value is not as strict at input handling)
+    * 
+    * @param {HTMLInputElement} inputField - The input element that triggered the event
+    * @param {boolean} allowEmpty - Whether the field is allowed to have an empty element.value
+    */
+    cleanUpOnFocusout(inputField, allowEmpty) {   
+        if(!allowEmpty) {
+            inputField.value = inputField.dataset.value;
+        }
+        else {
+            // If the field is empty, don't change value
+            // Otherwise cleanup value to internal value
+            inputField.value = inputField.value !== "" ? inputField.dataset.value : inputField.value; 
+        }
+    }
+
+    /**
+    * Updates a value from the initial/default input values and stores it in localStorage inside the "inputData" object
+    * @param {string} property - The property being updated & stored
+    * @param value - The new value for the property
+    */
+    storeInputValue(property, value) {
+        this.#defaultValues[property] = value;
+        localStorage.setItem("inputData", JSON.stringify(this.#defaultValues));
     }
 }

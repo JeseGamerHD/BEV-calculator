@@ -27,10 +27,14 @@
 
     /* The new pair of charge power & price added to comparison*/
     .chargerPricingAlt-wrapper {
-        visibility: collapse;
-        max-height: 0;
+        visibility: none;
+        /* max-height: 0; */
         transform: scale(0);
         transition: all 0.2s ease-in;
+        z-index: 998; /* transform creates a new stacking context meaning it messes up the stacking of the elements */
+        /* In this case it would mean that the tooltip inside the alternative charger&pricing would render under the results */
+        /* Adding z-index to this seems to fix it */
+        /* ^^ value should be below the one inside a tooltip in main.css (999) to prevent issues where tooltips outside this wrapper render below it */
     }
 
     .chargerPricingAlt-wrapper.animation {
@@ -47,6 +51,7 @@
         width: 33%;
         min-width: 130px;
         height: 3em;
+        overflow: hidden;
 
         border: none;
         border-radius: 25px;
@@ -68,6 +73,11 @@
     .filler {
         flex: 1;
     }
+
+    /*TODO: Maybe scale font a bit? */
+    /* h3 {
+        font-size: clamp(0.95em, min(1vw, 1.17em), 1.17em);
+    } */
 }
 
 /* MOBILE SCREENS, set the container styling, rest will follow */
@@ -90,6 +100,10 @@ input[type=text], input[type=number] {
 
 input::placeholder {
     font-weight: normal;
+}
+
+input[type=text]:focus, input[type=number]:focus {
+    outline: 2px solid var(--text-color-inputs);
 }
 
 /* NUMBER INPUT STYLING (BASIC INPUT FIELDS) */
@@ -144,6 +158,8 @@ input::placeholder {
 
         display: flex;
         flex-direction: row;
+        width: min-content; /* Needed so focus-within trick works */
+        overflow: hidden;
         
         .rangeInput-field {
             display: flex;
@@ -155,10 +171,6 @@ input::placeholder {
             color: var(--text-color-inputs);
     
             padding: 10px 0 10px 0px;
-        }
-    
-        .rangeInput-field:focus {
-            outline: none;
         }
         
         .rangeInput-field-symbol {
@@ -176,6 +188,13 @@ input::placeholder {
     
             padding: 10px 10px 10px 0;
         }
+    }
+
+    /* When the input field inside the wrapper gets focus, create an outline */
+    /* for both the input and the symbol span */
+    .rangeInput-field-wrapper:focus-within {
+        outline: 2px solid var(--text-color-inputs);
+        border-radius: 5px;
     }
 
     .rangeInput {
@@ -257,16 +276,26 @@ input::placeholder {
 
         /* The button which removes the alternate pair of charger power + price */
         #removeChargerPriceComparison {
-            color: var(--text-color-inputs);
+            color: red;
             background-color: var(--input-area-bg);
             border: none;
+            font-size: medium;
             font-weight: bold;
             cursor: pointer;
             padding-left: 10px;
+
+            img {
+                width: 16px;
+                object-fit: cover;
+            }
         }
 
         #removeChargerPriceComparison:hover {
-            color: var(--text-color-inputs-hover);
+            color: rgb(153, 0, 0);
+
+            img {
+                filter: brightness(0.5);
+            }
         }
     }
 
@@ -295,6 +324,13 @@ input::placeholder {
             .dropdown-option:hover {
                 background-color: #85cbfad5;
             }
+
+            .dropdown-tip {
+                margin-bottom: 5px;
+                margin-left: 10px;
+                font-style: italic;
+                font-weight: bold;
+            }
         }
 
         .dropdown-content.animation {
@@ -308,90 +344,109 @@ input::placeholder {
             border-radius: 5px;
             background-color: rgba(215, 215, 215, 0.546);
             touch-action: manipulation;
+            z-index: 10;
+            /* scrollbar would otherwise be on top of the outline on focus */
+            /* alternative way is to add some margin etc */
         }
     }
 }
+
 /* TOGGLE INPUT STYLING */
 .toggleInput-container {
     display: flex;
     flex-direction: column;
     width: 100%;
 
-    .toggleInput-title-wrapper {
-        display: flex;
-        align-items: center;
-        column-gap: 10px;
-    }
-
-    .toggleInput-wrapper {
-        margin-top: 10px;
-        display: flex;
-        flex-direction: row;
-        column-gap: 20px;
-    }
-
     h3 {
         margin: 0;
     }
+}
 
-    .toggleInput-field {
-        width: 33%;
-        height: 35px;
-        border: none;
-        border-radius: 5px;
-        color: var(--text-color-inputs);
-    }
+.toggleInput-title-container {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
 
-    .toggleInput-switch {
-        position: relative;
-        width: 66%;
-        border-radius: 25px;
-        background: linear-gradient(45deg, rgba(29,125,255,1) 0%, rgba(72,214,255,1) 100%);
-        cursor: pointer;
-        user-select: none;
-        margin-right: auto;
-        touch-action: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-    
-    .toggleInput-track {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .toggleInput-thumb {
-        position: absolute;
-        width: 45%;
-        height: 80%;
-        border-radius: 25px;
-        background-color: white;
-        transition: left 0.2s ease;
-    }
-    
-    .toggleInput-content {
-        display: flex;
-        align-items: center;
-        justify-content: center;       
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-    }
-    
-    /* Unselected option */
-    .toggle-option {
-        text-align: center;
-        width: 50%;
-        color: #000000;
-        padding: 0 10px;
-    }
-    
-    /* Selected option */
-    .toggle-option.active {
-        color: var(--text-color-inputs);
-        font-weight: bold;
-    }
+.toggle-title-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.left-title {
+    width: 33%;
+    padding-right: 20px;
+}
+
+.right-title {
+    width: 66%;
+}
+
+.toggleInput-wrapper {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+}
+
+.toggleInput-field {
+    width: 33%;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    color: var(--text-color-inputs);
+}
+
+.toggleInput-switch {
+    position: relative;
+    width: 66%;
+    border-radius: 25px;
+    background: linear-gradient(45deg, rgba(29,125,255,1) 0%, rgba(72,214,255,1) 100%);
+    cursor: pointer;
+    user-select: none;
+    margin-right: auto;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.toggleInput-track {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.toggleInput-thumb {
+    position: absolute;
+    width: 45%;
+    height: 80%;
+    border-radius: 25px;
+    background-color: white;
+    transition: left 0.2s ease;
+}
+
+.toggleInput-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;       
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+/* Unselected option */
+.toggle-option {
+    text-align: center;
+    width: 50%;
+    color: #000000;
+    padding: 0 10px;
+}
+
+/* Selected option */
+.toggle-option.active {
+    color: var(--text-color-inputs);
+    font-weight: bold;
 }
