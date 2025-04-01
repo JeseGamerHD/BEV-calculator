@@ -38,6 +38,36 @@ const localizationManager = new LocalizationManager();
 // Initialize the localization manager
 document.addEventListener('DOMContentLoaded', async () => {
     try {
+        // Get the start button and overlay elements
+        const startButton = document.getElementById('start-calculator');
+        const infoButton = document.getElementById('first-time-info-button');
+        const firstTimeOverlay = document.querySelector('.first-time-use');
+        const resultsContent = document.querySelector('.results-content');
+        // Check if this is the user's first visit
+        const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
+        
+        // If user has visited before, hide the overlay immediately
+        if (hasVisitedBefore === 'true') {
+            firstTimeOverlay.style.display = 'none';
+            resultsContent.style.display = 'flex';
+        }
+        // Add click handler to the start button
+        if (startButton) {
+            startButton.addEventListener('click', function() {
+                    firstTimeOverlay.style.display = 'none';
+                    resultsContent.style.display = 'flex'; 
+
+                    // Store in localStorage that user has visited
+                    localStorage.setItem('hasVisitedBefore', 'true');
+            });
+        }
+        if (infoButton) {
+            infoButton.addEventListener('click', function() {
+                firstTimeOverlay.style.display = 'flex';
+                resultsContent.style.display = 'none'; 
+            });
+        }
+
         // Initialize localization manager and load language
         await localizationManager.initializeLanguage();
 

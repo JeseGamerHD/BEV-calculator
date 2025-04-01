@@ -93,7 +93,9 @@
         "title": "Latauskustannus",
         "forRange": "Latauskustannukset €/kWh halutulle matkalle: ",
         "option1": "Latauskustannukset €/kWh vaihtoehto 1: ",
-        "option2": "Latauskustannukset €/kWh vaihtoehto 2: "
+        "option2": "Latauskustannukset €/kWh vaihtoehto 2: ",
+        "priceNotSet": "Hintaa ei asetettu",
+        "chargerNotSet": "Laturin tehoa ei asetettu"
       },
       "numberOfCharges": {
         "title": "Latausten määrä"
@@ -140,5 +142,13 @@
       "batteryCapacity": "Virhe: Akun kapasiteetti on 0. Latausten määrää ei voida laskea.",
       "chargingPower": "Virhe: Latausaikaa matkalle ei voida laskea. Latausteho puuttuu.",
       "pricingModel": "Virhe: Latauskustannuksia täyteen lataukseen ei voida laskea. Hinnoittelumalli puuttuu."
-    }
+    },
+  "firstUse": {
+  "title": "Tervetuloa",
+  "description": "Budjetoi sähköautoiluasi helposti",
+  "step1": "Aloita syöttämällä auton tämänhetkinen akun varaus ja akun kapasiteett",
+  "step2": "Jos haluat laskea arvoja tietylle matkalle, syötä lisäksi matkan pituus ja auton energian kulutus",
+  "step3": "Latauksia voi vertailla eri lataustehoilla ja hinnoilla valitsemalla “Lisää vertailu”",
+  "startButton": "Aloita käyttö"
+}
   }
