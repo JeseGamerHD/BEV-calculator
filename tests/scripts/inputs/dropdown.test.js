@@ -24,6 +24,7 @@ const initialValues = {
 };
 
 let calculator;
+let html;
 
 beforeAll(() => {
 
@@ -32,11 +33,16 @@ beforeAll(() => {
   const htmlPath = path.resolve(currentDirectory, "prototype.html");
 
   //Reads the contents of prototype.html and adds it to DOM body
-  const html = fs.readFileSync(htmlPath, "utf8");
+  html = fs.readFileSync(htmlPath, "utf8");
   document.body.innerHTML = html;
 
   calculator = new Calculator(initialValues);
   const dropdownInputHandler = new DropdownInputHandler(calculator, initialValues);
+
+});
+
+afterEach(() => {
+  document.body.innerHTML = html; 
 });
 
 describe('test suite: testing dropdown inputs',  () => {
@@ -44,11 +50,9 @@ describe('test suite: testing dropdown inputs',  () => {
   it('selects an option from dropdown menu', async () => {
 
     const dropdownButton = document.querySelector(('[data-options="batteryCapacity-options"]'));
-
     await userEvent.click(dropdownButton);
 
     const option = document.querySelector(('.dropdown-option[data-value="30"]'));
-
     await userEvent.click(option);
   
     expect((document.getElementById('batteryCapacity-input')).value).toBe('Small Batteries (30 kWh)');
@@ -57,29 +61,57 @@ describe('test suite: testing dropdown inputs',  () => {
   it('lets user enter a large number', async () => {
     
     const dropdownButton = document.querySelector(('[data-options="batteryCapacity-options"]'));
-
     await userEvent.click(dropdownButton);
 
     const inputField = document.getElementById('batteryCapacity-input');
+    await userEvent.type(inputField, '9999' );
 
-    await userEvent.type(inputField, '9999' )
-    expect((document.getElementById('batteryCapacity-input')).value).toBe('9999');
+    expect(inputField.value).toBe('9999');
   });
 
-  //TODO: Figure out why the test below fails. Is it because saving the values?
   
-  /*
   it('lets user enter 0', async () => {
     
     const dropdownButton = document.querySelector(('[data-options="batteryCapacity-options"]'));
-
     await userEvent.click(dropdownButton);
 
     const inputField = document.getElementById('batteryCapacity-input');
+    await userEvent.type(inputField, '0' );
 
-    await userEvent.type(inputField, '0' )
-    expect((document.getElementById('batteryCapacity-input')).value).toBe('0');
+    expect(inputField.value).toBe('0');
     
   });
-  */
+  
+  it('changes a predefined value to entered value', async () => {
+    
+    const dropdownButton = document.querySelector(('[data-options="batteryCapacity-options"]'));
+    await userEvent.click(dropdownButton);
+
+    const option = document.querySelector(('.dropdown-option[data-value="60"]'));
+    await userEvent.click(option);
+  
+    const inputField = document.getElementById('batteryCapacity-input');
+    expect(inputField.value).toBe('Mid-size Batteries (60 kWh)');
+
+    await userEvent.click(dropdownButton);
+    await userEvent.type(inputField, '20' )
+    expect(inputField.value).toBe('20'); 
+  });
+
+  it('changes an entered value to predefined value', async () => {
+    
+    const dropdownButton = document.querySelector(('[data-options="batteryCapacity-options"]'));
+    await userEvent.click(dropdownButton);
+
+    const inputField = document.getElementById('batteryCapacity-input');
+    await userEvent.type(inputField, '10' )
+
+    expect(inputField.value).toBe('10'); 
+
+    await userEvent.click(dropdownButton);
+    const option = document.querySelector(('.dropdown-option[data-value="45"]'));
+    await userEvent.click(option);
+
+    expect(inputField.value).toBe('Light Batteries (45 kWh)');
+  });
 });
