@@ -115,7 +115,6 @@ describe('test suite: calculating charge cost for range', () => {
     expect(document.getElementById('chargeCostRange').textContent).toContain('0.04 €');
   });
 
-
   it('calculates cost for range with time-based price with values containing decimals', () => {
 
     calculator.stateOfCharge = 40;
@@ -156,25 +155,25 @@ describe('test suite: calculating charge cost for range', () => {
     expect(document.getElementById('chargeCostRange').textContent).toContain('6.07 €');
   });
 
-  it('displays cost: 0 when energy based cost is 0', () => {
+  it('displays price is not set when energy based cost is 0', () => {
 
     calculator.pricingModel = 'energy';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
 
-    expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
+    expect(document.getElementById('chargeCostRange').textContent).toBe('Price not set');
   });
 
-  it('displays cost: 0 when time based cost is 0', () => {
+  it('displays price is not set when time based cost is 0', () => {
 
     calculator.pricingModel = 'time';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
 
-    expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
+    expect(document.getElementById('chargeCostRange').textContent).toBe('Price not set');
   });
 
-  it('displays cost: 0 when charging is not needed (time-based price)', () => {
+  it('displays Charging not needed when it is not necessary (time-based price)', () => {
 
     calculator.stateOfCharge = 100;
     calculator.desiredRange = 100;
@@ -185,10 +184,10 @@ describe('test suite: calculating charge cost for range', () => {
     calculator.chargerPower = 7.4;
     calculator.updateCalculations();
 
-    expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
+    expect(document.getElementById('chargeCostRange').textContent).toBe('Charging not needed');
   });
 
-  it('displays cost: 0 when charging is not needed (energy-based price)', () => {
+  it('displays charging is not needed when it is not necessary (energy-based price)', () => {
 
     calculator.stateOfCharge = 100;
     calculator.desiredRange = 50;
@@ -198,7 +197,7 @@ describe('test suite: calculating charge cost for range', () => {
     calculator.bevEnergyConsumption = 11.6;
     calculator.updateCalculations();
 
-    expect(document.getElementById('chargeCostRange').textContent).toBe('0.00 €');
+    expect(document.getElementById('chargeCostRange').textContent).toBe('Charging not needed');
   });
 });
 describe('test suite: calculating energy to be charged for required range', () => {
@@ -325,25 +324,25 @@ describe('test suite: calculating cost of charging to full', () => {
     expect(document.getElementById('chargeCostFullCharge').textContent).toBe('2.30 €');
   });
 
-  it('displays cost: 0 when energy based cost is 0', () => {
+  it('displays that price is not set when energy based cost is 0', () => {
 
     calculator.pricingModel = 'energy';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
 
-    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('Price not set');
   });
 
-  it('displays cost: 0 when time based cost is 0', () => {
+  it('displays that price is not set when time based cost is 0', () => {
 
     calculator.pricingModel = 'time';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
 
-    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('Price not set');
   });
 
-  it('displays cost: 0 when charging is not needed (time-based price)', () => {
+  it('displays charging not needed when it is not needed (time-based price)', () => {
 
     calculator.stateOfCharge = 100;
     calculator.pricingModel = 'time';
@@ -352,10 +351,10 @@ describe('test suite: calculating cost of charging to full', () => {
     calculator.chargerPower = 7.4;
     calculator.updateCalculations();
 
-    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('Charging not needed');
   });
 
-  it('displays cost: 0 when charging is not needed (energy-based price)', () => {
+  it('displays charging not needed when it is not needed (energy-based price)', () => {
 
     calculator.stateOfCharge = 100;
     calculator.pricingModel = 'energy';
@@ -363,7 +362,7 @@ describe('test suite: calculating cost of charging to full', () => {
     calculator.batteryCapacity = 57.5;
     calculator.updateCalculations();
 
-    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('0.00 €');
+    expect(document.getElementById('chargeCostFullCharge').textContent).toBe('Charging not needed');
   });
 });
 
