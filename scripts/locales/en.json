@@ -145,7 +145,7 @@
   },
   "firstUse": {
   "title": "Welcome",
-  "description": "Easily budget your EV usage",
+  "description": "Easily plan your EV usage",
   "step1": "Start by entering current state of charge and battery capacity",
   "step2": " Enter distance and energy consumption of the car to calculate values for a specific trip",
   "step3": "Compare different charging options and their costs with Add Comparison button ",
