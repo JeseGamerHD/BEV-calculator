@@ -10,9 +10,9 @@
   },
   "inputs": {
     "distance": {
-      "title": "Distance (km)",
+      "title": "Desired range (km)",
       "tooltip": "The distance to your destination / The total length of your trip.",
-      "placeholder": "Enter target range (optional)"
+      "placeholder": "Enter range (optional)"
     },
     "stateOfCharge": {
       "title": "State of Charge (SOC)"

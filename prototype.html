@@ -15,18 +15,15 @@
     <div class="topbar">
         <div class="topbar-title-container">
             <h3 data-localization="general.title">Range Anti-Anxiety</h3>
-            <p>v0.3.0</p>
+            <p>v0.3.1</p>
         </div>
         <div class="language-selector-container">
             <select id="language-switcher" title="Select language">
                 <option value="en" selected>English</option>
                 <option value="fi">Suomi</option>
             </select>
-            <button id="first-time-info-button">
-                i
-            </button>
-        </div>
-        
+            <button id="first-time-info-button">i</button>
+        </div> 
     </div>
 
     <!-- INTRODUCTION/TUTORIAL SECTION START -->
@@ -75,7 +72,7 @@
                 <div class="rangeInput-container">
                     <h3 class="rangeInput-title" data-localization="inputs.stateOfCharge.title"><strong>State of Charge</strong> (SOC)</h3>
                     <div class="rangeInput-field-wrapper">
-                        <input class="rangeInput-field" id="SOC-field" data-type="integer" type="text" data-target="SOC-slider" min="0" max="100" data-value="" data-property="stateOfCharge">
+                        <input class="rangeInput-field" id="SOC-field" data-type="integer" type="text" data-target="SOC-slider" min="0" max="100" data-value="" data-property="stateOfCharge" placeholder="0">
                         <span class="rangeInput-field-symbol">%</span>
                     </div> 
                     <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-target="SOC-field" data-property="stateOfCharge">
