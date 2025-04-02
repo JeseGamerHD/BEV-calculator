@@ -52,6 +52,10 @@ export class LocalizationManager {
     }
   }
 
+  /** Attempts to read and return a value from the active localization file
+  * using the given parameter (key)
+  * @param {string} path - The localization key
+  */
   getText(path) {
     // Split the path by dots to navigate the nested JSON
     const keys = path.split('.');
@@ -85,24 +89,6 @@ export class LocalizationManager {
     document.querySelectorAll('[data-localization-tooltip]').forEach(element => {
       const key = element.getAttribute('data-localization-tooltip');
       element.title = this.getText(key);
-    });
-
-    // Update dropdown tips
-    document.querySelectorAll('.dropdown-tip').forEach(element => {
-      const dropdownId = element.closest('.dropdown-content').id;
-      let key = '';
-      
-      if (dropdownId.includes('batteryCapacity')) {
-        key = 'inputs.batteryCapacity.tip';
-      } else if (dropdownId.includes('energyConsumption')) {
-        key = 'inputs.energyConsumption.tip';
-      } else if (dropdownId.includes('chargePower')) {
-        key = 'inputs.chargePower.tip';
-      }
-      
-      if (key) {
-        element.textContent = this.getText(key);
-      }
     });
   }
 }
