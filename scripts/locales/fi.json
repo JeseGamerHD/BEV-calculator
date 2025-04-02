@@ -145,8 +145,8 @@
     },
   "firstUse": {
   "title": "Tervetuloa",
-  "description": "Budjetoi sähköautoiluasi helposti",
-  "step1": "Aloita syöttämällä auton tämänhetkinen akun varaus ja akun kapasiteett",
+  "description": "Suunnittele sähköautoiluasi helposti",
+  "step1": "Aloita syöttämällä auton tämänhetkinen akun varaus ja akun kapasiteetti",
   "step2": "Jos haluat laskea arvoja tietylle matkalle, syötä lisäksi matkan pituus ja auton energian kulutus",
   "step3": "Latauksia voi vertailla eri lataustehoilla ja hinnoilla valitsemalla “Lisää vertailu”",
   "startButton": "Aloita käyttö"
