@@ -1,6 +1,5 @@
 /* First-time-use overlay styling */
 .first-time-use {
-    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -93,6 +92,7 @@
     height: 100%;
     box-sizing: border-box;
 }
+
 .left-side, .middle, .right-side {
     flex: 1;
     min-width: 250px;
@@ -133,8 +133,7 @@
 
 /* Inputs and results wrap when screen not wide enough */
 @media screen and (max-width: 900px) {
-    .first-time-use {
-        position: fixed; /* Fixed position for mobile makes more sense */
+    .first-time-use {     
         top: 0;
         left: 0;
         width: 100%;
@@ -158,8 +157,9 @@
         text-transform: uppercase;
     }
     .results-content {
-        display: flex; /* Show results on mobile */
-        
+        display: flex; 
+        flex-direction: column;
+        width: 100%;
     }
 
     .oikea-puoli-sivusta {
