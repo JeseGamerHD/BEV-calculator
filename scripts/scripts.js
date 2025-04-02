@@ -53,11 +53,6 @@ class Calculator {
     }
     
     calcMaxOperatingRange() {
-        if (this.bevEnergyConsumption === 0) {
-            console.log("Error: BEV energy consumption is 0. Cannot calculate maxOperatingRange & ChargesRequired.");
-            this.updateValueForResult("0", "chargesRequired");
-            return;
-        }
         const maxOperatingRange = (this.batteryCapacity / this.bevEnergyConsumption) * 100; // in km
         
         if (this.desiredRange > maxOperatingRange) {
@@ -149,18 +144,18 @@ class Calculator {
     
     calcChargeTimeForRange(energyToCharge, isAlt) {
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
-        // Get the localization key for "Charging not needed"
+        // Get the localization key for "Charging not needed" and "Charger power not set"
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
-
-        if (chargerPower === 0) {
+        const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
+        if (chargerPower === 0 && energyToCharge > 0) {
             console.log("Error: Cannot calculate charge time for range. Charge power is missing.");
             if (!isAlt) {
-                this.updateValueForResult("0 min", "chargeTimeForRange");
-                this.updateValueForResult("0 min", "chargeTimeForRangeOption1");
-                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-1");
+                this.updateValueForResult(chargerNotSetMessage, "chargeTimeForRange");
+                this.updateValueForResult(chargerNotSetMessage, "chargeTimeForRangeOption1");
+                this.updateValueForResult("", "chargerPowerOption1-1");
             } else {
-                this.updateValueForResult("0 min", "chargeTimeForRangeOption2");
-                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
+                this.updateValueForResult(chargerNotSetMessage, "chargeTimeForRangeOption2");
+                this.updateValueForResult("", "chargerPowerOption2-1");
             }
             return 0;
         }
@@ -170,10 +165,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult(notNeededMessage, "chargeTimeForRange");
                 this.updateValueForResult(notNeededMessage, "chargeTimeForRangeOption1");
-                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-1");
+                this.updateValueForResult("", "chargerPowerOption1-1");
             } else {
                 this.updateValueForResult(notNeededMessage, "chargeTimeForRangeOption2");
-                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
+                this.updateValueForResult("", "chargerPowerOption2-1");
             }
             return 0;
         }
@@ -220,16 +215,17 @@ class Calculator {
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
         // Get the localization key for "Charging not needed"
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
-            
-        if (chargerPower === 0) {
+        const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";    
+        if (chargerPower === 0 && energyNeeded > 0) {
             console.log("Error: BEV charge power is 0. Cannot calculate charge time for full charge.");
             if (!isAlt) {
-                this.updateValueForResult("0 min", "chargeTimeForFullCharge");
-                this.updateValueForResult("0 min", "chargeTimeForFullChargeOption1");
-                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-2");
+                this.updateValueForResult(chargerNotSetMessage, "chargeTimeForFullCharge");
+                this.updateValueForResult(chargerNotSetMessage, "chargeTimeForFullChargeOption1");
+                this.updateValueForResult("", "chargerPowerOption1-2");
             } else {
-                this.updateValueForResult("0 min", "chargeTimeForFullChargeOption2");
-                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-2");
+                this.updateValueForResult(chargerNotSetMessage, "chargeTimeForFullChargeOption2");
+                this.updateValueForResult("", "chargerPowerOption2-2");
+                
             }
             return 0;
         }
@@ -238,10 +234,10 @@ class Calculator {
             if (!isAlt) {
                 this.updateValueForResult(notNeededMessage, "chargeTimeForFullCharge");
                 this.updateValueForResult(notNeededMessage, "chargeTimeForFullChargeOption1");
-                this.updateValueForResult(this.getChargerPower() + " kW", "chargerPowerOption1-2");
+                this.updateValueForResult("", "chargerPowerOption1-2");
             } else {
                 this.updateValueForResult(notNeededMessage, "chargeTimeForFullChargeOption2");
-                this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-2");
+                this.updateValueForResult("", "chargerPowerOption2-2");
             }
             return 0;
         }
@@ -289,44 +285,81 @@ class Calculator {
         const pricingModel = isAlt ? this.pricingModelAlt : this.pricingModel;
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
         
-        // Calculate energyNeededForRange
+        // Get localized messages
+        const priceNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.priceNotSet"]')?.textContent || "Price not set";
+        const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
+        const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
+        // Calculate energy needed
         const energyNeededForRange = (this.bevEnergyConsumption / 100) * this.desiredRange;
         const currentEnergy = (this.stateOfCharge / 100) * this.batteryCapacity;
         const energyToCharge = Math.max(0, energyNeededForRange - currentEnergy);
         
         let chargeCost = 0;
         
-        if (chargerPower === 0) {
-            console.log("Error: Cannot calculate charge cost for range. Charger power is missing.");
+        if (energyToCharge <= 0) {
             if (!isAlt) {
-                this.updateValueForResult("0 €", "chargeCostRange");
-                this.updateValueForResult("0 €", "chargeCostForRangeOption1");
-                this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-1");
+                this.updateValueForResult(notNeededMessage, "chargeCostRange");
+                this.updateValueForResult(notNeededMessage, "chargeCostForRangeOption1");
+                this.updateValueForResult("", "energyPriceOption1-1");
             } else {
-                this.updateValueForResult("0 €", "chargeCostForRangeOption2");
-                this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-1");
+                this.updateValueForResult(notNeededMessage, "chargeCostForRangeOption2");
+                this.updateValueForResult("", "energyPriceOption2-1");
+            }
+            return 0;
+        }
+        // Check if charge power is valid (not 0, NaN, undefined, etc.)
+        if (!chargerPower || isNaN(chargerPower) || chargerPower <= 0) {
+            if (!isAlt) {
+                this.updateValueForResult(chargerNotSetMessage, "chargeCostRange");
+                this.updateValueForResult(chargerNotSetMessage, "chargeCostForRangeOption1");
+                this.updateValueForResult("", "energyPriceOption1-1");
+            } else {
+                this.updateValueForResult(chargerNotSetMessage, "chargeCostForRangeOption2");
+                this.updateValueForResult("", "energyPriceOption2-1");
             }
             return 0;
         }
         
+        // Check if price is valid (not 0, NaN, undefined, etc.)
+        if (!price || isNaN(price) || price <= 0) {
+            if (!isAlt) {
+                this.updateValueForResult(priceNotSetMessage, "chargeCostRange");
+                this.updateValueForResult(priceNotSetMessage, "chargeCostForRangeOption1");
+                this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-1");
+            } else {
+                this.updateValueForResult(priceNotSetMessage, "chargeCostForRangeOption2");
+                this.updateValueForResult("", "energyPriceOption2-1");
+            }
+            return 0;
+        }
+        
+        // Check for valid pricing model
         if (pricingModel === "energy") {
-            chargeCost = price * energyToCharge;
+            chargeCost = price * energyToCharge;      
         } else if (pricingModel === "time") {
             const chargeTime = energyToCharge / chargerPower; // Calculate charge time
             chargeCost = price * chargeTime;
         } else {
-            console.log("Error: Cannot calculate charge cost for range. Pricing model is missing.");
             if (!isAlt) {
-                this.updateValueForResult("0 €", "chargeCostRange");
-                this.updateValueForResult("0 €", "chargeCostForRangeOption1");
+                this.updateValueForResult("Pricing model is missing", "chargeCostRange");
+                this.updateValueForResult("Pricing model is missing", "chargeCostForRangeOption1");
                 this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-1");
             } else {
-                this.updateValueForResult("0 €", "chargeCostForRangeOption2");
+                this.updateValueForResult("Pricing model is missing", "chargeCostForRangeOption2");
                 this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-1");
             }
             return 0;
         }
         
+        // Add a final NaN check before displaying the result
+        if (isNaN(chargeCost)) {
+            console.error("Error: Calculated charge cost is NaN", {
+                price, pricingModel, chargerPower, energyToCharge
+            });
+            chargeCost = 0;
+        }
+        
+        // Update UI with results
         if (!isAlt) {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption1");
@@ -343,23 +376,50 @@ class Calculator {
         const price = isAlt ? this.energyPriceAlt : this.energyPrice;
         const pricingModel = isAlt ? this.pricingModelAlt : this.pricingModel;
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
+        // Get localized message for missing price and charge power
+        const priceNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.priceNotSet"]')?.textContent || "Price not set";
+        const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
+        const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
         
         const energyNeeded = this.batteryCapacity - ((this.stateOfCharge / 100) * this.batteryCapacity);
         let chargeCost = 0;
         
-        if (chargerPower === 0) {
+        if (energyNeeded <= 0) {
+            if (!isAlt) {
+                this.updateValueForResult(notNeededMessage, "chargeCostFullCharge");
+                this.updateValueForResult(notNeededMessage, "chargeCostForFullChargeOption1");
+                this.updateValueForResult("", "energyPriceOption1-2");
+            } else {
+                this.updateValueForResult(notNeededMessage, "chargeCostForFullChargeOption2");
+                this.updateValueForResult("", "energyPriceOption2-2");
+            }
+            return 0;
+        }
+
+        if (!chargerPower || isNaN(chargerPower) || chargerPower <= 0) {
             console.log("Error: Cannot calculate charge cost for full charge. Charger power is missing.");
             if (!isAlt) {
-                this.updateValueForResult("0 €", "chargeCostFullCharge");
-                this.updateValueForResult("0 €", "chargeCostForFullChargeOption1");
+                this.updateValueForResult(chargerNotSetMessage, "chargeCostFullCharge");
+                this.updateValueForResult(chargerNotSetMessage, "chargeCostForFullChargeOption1");
+                this.updateValueForResult("", "energyPriceOption1-2");
+            } else {
+                this.updateValueForResult(chargerNotSetMessage, "chargeCostForFullChargeOption2");
+                this.updateValueForResult("", "energyPriceOption2-2");
+            }
+            return 0;
+        }
+        if (price === 0 || price === undefined || price === null) {
+            if (!isAlt) {
+                this.updateValueForResult(priceNotSetMessage, "chargeCostFullCharge");
+                this.updateValueForResult(priceNotSetMessage, "chargeCostForFullChargeOption1");
                 this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-2");
             } else {
-                this.updateValueForResult("0 €", "chargeCostForFullChargeOption2");
+                this.updateValueForResult(priceNotSetMessage, "chargeCostForFullChargeOption2");
                 this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-2");
             }
             return 0;
         }
-        
+
         if (pricingModel === "energy") {
             chargeCost = price * energyNeeded;
         } else if (pricingModel === "time") {

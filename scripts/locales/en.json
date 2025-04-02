@@ -10,9 +10,9 @@
   },
   "inputs": {
     "distance": {
-      "title": "Distance (km)",
+      "title": "Desired range (km)",
       "tooltip": "The distance to your destination / The total length of your trip.",
-      "placeholder": "Enter target range (optional)"
+      "placeholder": "Enter range (optional)"
     },
     "stateOfCharge": {
       "title": "State of Charge (SOC)"
@@ -94,7 +94,9 @@
       "title": "Charging Costs",
       "forRange": "Charge cost in €/kWh for desired range: ",
       "option1": "Charge cost in €/kWh for range option 1: ",
-      "option2": "Charge cost in €/kWh for range option 2: "
+      "option2": "Charge cost in €/kWh for range option 2: ",
+      "priceNotSet": "Price not set",
+      "chargerNotSet": "Charge power not set"
     },
     "numberOfCharges": {
       "title": "Number of Charges"
@@ -143,5 +145,13 @@
     "batteryCapacity": "Error: Battery capacity is 0. Cannot calculate charges required.",
     "chargingPower": "Error: Cannot calculate charge time for range. Charge power is missing.",
     "pricingModel": "Error: Cannot calculate charge cost for full charge. Pricing model is missing."
-  }
+  },
+  "firstUse": {
+  "title": "Welcome",
+  "description": "Easily plan your EV usage",
+  "step1": "Start by entering current state of charge and battery capacity",
+  "step2": " Enter distance and energy consumption of the car to calculate values for a specific trip",
+  "step3": "Compare different charging options and their costs with Add Comparison button ",
+  "startButton": "Start Using Calculator"
+}
 }

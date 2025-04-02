@@ -1,3 +1,105 @@
+/* First-time-use overlay styling */
+.first-time-use {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(165deg, rgb(56,140,204) 0%, rgb(48,44,116) 100%);
+    color: white;
+    display: flex;
+    justify-content: left;
+    align-items: start;
+    z-index: 1000;
+    text-align: left;
+    overflow: auto; /* Allow scrolling on small screens */
+}
+
+.first-time-content {
+    max-width: 80%;
+    padding: 2rem;
+}
+
+.first-time-content h2 {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+.first-time-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+/* Add separator line after h3 in first-time-use */
+.first-time-content h3:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3); 
+    margin: 1.5rem 0;
+}
+.first-time-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    white-space: normal; /* Allow text wrapping */
+    color: rgb(240, 238, 238);
+}
+
+.first-time-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.first-time-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+.first-time-button {
+    background: white;
+    color: rgb(48,44,116);
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.first-time-button:hover {
+    background: rgba(255,255,255,0.9);
+    transform: scale(1.05);
+}
+
+
+.results-content {
+    display: none;
+    flex-direction: row; /* Horizontal layout */
+    flex-wrap: wrap; /* Wrap on small screens */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.left-side, .middle, .right-side {
+    flex: 1;
+    min-width: 250px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
 .oikea-puoli-sivusta{
     width: 67%; /* RESULTS SHOULD TAKE 2/3 of the width by default*/
     /* => INPUTS TAKE 1/3 by default */
@@ -6,6 +108,7 @@
     color: white;
     font-size: clamp(1rem, 2vw, 1.75em);
     white-space: nowrap;
+    
 }
 
 .oikea-puoli-sivusta h1{
@@ -25,8 +128,40 @@
     padding: 2vw;
 }
 
+
+
+
 /* Inputs and results wrap when screen not wide enough */
 @media screen and (max-width: 900px) {
+    .first-time-use {     
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; 
+        min-height: 100vh;
+        display: none;
+    }
+    
+    .first-time-content {
+        padding: 2rem;
+        max-width: 90%; /* Adjust for mobile */
+        margin: 0 auto; /* Center horizontally */
+    }
+    .first-time-content h2 {
+        font-size: 5vh;
+        margin-bottom: 1.5rem;
+    }
+    .first-time-content h3 {
+        font-size: 2vh;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+    }
+    .results-content {
+        display: flex; 
+        flex-direction: column;
+        width: 100%;
+    }
+
     .oikea-puoli-sivusta {
         width: 100%;
         font-size: 1.5em;

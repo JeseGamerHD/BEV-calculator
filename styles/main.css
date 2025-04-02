@@ -5,8 +5,6 @@ body, html {
     padding: 0;
     height: 100vh;
     width: 100%;
-    /* overflow-x: hidden; TODO: Temp fix for white space on the right on mobile */
-    /* This is caused by the tooltips*/
     font-family: Arial, Verdana, Tahoma;
 }
 
@@ -16,8 +14,8 @@ body, html {
     padding: 20px 60px 20px 60px;
     align-items: center;
     justify-content: space-between;
-    background: rgb(4,36,130);
-    background: linear-gradient(180deg, rgba(4,36,130,1) 0%, rgba(0,72,171,1) 100%);
+    background: linear-gradient(180deg, rgb(0, 73, 142)0%, rgba(0,83,142,1) 100%);
+    border-bottom: 2px solid rgb(30, 69, 119);
 }
 
 .topbar-title-container {
@@ -37,6 +35,56 @@ body, html {
         color: lightgray;
         margin: 0;
     }
+}
+
+.language-selector-container {
+    display: flex;
+    align-items: center;
+}
+
+/*NOTE: <select> cant be customized well, would require a custom dropdown*/
+#language-switcher {
+    padding: 5px 30px 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: rgb(143, 184, 210);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#language-switcher:hover {
+    background-color: rgb(110, 167, 202);
+}
+
+#first-time-info-button {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    transition: all 0.2s ease-in-out;
+    
+}
+
+#first-time-info-button:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#first-time-info-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
 }
 
 /* TODO Either remove or new styling depending on which approach for tutorial is chosen */

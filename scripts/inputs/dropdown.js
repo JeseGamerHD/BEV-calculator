@@ -7,12 +7,34 @@ export class DropdownInputHandler extends InputField {
     constructor(calculator, initialValues) {
         super();
         this.#calculator = calculator;
-        this.setDefaultValues(document.querySelectorAll(".dropdownInput-field"), initialValues);
+        let dropdownFields = document.querySelectorAll(".dropdownInput-field");
+        this.setDefaultValues(dropdownFields, initialValues);
         this.attachEventListeners();
     }
 
-    attachEventListeners() {
+    /** @inheritdoc 
+    * DropdownInputHandler implementation loops through the dropdown options
+    * and sets the visible text to match an option if the initial values match
+    */
+    setDefaultValues(dropdownFields, intialValues) {
+        super.setDefaultValues(dropdownFields, intialValues);
 
+        // Dropdowns also check if a initial value matches an option,
+        // and sets its value to match the text
+        dropdownFields.forEach(dropdown => {
+            let dropdownContent = document.getElementById(dropdown.dataset.options);
+            let options = dropdownContent.querySelectorAll(".dropdown-option");
+            
+            for(let option of options) {
+                if(dropdown.value == option.dataset.value) {
+                    dropdown.value = option.textContent;
+                    break;
+                }
+            }
+        });
+    }
+
+    attachEventListeners() {
         // User clicks on an option or the input field
         document.addEventListener("click", (clickEvent) => {
             this.handleClickEvent(clickEvent);
