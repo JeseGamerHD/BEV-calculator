@@ -80,7 +80,8 @@
     },
     "results": {
       "distance": {
-        "title": "Matka"
+        "title": "Matka",
+        "tooltip": "Latausaika kertoo kokonaisajan, joka kuluu auton lataamiseen halutun matkan ajamiseksi. Latauskustannus puolestaan kertoo kyseisten latausten kokonaishinnan ja energia kertoo lataukseen menevän energian määrän summan"
       },
       "chargingTime": {
         "title": "Latausaika",
@@ -104,6 +105,7 @@
       },
       "untilFull": {
         "title": "Täyteen asti (SOC)",
+        "tooltip": "Latausaika näyttää ajan akun täyteen lataamiseen sen nykyisestä varausasteesta. Latauskustannus näyttää latauksen hinnan ja energia kertoo akun täyteen lataamiseen tarvittavan energian määrän.",
         "fullCharge": "100%",
         "chargingTime": {
           "title": "Latausaika",
@@ -124,6 +126,7 @@
       },
       "stateOfCharge": {
         "title": "Varausaste",
+        "tooltip": "Varausaste kertoo akun nykyisen varauksen prosentteina ja Matka näyttää kuinka pitkälle sen hetkisellä varauksella pystyy ajamaan",
         "soc": "SOC: "
       },
       "operatingRange": {

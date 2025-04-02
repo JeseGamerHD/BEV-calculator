@@ -232,7 +232,10 @@
         <div class="oikea-puoli-sivusta"> 
         
             <div class="left-side">
-                <h1 data-localization="results.distance.title">Distance</h1>
+                <div class="results-tooltip-wrapper">
+                    <h1 data-localization="results.distance.title">Distance</h1>
+                    <div class="tooltip-container" data-tooltipkey="results.distance.tooltip"></div>
+                </div>
                 <div id="desiredRange" class="spaced-div">TEST</div>
 
                 <div class="header-wrapper">
@@ -278,7 +281,11 @@
             </div>
               
             <div class="middle">
-                <h1 data-localization="results.untilFull.title">Until Full (SOC)</h1>
+                <div class="results-tooltip-wrapper">
+                    <h1 data-localization="results.untilFull.title">Until Full (SOC)</h1>
+                    <div class="tooltip-container" data-tooltipkey="results.untilFull.tooltip"></div>
+                </div>
+
                 <div id="fullCharge" class="spaced-div" data-localization="results.untilFull.fullCharge">100%</div>
     
                 <h5 data-localization="results.untilFull.chargingTime.title">Charging Time</h5>
@@ -321,7 +328,11 @@
             </div>
     
             <div class="right-side">
-                <h1 data-localization="results.stateOfCharge.title">State of Charge</h1>
+                <div class="results-tooltip-wrapper">
+                    <h1 data-localization="results.stateOfCharge.title">State of Charge</h1>
+                    <div class="tooltip-container" data-tooltipkey="results.stateOfCharge.tooltip"></div>
+                </div>    
+
                 <div id="stateOfCharge" class="spaced-div" data-localization="results.stateOfCharge.soc">SOC: </div>
     
                 <h5 data-localization="results.operatingRange.title">Distance</h5>
