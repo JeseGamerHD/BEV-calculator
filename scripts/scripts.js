@@ -196,8 +196,6 @@ class Calculator {
         this.results.rangeTime.hours = hours;
         this.results.rangeTime.minutes = minutes;
         
-        // TODO: This first if segment doesnt seem to ever run? 
-        // Since energyNeeded and chargerPower already check for zero
         if (hours === 0 && minutes === 0) {
             if (!isAlt) {
                 this.updateValueForResult("<1 min", "chargeTimeForRange");
@@ -273,8 +271,6 @@ class Calculator {
         this.results.fullChargeTime.hours = hours;
         this.results.fullChargeTime.minutes = minutes;
         
-        // TODO: This first if segment doesnt seem to ever run? 
-        // Since energyNeeded and chargerPower already check for zero
         if (hours === 0 && minutes === 0) {
             if (!isAlt) {
                 this.updateValueForResult("<1 min", "chargeTimeForFullCharge");
