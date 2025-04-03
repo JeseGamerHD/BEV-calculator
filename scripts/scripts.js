@@ -1,3 +1,5 @@
+import { Results } from "./results.js";
+
 class Calculator {
     constructor(values) {
         this.desiredRange = values.desiredRange;
@@ -12,11 +14,20 @@ class Calculator {
         this.pricingModel = values.pricingModel;
         this.pricingModelAlt = values.pricingModelAlt;
         this.alt = false;
+        this.results = new Results(); // Results are stored and updated to this object
     }
     
     setData(variable, value) {
         this[variable] = value;
         this.updateCalculations();
+    }
+
+    /**
+    * Returns the **numeric** results of the calculations in a Results class object
+    * @returns {Results} results
+    */
+    getResults() {
+        return this.results;
     }
 
     toggleComparison() {
@@ -118,6 +129,7 @@ class Calculator {
                 this.updateValueForResult("0 kWh", "energyNeededForRange");
             }
             this.calcChargeTimeForRange(0, isAlt);
+            this.results.rangeEnergy = 0;
             return 0;
         }
         
@@ -126,6 +138,7 @@ class Calculator {
         }
         
         this.calcChargeTimeForRange(energyToCharge, isAlt);
+        this.results.rangeEnergy = energyToCharge;
         return energyToCharge;
     }
     
@@ -139,10 +152,13 @@ class Calculator {
             this.updateValueForResult(energyToFullCharge.toFixed(2) + " kWh", "energyToFullCharge");
         }
         
+        this.results.fullChargeEnergy = energyToFullCharge;
         return energyToFullCharge;
     }
     
     calcChargeTimeForRange(energyToCharge, isAlt) {
+        this.results.rangeTime.hours = 0;
+        this.results.rangeTime.minutes = 0;
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
         // Get the localization key for "Charging not needed" and "Charger power not set"
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
@@ -176,7 +192,12 @@ class Calculator {
         const chargeTimeForRange = energyToCharge / chargerPower; // in hours
         const hours = Math.floor(chargeTimeForRange);
         const minutes = Math.round((chargeTimeForRange - hours) * 60);
+
+        this.results.rangeTime.hours = hours;
+        this.results.rangeTime.minutes = minutes;
         
+        // TODO: This first if segment doesnt seem to ever run? 
+        // Since energyNeeded and chargerPower already check for zero
         if (hours === 0 && minutes === 0) {
             if (!isAlt) {
                 this.updateValueForResult("<1 min", "chargeTimeForRange");
@@ -188,6 +209,7 @@ class Calculator {
             }
             return chargeTimeForRange;
         }
+        // **** //
         if (hours > 0) {
             if (!isAlt) {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForRange");
@@ -212,6 +234,8 @@ class Calculator {
     }
     
     calcChargeTimeForFullCharge(energyNeeded, isAlt) {
+        this.results.fullChargeTime.hours = 0;
+        this.results.fullChargeTime.minutes = 0;
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
         // Get the localization key for "Charging not needed"
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
@@ -245,7 +269,12 @@ class Calculator {
         const chargeTimeForFullCharge = energyNeeded / chargerPower; // in hours
         const hours = Math.floor(chargeTimeForFullCharge);
         const minutes = Math.round((chargeTimeForFullCharge - hours) * 60);
+
+        this.results.fullChargeTime.hours = hours;
+        this.results.fullChargeTime.minutes = minutes;
         
+        // TODO: This first if segment doesnt seem to ever run? 
+        // Since energyNeeded and chargerPower already check for zero
         if (hours === 0 && minutes === 0) {
             if (!isAlt) {
                 this.updateValueForResult("<1 min", "chargeTimeForFullCharge");
@@ -257,6 +286,7 @@ class Calculator {
             }
             return chargeTimeForFullCharge;
         }
+        // **** //
         if (hours > 0) {
             if (!isAlt) {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullCharge");
@@ -295,6 +325,7 @@ class Calculator {
         const energyToCharge = Math.max(0, energyNeededForRange - currentEnergy);
         
         let chargeCost = 0;
+        this.results.rangeCost = 0;
         
         if (energyToCharge <= 0) {
             if (!isAlt) {
@@ -369,6 +400,7 @@ class Calculator {
             this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-1");
         }
         
+        this.results.rangeCost = chargeCost;
         return chargeCost;
     }
     
@@ -383,6 +415,7 @@ class Calculator {
         
         const energyNeeded = this.batteryCapacity - ((this.stateOfCharge / 100) * this.batteryCapacity);
         let chargeCost = 0;
+        this.results.fullChargeCost = 0;
         
         if (energyNeeded <= 0) {
             if (!isAlt) {
@@ -447,6 +480,7 @@ class Calculator {
             this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-2");
         }
         
+        this.results.fullChargeCost = chargeCost;
         return chargeCost;
     }
     
@@ -455,15 +489,15 @@ class Calculator {
         const energyNeededForRange = (this.bevEnergyConsumption / 100) * this.desiredRange;
         const energyToCharge = energyNeededForRange - currentEnergy;
 
-        
-            const chargesRequired = Math.ceil(energyToCharge / this.batteryCapacity);
-            if (chargesRequired > 1) {
-                document.getElementById("header-span").style.display = "block";
-            } else {
-                document.getElementById("header-span").style.display = "none";
-            }
-            return chargesRequired;
-        
+        const chargesRequired = Math.ceil(energyToCharge / this.batteryCapacity);
+        if (chargesRequired > 1) {
+            document.getElementById("header-span").style.display = "block";
+        } else {
+            document.getElementById("header-span").style.display = "none";
+        }
+
+        this.results.chargeCount = chargesRequired;
+        return chargesRequired;
     }
     
     updateComparisonBars(bar1ID, bar2ID, value1ID, value2ID) {
