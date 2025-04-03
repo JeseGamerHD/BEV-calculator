@@ -1,15 +1,11 @@
 /* First-time-use overlay styling */
 .first-time-use {
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
     background: linear-gradient(165deg, rgb(56,140,204) 0%, rgb(48,44,116) 100%);
     color: white;
     display: flex;
     justify-content: left;
     align-items: start;
-    z-index: 1000;
     text-align: left;
     overflow: auto; /* Allow scrolling on small screens */
 }
@@ -132,16 +128,7 @@
 
 
 /* Inputs and results wrap when screen not wide enough */
-@media screen and (max-width: 900px) {
-    .first-time-use {     
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%; 
-        min-height: 100vh;
-        display: none;
-    }
-    
+@media screen and (max-width: 900px) {   
     .first-time-content {
         padding: 2rem;
         max-width: 90%; /* Adjust for mobile */
@@ -157,7 +144,6 @@
         text-transform: uppercase;
     }
     .results-content {
-        display: flex; 
         flex-direction: column;
         width: 100%;
     }

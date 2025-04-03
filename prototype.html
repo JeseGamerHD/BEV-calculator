@@ -26,33 +26,6 @@
         </div> 
     </div>
 
-    <!-- INTRODUCTION/TUTORIAL SECTION START -->
-    <!--TODO: Will be removed and replaced with a first time tutorial where results are-->
-    <!-- Or maybe keep, make a better tutorial and styling here? -->
-    <div class="introduction-container">
-        <div class="introduction">
-            <div class="introduction-title-container">
-                <h1 data-localization="general.title">Range Anti-Anxiety</h1>
-                <p data-localization="general.subtitle">The calculator for BEV related issues</p>
-            </div>
-            <div class="introduction-tutorial">
-                <div class="step-container">
-                    <div class="step">1.</div>
-                    <p data-localization="tutorial.step1">Start by entering a desired range and basic details about your car.</p>
-                </div>
-                <div class="step-container">
-                    <div class="step">2.</div>
-                    <p data-localization="tutorial.step2">Set the charge power and the price of using it. You can also add another set for comparison.</p>
-                </div>
-                <div class="step-container">
-                    <div class="step">3.</div>
-                    <p data-localization="tutorial.step3">See the results. Play around with values to see how they affect the results.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- INTRODUCTION/TUTORIAL SECTION END -->
-
     <!-- CALCULATOR CONTAINER HOLDS INPUT + RESULTS -->
     <div class="calculator-container">
         
@@ -231,139 +204,155 @@
 
         <!-- RESULTS AREA CONTAINER -->
         
-        <div class="oikea-puoli-sivusta"> 
+        <div class="oikea-puoli-sivusta">
             <div class="first-time-use">
                 <div class="first-time-content">
-                <h2 data-localization="firstUse.title">Welcome to Range Anti-Anxiety</h2>
-                <h3 data-localization="firstUse.description">Easily budget your ev usage</h3>
-                
-                <div class="first-time-steps">
-                    <div class="first-time-step">
-                        <div class="step-number">1.</div>
-                        <p data-localization="firstUse.step1">Enter your desired range and car details</p>
+                    <h2 data-localization="firstUse.title">Welcome to Range Anti-Anxiety</h2>
+                    <h3 data-localization="firstUse.description">Easily budget your ev usage</h3>
+        
+                    <div class="first-time-steps">
+                        <div class="first-time-step">
+                            <div class="step-number">1.</div>
+                            <p data-localization="firstUse.step1">Enter your desired range and car details</p>
+                        </div>
+                        <div class="first-time-step">
+                            <div class="step-number">2.</div>
+                            <p data-localization="firstUse.step2">Set charging power and pricing</p>
+                        </div>
+                        <div class="first-time-step">
+                            <div class="step-number">3.</div>
+                            <p data-localization="firstUse.step3">See detailed results and compare options</p>
+                        </div>
                     </div>
-                    <div class="first-time-step">
-                        <div class="step-number">2.</div>
-                        <p data-localization="firstUse.step2">Set charging power and pricing</p>
-                    </div>
-                    <div class="first-time-step">
-                        <div class="step-number">3.</div>
-                        <p data-localization="firstUse.step3">See detailed results and compare options</p>
-                    </div>
-                </div>
-                <button class="first-time-button" id="start-calculator" data-localization="firstUse.startButton">Start Using Calculator</button>
+                    <button class="first-time-button" id="start-calculator" data-localization="firstUse.startButton">Start Using
+                        Calculator</button>
                 </div>
             </div>
-
+        
             <div class="results-content">
-            <div class="left-side">
-                <div class="results-tooltip-wrapper">
-                    <h1 data-localization="results.distance.title">Distance</h1>
-                    <div class="tooltip-container" data-tooltipkey="results.distance.tooltip"></div>
-                </div>
-                <div id="desiredRange" class="spaced-div">TEST</div>
-
-                <div class="header-wrapper">
-                    <h5 data-localization="results.chargingTime.title">Charging Time</h5>
-                    <h5 id="header-span" class="header-span" data-localization="results.chargingTime.multipleCharges">Multiple charges</h5>
-                </div>
-                    
+                <div class="left-side">
+                    <div class="results-tooltip-wrapper">
+                        <h1 data-localization="results.distance.title">Distance</h1>
+                        <div class="tooltip-container" data-tooltipkey="results.distance.tooltip"></div>
+                    </div>
+                    <div id="desiredRange" class="spaced-div">TEST</div>
+        
+                    <div class="header-wrapper">
+                        <h5 data-localization="results.chargingTime.title">Charging Time</h5>
+                        <h5 id="header-span" class="header-span" data-localization="results.chargingTime.multipleCharges">
+                            Multiple charges</h5>
+                    </div>
+        
                     <div id="chargeTimeForRange" class="spaced-div single-option">Charge time needed for range: </div>
-                    
-                <div id="chargeTimeComparisonContainer" class="multiple-options" style="display: none;">
-                    <div class="optionTextWrapper">
-                        <div id="chargeTimeForRangeOption1" data-localization="results.chargingTime.option1">Charge time for range option 1: </div>
-                        <div class="option-span" id="chargerPowerOption1-1"></div>
+        
+                    <div id="chargeTimeComparisonContainer" class="multiple-options" style="display: none;">
+                        <div class="optionTextWrapper">
+                            <div id="chargeTimeForRangeOption1" data-localization="results.chargingTime.option1">Charge time for
+                                range option 1: </div>
+                            <div class="option-span" id="chargerPowerOption1-1"></div>
+                        </div>
+                        <div id="comparisonBarRangeTime1" class="comparison-bar spaced-div"></div>
+        
+                        <div class="optionTextWrapper">
+                            <div id="chargeTimeForRangeOption2" data-localization="results.chargingTime.option2">Charge time for
+                                range option 2: </div>
+                            <div class="option-span" id="chargerPowerOption2-1"></div>
+                        </div>
+                        <div id="comparisonBarRangeTime2" class="comparison-bar spaced-div"></div>
                     </div>
-                    <div id="comparisonBarRangeTime1" class="comparison-bar spaced-div"></div>
-                    
-                    <div class="optionTextWrapper">
-                        <div id="chargeTimeForRangeOption2" data-localization="results.chargingTime.option2">Charge time for range option 2: </div>
-                        <div class="option-span" id="chargerPowerOption2-1"></div>
+        
+                    <h5 data-localization="results.chargingCosts.title">Charging Costs</h5>
+                    <div id="chargeCostRange" class="spaced-div single-option"
+                        data-localization="results.chargingCosts.forRange">Charge cost in €/kWh for desired range: </div>
+        
+                    <div id="chargeCostComparisonContainer" class="multiple-options" style="display: none;">
+                        <div class="optionTextWrapper">
+                            <div id="chargeCostForRangeOption1" data-localization="results.chargingCosts.option1">Charge cost in
+                                €/kWh for range option 1: </div>
+                            <div class="option-span" id="energyPriceOption1-1"></div>
+                        </div>
+                        <div id="comparisonBarRangeCost1" class="comparison-bar spaced-div"></div>
+        
+                        <div class="optionTextWrapper">
+                            <div id="chargeCostForRangeOption2" data-localization="results.chargingCosts.option2">Charge cost in
+                                €/kWh for range option 2: </div>
+                            <div class="option-span" id="energyPriceOption2-1"></div>
+                        </div>
+                        <div id="comparisonBarRangeCost2" class="comparison-bar spaced-div"></div>
                     </div>
-                    <div id="comparisonBarRangeTime2" class="comparison-bar spaced-div"></div>
+        
+                    <h5 data-localization="results.energy.title">Energy</h5>
+                    <div id="energyNeededForRange" data-localization="results.energy.forRange">Energy needed for range: </div>
                 </div>
-               
-                <h5 data-localization="results.chargingCosts.title">Charging Costs</h5>
-                <div id="chargeCostRange" class="spaced-div single-option" data-localization="results.chargingCosts.forRange">Charge cost in €/kWh for desired range: </div>
-
-                <div id="chargeCostComparisonContainer" class="multiple-options" style="display: none;">
-                    <div class="optionTextWrapper">
-                        <div id="chargeCostForRangeOption1" data-localization="results.chargingCosts.option1">Charge cost in €/kWh for range option 1: </div>
-                        <div class="option-span" id="energyPriceOption1-1"></div>
+        
+                <div class="middle">
+                    <div class="results-tooltip-wrapper">
+                        <h1 data-localization="results.untilFull.title">Until Full (SOC)</h1>
+                        <div class="tooltip-container" data-tooltipkey="results.untilFull.tooltip"></div>
                     </div>
-                    <div id="comparisonBarRangeCost1" class="comparison-bar spaced-div"></div>
-
-                    <div class="optionTextWrapper">
-                        <div id="chargeCostForRangeOption2" data-localization="results.chargingCosts.option2">Charge cost in €/kWh for range option 2: </div>
-                        <div class="option-span" id="energyPriceOption2-1"></div>
+        
+                    <div id="fullCharge" class="spaced-div" data-localization="results.untilFull.fullCharge">100%</div>
+        
+                    <h5 data-localization="results.untilFull.chargingTime.title">Charging Time</h5>
+                    <div id="chargeTimeForFullCharge" class="spaced-div single-option"
+                        data-localization="results.untilFull.chargingTime.forFull">Charge time for full charge: </div>
+        
+                    <div id="chargeTimeComparisonContainerFullCharge" class="multiple-options" style="display: none;">
+                        <div class="optionTextWrapper">
+                            <div id="chargeTimeForFullChargeOption1" data-localization="results.untilFull.chargingTime.option1">
+                                Charge time for full charge option 1: </div>
+                            <div class="option-span" id="chargerPowerOption1-2"></div>
+                        </div>
+                        <div id="comparisonBarFullChargeTime1" class="comparison-bar spaced-div"></div>
+        
+                        <div class="optionTextWrapper">
+                            <div id="chargeTimeForFullChargeOption2" data-localization="results.untilFull.chargingTime.option2">
+                                Charge time for full charge option 2: </div>
+                            <div class="option-span" id="chargerPowerOption2-2"></div>
+                        </div>
+        
+                        <div id="comparisonBarFullChargeTime2" class="comparison-bar spaced-div"></div>
                     </div>
-                    <div id="comparisonBarRangeCost2" class="comparison-bar spaced-div"></div>
+        
+                    <h5 data-localization="results.untilFull.chargingCosts.title">Charging Costs</h5>
+                    <div id="chargeCostFullCharge" class="spaced-div single-option"
+                        data-localization="results.untilFull.chargingCosts.forFull">Charge cost in €/kWh for full charge: </div>
+        
+                    <div id="chargeCostComparisonContainerFullCharge" class="multiple-options" style="display: none;">
+                        <div class="optionTextWrapper">
+                            <div id="chargeCostForFullChargeOption1"
+                                data-localization="results.untilFull.chargingCosts.option1">Charge cost in €/kWh for full charge
+                                option 1: </div>
+                            <div class="option-span" id="energyPriceOption1-2"></div>
+                        </div>
+                        <div id="comparisonBarFullChargeCost1" class="comparison-bar spaced-div"></div>
+        
+                        <div class="optionTextWrapper">
+                            <div id="chargeCostForFullChargeOption2"
+                                data-localization="results.untilFull.chargingCosts.option2">Charge cost in €/kWh for full charge
+                                option 2: </div>
+                            <div class="option-span" id="energyPriceOption2-2"></div>
+                        </div>
+                        <div id="comparisonBarFullChargeCost2" class="comparison-bar spaced-div"></div>
+                    </div>
+        
+                    <h5 data-localization="results.untilFull.energy.title">Energy</h5>
+                    <div id="energyToFullCharge" data-localization="results.untilFull.energy.forFull">Energy needed for full
+                        charge: </div>
                 </div>
-    
-                <h5 data-localization="results.energy.title">Energy</h5>
-                <div id="energyNeededForRange" data-localization="results.energy.forRange">Energy needed for range: </div>
+        
+                <div class="right-side">
+                    <div class="results-tooltip-wrapper">
+                        <h1 data-localization="results.stateOfCharge.title">State of Charge</h1>
+                        <div class="tooltip-container" data-tooltipkey="results.stateOfCharge.tooltip"></div>
+                    </div>
+        
+                    <div id="stateOfCharge" class="spaced-div" data-localization="results.stateOfCharge.soc">SOC: </div>
+        
+                    <h5 data-localization="results.operatingRange.title">Distance</h5>
+                    <div id="currentOperatingRange" data-localization="results.operatingRange.range">Operation range: </div>
+                </div>
             </div>
-              
-            <div class="middle">
-                <div class="results-tooltip-wrapper">
-                    <h1 data-localization="results.untilFull.title">Until Full (SOC)</h1>
-                    <div class="tooltip-container" data-tooltipkey="results.untilFull.tooltip"></div>
-                </div>
-
-                <div id="fullCharge" class="spaced-div" data-localization="results.untilFull.fullCharge">100%</div>
-    
-                <h5 data-localization="results.untilFull.chargingTime.title">Charging Time</h5>
-                <div id="chargeTimeForFullCharge" class="spaced-div single-option" data-localization="results.untilFull.chargingTime.forFull">Charge time for full charge: </div>
-
-                <div id="chargeTimeComparisonContainerFullCharge" class="multiple-options" style="display: none;">
-                    <div class="optionTextWrapper">
-                        <div id="chargeTimeForFullChargeOption1" data-localization="results.untilFull.chargingTime.option1">Charge time for full charge option 1: </div>
-                        <div class="option-span" id="chargerPowerOption1-2"></div>
-                    </div>
-                    <div id="comparisonBarFullChargeTime1" class="comparison-bar spaced-div"></div>
-
-                    <div class="optionTextWrapper">
-                        <div id="chargeTimeForFullChargeOption2" data-localization="results.untilFull.chargingTime.option2">Charge time for full charge option 2: </div>
-                        <div class="option-span" id="chargerPowerOption2-2"></div>
-                    </div>
-                    
-                    <div id="comparisonBarFullChargeTime2" class="comparison-bar spaced-div"></div>
-                </div>
-    
-                <h5 data-localization="results.untilFull.chargingCosts.title">Charging Costs</h5>
-                <div id="chargeCostFullCharge" class="spaced-div single-option" data-localization="results.untilFull.chargingCosts.forFull">Charge cost in €/kWh for full charge: </div>
-            
-                <div id="chargeCostComparisonContainerFullCharge" class="multiple-options" style="display: none;">
-                    <div class="optionTextWrapper">
-                        <div id="chargeCostForFullChargeOption1" data-localization="results.untilFull.chargingCosts.option1">Charge cost in €/kWh for full charge option 1: </div>
-                        <div class="option-span" id="energyPriceOption1-2"></div>
-                    </div>
-                    <div id="comparisonBarFullChargeCost1" class="comparison-bar spaced-div"></div>
-
-                    <div class="optionTextWrapper">
-                        <div id="chargeCostForFullChargeOption2" data-localization="results.untilFull.chargingCosts.option2">Charge cost in €/kWh for full charge option 2: </div>
-                        <div class="option-span" id="energyPriceOption2-2"></div>
-                    </div>
-                    <div id="comparisonBarFullChargeCost2" class="comparison-bar spaced-div"></div>
-                </div>
-    
-                <h5 data-localization="results.untilFull.energy.title">Energy</h5>
-                <div id="energyToFullCharge" data-localization="results.untilFull.energy.forFull">Energy needed for full charge: </div>
-            </div>
-    
-            <div class="right-side">
-                <div class="results-tooltip-wrapper">
-                    <h1 data-localization="results.stateOfCharge.title">State of Charge</h1>
-                    <div class="tooltip-container" data-tooltipkey="results.stateOfCharge.tooltip"></div>
-                </div>    
-
-                <div id="stateOfCharge" class="spaced-div" data-localization="results.stateOfCharge.soc">SOC: </div>
-    
-                <h5 data-localization="results.operatingRange.title">Distance</h5>
-                <div id="currentOperatingRange" data-localization="results.operatingRange.range">Operation range: </div>
-            </div>
-        </div>        
         </div>
         <!--END OF RESULTS CONTAINER -->
 
