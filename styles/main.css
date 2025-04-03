@@ -18,8 +18,15 @@ body, html {
     border-bottom: 2px solid rgb(30, 69, 119);
 }
 
+@media screen and (max-width: 900px) {
+    .topbar {
+        padding: 20px 20px 20px 20px;
+    }
+}
+
 .topbar-title-container {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     column-gap: 10px;
