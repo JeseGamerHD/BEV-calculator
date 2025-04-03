@@ -274,6 +274,15 @@ describe('test suite: calculating charge time when charging to full', () => {
 
     expect(document.getElementById('chargeTimeForFullCharge').textContent).toBe('5 h 41 min');
   });
+
+  it('displays that charge power is not set when charging required and charger power is unknown', () => {
+    calculator.stateOfCharge = 20;
+    calculator.batteryCapacity = 60;
+    calculator.chargerPower = 0;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForFullCharge').textContent).toBe('Charge power not set');
+  });
 });
 
 describe('test suite: calculating cost of charging to full', () => {
