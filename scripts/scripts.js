@@ -79,10 +79,12 @@ class Calculator {
         if (this.bevEnergyConsumption === 0) {
             console.log("Error: BEV energy consumption is 0. Cannot calculate operating range.");
             this.updateValueForResult("0 km", "currentOperatingRange");
+            this.results.currentRange = 0;
             return;
         }
         const operatingRange = (this.batteryCapacity / this.bevEnergyConsumption) * (this.stateOfCharge); // in km
         this.updateValueForResult(operatingRange.toFixed(2) + " km", "currentOperatingRange");
+        this.results.currentRange = operatingRange.toFixed(2);
         return operatingRange;
     }
     
@@ -157,8 +159,15 @@ class Calculator {
     }
     
     calcChargeTimeForRange(energyToCharge, isAlt) {
-        this.results.rangeTime.hours = 0;
-        this.results.rangeTime.minutes = 0;
+        
+        if(!isAlt) { // set to zero so wont have to put these in every if else segment
+            this.results.rangeTime.hours = 0; // At the bottom values are assigned
+            this.results.rangeTime.minutes = 0;
+        } else {
+            this.results.rangeTimeAlt.hours = 0;
+            this.results.rangeTimeAlt.minutes = 0;
+        }
+        
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
         // Get the localization key for "Charging not needed" and "Charger power not set"
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
@@ -193,9 +202,6 @@ class Calculator {
         const hours = Math.floor(chargeTimeForRange);
         const minutes = Math.round((chargeTimeForRange - hours) * 60);
 
-        this.results.rangeTime.hours = hours;
-        this.results.rangeTime.minutes = minutes;
-        
         if (hours === 0 && minutes === 0) {
             if (!isAlt) {
                 this.updateValueForResult("<1 min", "chargeTimeForRange");
@@ -227,13 +233,28 @@ class Calculator {
                 this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-1");
             }
         }
+
+        if(!isAlt) {
+            this.results.rangeTime.hours = hours;
+            this.results.rangeTime.minutes = minutes;
+        } else {
+            this.results.rangeTimeAlt.hours = hours;
+            this.results.rangeTimeAlt.minutes = minutes;
+        }
         
         return chargeTimeForRange;
     }
     
     calcChargeTimeForFullCharge(energyNeeded, isAlt) {
-        this.results.fullChargeTime.hours = 0;
-        this.results.fullChargeTime.minutes = 0;
+        
+        if(!isAlt) { // set to zero so wont have to put these in every if else segment
+            this.results.fullChargeTime.hours = 0; // At the bottom values are assigned
+            this.results.fullChargeTime.minutes = 0;
+        } else {
+            this.results.fullChargeTimeAlt.hours = 0;
+            this.results.fullChargeTimeAlt.minutes = 0;
+        }
+        
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
         // Get the localization key for "Charging not needed"
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
@@ -267,9 +288,6 @@ class Calculator {
         const chargeTimeForFullCharge = energyNeeded / chargerPower; // in hours
         const hours = Math.floor(chargeTimeForFullCharge);
         const minutes = Math.round((chargeTimeForFullCharge - hours) * 60);
-
-        this.results.fullChargeTime.hours = hours;
-        this.results.fullChargeTime.minutes = minutes;
         
         if (hours === 0 && minutes === 0) {
             if (!isAlt) {
@@ -282,7 +300,7 @@ class Calculator {
             }
             return chargeTimeForFullCharge;
         }
-        // **** //
+        
         if (hours > 0) {
             if (!isAlt) {
                 this.updateValueForResult(`${hours} h ${minutes} min`, "chargeTimeForFullCharge");
@@ -301,6 +319,14 @@ class Calculator {
                 this.updateValueForResult(`${minutes} min`, "chargeTimeForFullChargeOption2");
                 this.updateValueForResult(this.getChargerPowerAlt() + " kW", "chargerPowerOption2-2");
             }
+        }
+
+        if(!isAlt) { // Store results
+            this.results.fullChargeTime.hours = hours;
+            this.results.fullChargeTime.minutes = minutes;
+        } else {
+            this.results.fullChargeTimeAlt.hours = hours;
+            this.results.fullChargeTimeAlt.minutes = minutes;
         }
         
         return chargeTimeForFullCharge;
@@ -321,7 +347,8 @@ class Calculator {
         const energyToCharge = Math.max(0, energyNeededForRange - currentEnergy);
         
         let chargeCost = 0;
-        this.results.rangeCost = 0;
+        this.results.rangeCost = isAlt ? this.results.rangeCost : 0;
+        this.results.rangeCostAlt = isAlt ? 0 : this.results.rangeCost;
         
         if (energyToCharge <= 0) {
             if (!isAlt) {
@@ -391,12 +418,13 @@ class Calculator {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostRange");
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption1");
             this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-1");
+            this.results.rangeCost = chargeCost.toFixed(2);
         } else {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForRangeOption2");
             this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-1");
+            this.results.rangeCostAlt = chargeCost.toFixed(2);
         }
         
-        this.results.rangeCost = chargeCost;
         return chargeCost;
     }
     
@@ -411,7 +439,8 @@ class Calculator {
         
         const energyNeeded = this.batteryCapacity - ((this.stateOfCharge / 100) * this.batteryCapacity);
         let chargeCost = 0;
-        this.results.fullChargeCost = 0;
+        this.results.fullChargeCost = isAlt ? this.results.fullChargeCost : 0;
+        this.results.fullChargeCostAlt = isAlt ? 0 : this.results.fullChargeCost;
         
         if (energyNeeded <= 0) {
             if (!isAlt) {
@@ -471,12 +500,13 @@ class Calculator {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostFullCharge");
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption1");
             this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-2");
+            this.results.fullChargeCost = chargeCost.toFixed(2);
         } else {
             this.updateValueForResult(chargeCost.toFixed(2) + " €", "chargeCostForFullChargeOption2");
             this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-2");
+            this.results.fullChargeCostAlt = chargeCost.toFixed(2);
         }
-        
-        this.results.fullChargeCost = chargeCost;
+              
         return chargeCost;
     }
     
