@@ -116,8 +116,8 @@ body, html {
     }
 
     .oikea-puoli-sivusta {
-        position: static;
-        height: auto;
+        max-height: 50vh;
+        z-index: 999;
     }
 }
 

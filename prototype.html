@@ -229,22 +229,35 @@
                 </div>
             </div>
         
+            
             <div class="results-content">
+
                 <div class="left-side">
+                    <div class="swipe-dots" id="swipeDots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+                    <div class="results-mobile-wrapper">
                     <div class="results-tooltip-wrapper">
-                        <h1 data-localization="results.distance.title">Distance</h1>
-                        <div class="tooltip-container" data-tooltipkey="results.distance.tooltip"></div>
+                            <h1 data-localization="results.distance.title">Distance</h1>
+                            <div class="tooltip-container" data-tooltipkey="results.distance.tooltip"></div>
+                        </div>
+                        <div id="desiredRange" class="spaced-div">TEST</div>
                     </div>
-                    <div id="desiredRange" class="spaced-div">TEST</div>
-        
-                    <div class="header-wrapper">
-                        <h5 data-localization="results.chargingTime.title">Charging Time</h5>
-                        <h5 id="header-span" class="header-span" data-localization="results.chargingTime.multipleCharges">
-                            Multiple charges</h5>
+
+                    <span class="mobile-divider-line"></span>
+
+                    <div class="results-mobile-wrapper">
+                        <div class="header-wrapper">
+                            <h5 data-localization="results.chargingTime.title">Charging Time</h5>
+                            <h5 id="header-span" class="header-span" data-localization="results.chargingTime.multipleCharges">
+                                Multiple charges</h5>
+                        </div>
+                        <div id="chargeTimeForRange" class="spaced-div single-option">Charge time needed for range: </div>
                     </div>
-        
-                    <div id="chargeTimeForRange" class="spaced-div single-option">Charge time needed for range: </div>
-        
+
                     <div id="chargeTimeComparisonContainer" class="multiple-options" style="display: none;">
                         <div class="optionTextWrapper">
                             <div id="chargeTimeForRangeOption1" data-localization="results.chargingTime.option1">Charge time for
@@ -260,11 +273,13 @@
                         </div>
                         <div id="comparisonBarRangeTime2" class="comparison-bar spaced-div"></div>
                     </div>
-        
-                    <h5 data-localization="results.chargingCosts.title">Charging Costs</h5>
-                    <div id="chargeCostRange" class="spaced-div single-option"
-                        data-localization="results.chargingCosts.forRange">Charge cost in €/kWh for desired range: </div>
-        
+
+                    <div class="results-mobile-wrapper">
+                        <h5 data-localization="results.chargingCosts.title">Charging Costs</h5>
+                        <div id="chargeCostRange" class="spaced-div single-option"
+                            data-localization="results.chargingCosts.forRange">Charge cost in €/kWh for desired range: </div>
+                    </div>
+
                     <div id="chargeCostComparisonContainer" class="multiple-options" style="display: none;">
                         <div class="optionTextWrapper">
                             <div id="chargeCostForRangeOption1" data-localization="results.chargingCosts.option1">Charge cost in
@@ -280,23 +295,35 @@
                         </div>
                         <div id="comparisonBarRangeCost2" class="comparison-bar spaced-div"></div>
                     </div>
-        
-                    <h5 data-localization="results.energy.title">Energy</h5>
-                    <div id="energyNeededForRange" data-localization="results.energy.forRange">Energy needed for range: </div>
+
+                    <div class="results-mobile-wrapper">
+                        <h5 data-localization="results.energy.title">Energy</h5>
+                        <div id="energyNeededForRange" data-localization="results.energy.forRange">Energy needed for range: </div>
+                    </div>
                 </div>
         
                 <div class="middle">
-                    <div class="results-tooltip-wrapper">
-                        <h1 data-localization="results.untilFull.title">Until Full (SOC)</h1>
-                        <div class="tooltip-container" data-tooltipkey="results.untilFull.tooltip"></div>
+                    <div class="swipe-dots slide-dots">
+                        <span class="dot"></span>
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
                     </div>
-        
-                    <div id="fullCharge" class="spaced-div" data-localization="results.untilFull.fullCharge">100%</div>
-        
-                    <h5 data-localization="results.untilFull.chargingTime.title">Charging Time</h5>
-                    <div id="chargeTimeForFullCharge" class="spaced-div single-option"
-                        data-localization="results.untilFull.chargingTime.forFull">Charge time for full charge: </div>
-        
+                    <div class="results-mobile-wrapper">
+                        <div class="results-tooltip-wrapper">
+                            <h1 data-localization="results.untilFull.title">Until Full (SOC)</h1>
+                            <div class="tooltip-container" data-tooltipkey="results.untilFull.tooltip"></div>
+                        </div>
+                        <div id="fullCharge" class="spaced-div" data-localization="results.untilFull.fullCharge">100%</div>
+                    </div>    
+
+                    <span class="mobile-divider-line"></span>
+
+                    <div class="results-mobile-wrapper">
+                        <h5 data-localization="results.untilFull.chargingTime.title">Charging Time</h5>
+                        <div id="chargeTimeForFullCharge" class="spaced-div single-option"
+                            data-localization="results.untilFull.chargingTime.forFull">Charge time for full charge: </div>
+                    </div>
+
                     <div id="chargeTimeComparisonContainerFullCharge" class="multiple-options" style="display: none;">
                         <div class="optionTextWrapper">
                             <div id="chargeTimeForFullChargeOption1" data-localization="results.untilFull.chargingTime.option1">
@@ -313,11 +340,13 @@
         
                         <div id="comparisonBarFullChargeTime2" class="comparison-bar spaced-div"></div>
                     </div>
-        
-                    <h5 data-localization="results.untilFull.chargingCosts.title">Charging Costs</h5>
-                    <div id="chargeCostFullCharge" class="spaced-div single-option"
-                        data-localization="results.untilFull.chargingCosts.forFull">Charge cost in €/kWh for full charge: </div>
-        
+
+                    <div class="results-mobile-wrapper">
+                        <h5 data-localization="results.untilFull.chargingCosts.title">Charging Costs</h5>
+                        <div id="chargeCostFullCharge" class="spaced-div single-option"
+                            data-localization="results.untilFull.chargingCosts.forFull">Charge cost in €/kWh for full charge: </div>
+                    </div>    
+
                     <div id="chargeCostComparisonContainerFullCharge" class="multiple-options" style="display: none;">
                         <div class="optionTextWrapper">
                             <div id="chargeCostForFullChargeOption1"
@@ -335,22 +364,35 @@
                         </div>
                         <div id="comparisonBarFullChargeCost2" class="comparison-bar spaced-div"></div>
                     </div>
-        
-                    <h5 data-localization="results.untilFull.energy.title">Energy</h5>
-                    <div id="energyToFullCharge" data-localization="results.untilFull.energy.forFull">Energy needed for full
-                        charge: </div>
+                    
+                    <div class="results-mobile-wrapper">
+                        <h5 data-localization="results.untilFull.energy.title">Energy</h5>
+                        <div id="energyToFullCharge" data-localization="results.untilFull.energy.forFull">Energy needed for full
+                            charge: </div>
+                    </div>
                 </div>
         
                 <div class="right-side">
-                    <div class="results-tooltip-wrapper">
-                        <h1 data-localization="results.stateOfCharge.title">State of Charge</h1>
-                        <div class="tooltip-container" data-tooltipkey="results.stateOfCharge.tooltip"></div>
+                    <div class="swipe-dots slide-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot active"></span>
                     </div>
-        
-                    <div id="stateOfCharge" class="spaced-div" data-localization="results.stateOfCharge.soc">SOC: </div>
-        
-                    <h5 data-localization="results.operatingRange.title">Distance</h5>
-                    <div id="currentOperatingRange" data-localization="results.operatingRange.range">Operation range: </div>
+                    <div class="results-mobile-wrapper">
+                        <div class="results-tooltip-wrapper">
+                            <h1 data-localization="results.stateOfCharge.title">State of Charge</h1>
+                            <div class="tooltip-container" data-tooltipkey="results.stateOfCharge.tooltip"></div>
+                        </div>
+                        <div id="stateOfCharge" class="spaced-div" data-localization="results.stateOfCharge.soc">SOC: </div>
+                    </div>
+                    
+                    <span class="mobile-divider-line"></span>
+
+                    <div class="results-mobile-wrapper">   
+                        <h5 data-localization="results.operatingRange.title">Distance</h5>
+                        <div id="currentOperatingRange" data-localization="results.operatingRange.range">Operation range: </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

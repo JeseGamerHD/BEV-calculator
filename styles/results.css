@@ -24,6 +24,7 @@
     margin-bottom: 1.5rem;
     text-transform: uppercase;
 }
+
 /* Add separator line after h3 in first-time-use */
 .first-time-content h3:after {
     content: "";
@@ -33,6 +34,7 @@
     background-color: rgba(255, 255, 255, 0.3); 
     margin: 1.5rem 0;
 }
+
 .first-time-content p {
     font-size: 1.2rem;
     line-height: 1.6;
@@ -64,6 +66,7 @@
     font-weight: bold;
     flex-shrink: 0;
 }
+
 .first-time-button {
     background: white;
     color: rgb(48,44,116);
@@ -74,11 +77,11 @@
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 .first-time-button:hover {
     background: rgba(255,255,255,0.9);
     transform: scale(1.05);
 }
-
 
 .results-content {
     display: none;
@@ -87,6 +90,16 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+}
+
+#desiredRange, #fullCharge, #stateOfCharge{
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+#currentOperatingRange, #energyToFullCharge, #energyNeededForRange{
+    font-size: larger;
+    font-weight: bold;
 }
 
 .left-side, .middle, .right-side {
@@ -103,8 +116,7 @@
     display: flex;
     color: white;
     font-size: clamp(1rem, 2vw, 1.75em);
-    white-space: nowrap;
-    
+    white-space: nowrap;  
 }
 
 .oikea-puoli-sivusta h1{
@@ -117,64 +129,16 @@
     font-size: clamp(0.8rem, 1.2vw, 1.5em);
 }
 
+.spaced-div{
+    margin-bottom: 30px;
+}
+
 .left-side, .middle, .right-side{
     display: flex;
     flex-direction: column;
     width: 33%;
     padding: 2vw;
 }
-
-
-
-
-/* Inputs and results wrap when screen not wide enough */
-@media screen and (max-width: 900px) {   
-    .first-time-content {
-        padding: 2rem;
-        max-width: 90%; /* Adjust for mobile */
-        margin: 0 auto; /* Center horizontally */
-    }
-    .first-time-content h2 {
-        font-size: 5vh;
-        margin-bottom: 1.5rem;
-    }
-    .first-time-content h3 {
-        font-size: 2vh;
-        margin-bottom: 1.5rem;
-        text-transform: uppercase;
-    }
-    .results-content {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .oikea-puoli-sivusta {
-        width: 100%;
-        font-size: 1.5em;
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .oikea-puoli-sivusta h1 {
-        font-size: 1.5em;
-    }
-    
-    .left-side, .middle, .right-side{
-        width: 100%;
-        padding: 10vw;
-    }
-
-}
-#desiredRange, #fullCharge, #stateOfCharge{
-    font-size: 3em;
-    font-weight: bold;
-}
-
-#currentOperatingRange, #energyToFullCharge, #energyNeededForRange{
-    font-size: larger;
-    font-weight: bold;
-}
-
 
 .multiple-options{
     flex-direction: column;
@@ -199,6 +163,137 @@
     display: inline-flex;
     margin-left: 5px;
 }
+
+
+/* Inputs and results wrap when screen not wide enough */
+@media screen and (max-width: 900px) {   
+    .first-time-use{
+        height: 50vh;
+    }
+    
+    .first-time-content {
+        padding: 2rem;
+        max-width: 90%; /* Adjust for mobile */
+        margin: 0 auto; /* Center horizontally */
+    }
+    .first-time-content h2 {
+        font-size: 5vh;
+        margin-bottom: 1.5rem;
+    }
+    .first-time-content h3 {
+        font-size: 2vh;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+    }
+    
+    .results-content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        overflow-x: scroll;
+        position: relative;
+        scroll-snap-type: x mandatory;
+        border-bottom-left-radius: 45px;
+        border-bottom-right-radius: 45px;
+
+    }
+
+    .mobile-divider-line{
+    
+        border-bottom: 1px solid rgb(160,180,220);
+        margin-bottom: 15px;
+    }
+
+    .swipe-dots{
+        position: absolute;
+        top: 10px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        z-index: 10;
+    }
+
+    .swipe-dots .dot{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #ccc;
+    }
+
+    .left-side .swipe-dots .dot:nth-child(1),
+    .middle .swipe-dots .dot:nth-child(2),
+    .right-side .swipe-dots .dot:nth-child(3) {
+    background-color: #333;
+}
+
+    .left-side, .middle, .right-side {
+        width: 100vw;
+        flex: none;
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /*align-items: center;*/
+        scroll-snap-align: start;
+    }
+
+    .oikea-puoli-sivusta {
+        width: 100%;
+        background-color: rgb(228, 228, 228);
+        font-size: 1rem;
+        height: 50vh;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .oikea-puoli-sivusta h1 {
+        font-size: 1em;
+        margin-bottom: 0px;
+    }
+
+    .oikea-puoli-sivusta h5 {
+        margin-top: 10px;
+        font-size: 1em;
+        margin-bottom: 5px;
+    }
+
+    .optionTextWrapper {
+        margin-bottom: 5px;
+    }
+
+    .option-span{
+        font-size: 0.75em;
+    }
+
+    .results-mobile-wrapper {
+        display: flex;
+        align-items: baseline;
+    }
+
+    #currentOperatingRange, #energyToFullCharge, #energyNeededForRange{
+        margin-left: auto;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    #desiredRange, #fullCharge, #stateOfCharge{
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .spaced-div{
+        margin-bottom: 5px;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+}
+
+
+
+
 
 .header-wrapper{
     display: flex;
@@ -237,6 +332,3 @@
     background: linear-gradient(165deg, rgb(64,100,188) 0%, rgb(64,52,172,1) 100%);
 }
 
-.spaced-div{
-    margin-bottom: 30px;
-}

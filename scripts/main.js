@@ -160,6 +160,43 @@ function handleComparisonButtons(button) {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function(){
+    let currentIndex = 0;
+    const totalScreens = 3;
+    const resultsContent = document.querySelectorAll(".results-content")[0];
+
+    let initialX = null;
+
+    function startTouch(e){
+        initialX = e.touches[0].clientX;
+    }
+
+    function moveTouch(e){
+        if (initialX === null) {
+            return;
+        }
+
+        let currentX = e.touches[0].clientX;
+        let diffX = initialX - currentX;
+
+        if(Math.abs(diffX) > 50){
+            if(diffX > 0 && currentIndex < totalScreens - 1){
+                currentIndex++;
+            } else if(diffX < 0 && currentIndex > 0){
+                currentIndex--;
+            }
+
+            resultsContent.style.transform = `translateX(-${currentIndex * 100}vw)`;
+        }
+
+        initialX = null;
+        e.preventDefault();
+    }
+
+    resultsContent.addEventListener("touchstart", startTouch, false);
+    resultsContent.addEventListener("touchmove", moveTouch, false);
+});
+
 // ** TOOLTIP FUNCTIONALITY **
 const tooltip = document.getElementById("tooltip");
 const elementsWithTooltip = document.querySelectorAll(".tooltip-container");
