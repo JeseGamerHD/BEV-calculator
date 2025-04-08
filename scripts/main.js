@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (languageSwitcher) {
             languageSwitcher.value = localizationManager.currentLanguage; // Change the selected option to the one set in the localization
             
-            languageSwitcher.addEventListener('click', async (clickEvent) => {
-                let newLanguage = clickEvent.target.value; // The selected language option
+            languageSwitcher.addEventListener('change', async (changeEvent) => {
+                let newLanguage = changeEvent.target.value; // The selected language option
                 
                 if (newLanguage != localizationManager.currentLanguage) { // No need to update if same language is picked or options only opened
                     localStorage.setItem("language", newLanguage); // Store choice
