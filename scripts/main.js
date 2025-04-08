@@ -38,6 +38,10 @@ const localizationManager = new LocalizationManager();
 // Initialize the localization manager
 document.addEventListener('DOMContentLoaded', async () => {
     try {
+
+        // TODO: Maybe move first time use functionality to make this bit cleaner
+        // since it is for localization stuff
+        
         // Get the start button and overlay elements
         const startButton = document.getElementById('start-calculator');
         const infoButton = document.getElementById('first-time-info-button');
@@ -46,16 +50,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Check if this is the user's first visit
         const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
         
+        const inputAreaContainer = document.getElementById("input-area-container");
+        const mobileActive = window.matchMedia("(max-width: 900px)");
         // If user has visited before, hide the overlay immediately
         if (hasVisitedBefore === 'true') {
             firstTimeOverlay.style.display = 'none';
             resultsContent.style.display = 'flex';
+            inputAreaContainer.style.display = "flex"; 
+        } else {
+            if(mobileActive.matches) {
+                // Input side is hidden on mobile due to scrolling issues
+                // when the introduction is active, TODO: Better fix
+                inputAreaContainer.style.display = "none";
+            } else {
+                inputAreaContainer.style.display = "flex";
+            }
         }
         // Add click handler to the start button
         if (startButton) {
             startButton.addEventListener('click', function() {
                     firstTimeOverlay.style.display = 'none';
-                    resultsContent.style.display = 'flex'; 
+                    resultsContent.style.display = 'flex';
+                    inputAreaContainer.style.display = "flex"; 
 
                     // Store in localStorage that user has visited
                     localStorage.setItem('hasVisitedBefore', 'true');
@@ -64,9 +80,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (infoButton) {
             infoButton.addEventListener('click', function() {
                 firstTimeOverlay.style.display = 'flex';
-                resultsContent.style.display = 'none'; 
+                resultsContent.style.display = 'none';
+                if(mobileActive.matches){
+                    inputAreaContainer.style.display = "none";
+                }    
             });
         }
+
+        // For cases where user resizes desktop browser
+        // On desktop inputs are always visible
+        window.addEventListener("resize", () => {
+            let mobile = window.matchMedia("(max-width: 900px)");
+            if(!mobile.matches) {
+                inputAreaContainer.style.display = "flex"; 
+            }
+        });
 
         // Initialize localization manager and load language
         await localizationManager.initializeLanguage();

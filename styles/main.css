@@ -104,20 +104,9 @@ body, html {
     max-width: 100vw;
 }
 
-.oikea-puoli-sivusta {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-}
-
 @media screen and (max-width: 900px) {
     .calculator-container {
         flex-wrap: wrap-reverse; /* On mobile wrap results above inputs */
-    }
-
-    .oikea-puoli-sivusta {
-        max-height: 50vh;
-        z-index: 999;
     }
 }
 
