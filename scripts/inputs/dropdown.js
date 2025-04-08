@@ -4,15 +4,37 @@ export class DropdownInputHandler extends InputField {
 
     #calculator = null;
 
-    constructor(calculator) {
+    constructor(calculator, initialValues) {
         super();
         this.#calculator = calculator;
-        this.setDefaultValues(document.querySelectorAll(".dropdownInput-field"), calculator);
+        let dropdownFields = document.querySelectorAll(".dropdownInput-field");
+        this.setDefaultValues(dropdownFields, initialValues);
         this.attachEventListeners();
     }
 
-    attachEventListeners() {
+    /** @inheritdoc 
+    * DropdownInputHandler implementation loops through the dropdown options
+    * and sets the visible text to match an option if the initial values match
+    */
+    setDefaultValues(dropdownFields, intialValues) {
+        super.setDefaultValues(dropdownFields, intialValues);
 
+        // Dropdowns also check if a initial value matches an option,
+        // and sets its value to match the text
+        dropdownFields.forEach(dropdown => {
+            let dropdownContent = document.getElementById(dropdown.dataset.options);
+            let options = dropdownContent.querySelectorAll(".dropdown-option");
+            
+            for(let option of options) {
+                if(dropdown.value == option.dataset.value) {
+                    dropdown.value = option.textContent;
+                    break;
+                }
+            }
+        });
+    }
+
+    attachEventListeners() {
         // User clicks on an option or the input field
         document.addEventListener("click", (clickEvent) => {
             this.handleClickEvent(clickEvent);
@@ -21,12 +43,8 @@ export class DropdownInputHandler extends InputField {
         document.addEventListener("focusout", (focusoutEvent) => {
             if (focusoutEvent.target.classList.contains("dropdownInput-field")) {
                 let inputField = focusoutEvent.target;
-
-                // Allow empty, but otherwise cleanup
-                // Cleaning up empty to zero causes zero to flash when clicking on an option
-                if (inputField.value != "") {
-                    inputField.value = inputField.dataset.value;
-                }
+                this.cleanUpOnFocusout(inputField, true);
+                this.storeInputValue(inputField.dataset.property, parseFloat(inputField.dataset.value));
             }
         });
 
@@ -37,7 +55,6 @@ export class DropdownInputHandler extends InputField {
                 let dropdownContentID = dropdownField.dataset.options;
                 this.handleInput(dropdownField);
 
-                // TODO: should it?
                 // Close the options if the user starts typing
                 if (document.getElementById(dropdownContentID).classList.contains("animation")) {
                     this.toggleDropdown(dropdownContentID);
@@ -58,8 +75,9 @@ export class DropdownInputHandler extends InputField {
             dropdownField.value = option.textContent;
             dropdownField.dataset.value = option.dataset.value;
 
-            // Update calculations, close dropdown
+            // Update calculations, store data, close dropdown
             this.#calculator.setData(dropdownField.dataset.property, parseFloat(option.dataset.value));
+            this.storeInputValue(dropdownField.dataset.property, parseFloat(option.dataset.value));
             this.toggleDropdown(option.parentElement.id);
         }
         // User clicks on the input field:

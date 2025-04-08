@@ -3,50 +3,75 @@ import { InputField } from "./inputfield.js";
 export class ToggleInputHandler extends InputField {
 
     #calculator = null;
-    #toggleSwitches = null;
 
-    constructor(calculator) {
+    constructor(calculator, initialValues) {
         super();    
         this.#calculator = calculator;
-        this.#toggleSwitches = document.querySelectorAll(".toggleInput-switch");
-        this.setDefaultValues(document.querySelectorAll(".toggleInput-field, .toggleInput-switch"), calculator);
-
+        let toggleSwitches = document.querySelectorAll(".toggleInput-switch");
+        this.setDefaultValues(document.querySelectorAll(".toggleInput-field, .toggleInput-switch"), initialValues);
         this.attachEventListeners();
-        this.#toggleSwitches.forEach(toggleSwitch => {
 
-            // By default options have the left option selected
-            // initialize by toggling some styling
-            let leftOption = document.querySelector(`[data-owner="${toggleSwitch.id}"][data-value="${toggleSwitch.dataset.left}"]`);
-            leftOption.classList.toggle("active");
-            document.getElementById(toggleSwitch.dataset.thumb).style.left = "5px";
-            
-            // TODO: figure out how to move eventlistener to the attachEventListeners() method
-            // The click has issues activating on the thumb using event delegation
-            toggleSwitch.addEventListener("click", () => {
-                this.toggleOptions(toggleSwitch);
-                this.#calculator.setData(toggleSwitch.dataset.property, toggleSwitch.dataset.value);
-            });
+        // initialize the position of each toggle switch
+        toggleSwitches.forEach(toggle => {
+            this.initializeTogglePosition(toggle);
         });
     }
 
     attachEventListeners() {
         
         document.addEventListener("input", (inputEvent) => {
-            if(inputEvent.target.classList.contains("toggleInput-field")){
+            let wrapper = inputEvent.target.closest(".toggleInput-wrapper"); // If clicking inside the wrapper, this finds the wrapper element. When clicking outside it returns null.
+            if(wrapper != null && inputEvent.target.classList.contains("toggleInput-field")) {
                 let inputField = inputEvent.target;
                 this.handleInput(inputField);
                 this.#calculator.setData(inputField.dataset.property, parseFloat(inputField.dataset.value));
             }
         });
-        
+
         document.addEventListener("focusout", (focusoutEvent) => {
-            if(focusoutEvent.target.classList.contains("toggleInput-field")){
+            let wrapper = focusoutEvent.target.closest(".toggleInput-wrapper");
+            if(wrapper != null && focusoutEvent.target.classList.contains("toggleInput-field")) {
                 let inputField = focusoutEvent.target;
-                if (inputField.value != "") {
-                    inputField.value = inputField.dataset.value;
+                this.cleanUpOnFocusout(inputField, true);
+                this.storeInputValue(inputField.dataset.property, parseFloat(inputField.dataset.value));
+            }
+        });
+
+        document.addEventListener("click", (clickEvent) => {
+            let wrapper = clickEvent.target.closest(".toggleInput-wrapper");
+            if(wrapper != null) {
+                // Switch consists of multiple overlapping parts
+                // Need to get toggleSwitch like this and do the check, otherwise runs on every element
+                // inside the wrapper
+                let toggleSwitch = wrapper.querySelector(".toggleInput-switch");
+                if(toggleSwitch.contains(clickEvent.target)) {
+                    this.toggleOptions(toggleSwitch);
+                    this.#calculator.setData(toggleSwitch.dataset.property, toggleSwitch.dataset.value);
+                    this.storeInputValue(toggleSwitch.dataset.property, toggleSwitch.dataset.value);
                 }
             }
         });
+    }
+
+    /**
+    * Initializes the position of the toggle based on the value in toggleSwitch.dataset.value.
+    * => Checks which "option" in the toggle has that same value and moves the thumb over it
+    * @param  {HTMLElement } toggleSwitch
+    */
+    initializeTogglePosition(toggleSwitch) {
+        
+        let thumb = toggleSwitch.querySelector(".toggleInput-thumb");
+        let leftOption = toggleSwitch.querySelector(".toggle-option.left");
+        let rightOption = toggleSwitch.querySelector(".toggle-option.right");
+
+        if(toggleSwitch.dataset.value == leftOption.dataset.value) {
+            thumb.style.left = "5px";
+            leftOption.classList.toggle("active");
+        }
+        else {
+            thumb.style.left = "calc(100% - 45% - 5px)";
+            rightOption.classList.toggle("active");
+        }
     }
 
     /**
@@ -55,26 +80,20 @@ export class ToggleInputHandler extends InputField {
     * @param  {HTMLElement } toggleSwitch
     */
     toggleOptions(toggleSwitch) {
-        
-        let thumb = document.getElementById(toggleSwitch.dataset.thumb); // The "thumb" (white thingie) associated with the toggleSwitch
-        let left = toggleSwitch.dataset.left; // The value of the left side option in the toggle
-        let right = toggleSwitch.dataset.right; // ^^ Same but right side
-        
-        // Options define data-owner which is the id of the switch that "owns" the options
-        // They also have a data-value which is the value of that option
-        // So select left & right options that belong to this switch:
-        let leftOption = document.querySelector(`[data-owner="${toggleSwitch.id}"][data-value="${left}"]`);
-        let rightOption = document.querySelector(`[data-owner="${toggleSwitch.id}"][data-value="${right}"]`);
 
-        // Change active option:
-        if(toggleSwitch.dataset.value == left) {
-            toggleSwitch.dataset.value = right; // Set the value
+        let thumb = toggleSwitch.querySelector(".toggleInput-thumb");
+        let leftOption = toggleSwitch.querySelector(".toggle-option.left"); // toggle-option's also have left or right class
+        let rightOption = toggleSwitch.querySelector(".toggle-option.right");
+
+        // Switch active option:
+        if(toggleSwitch.dataset.value == leftOption.dataset.value) {
+            toggleSwitch.dataset.value = rightOption.dataset.value;
             thumb.style.left = "calc(100% - 45% - 5px)"; // Move thumb (css animates this)
             leftOption.classList.toggle("active");
             rightOption.classList.toggle("active");
- 
-        } else {
-            toggleSwitch.dataset.value = left;
+        }
+        else {
+            toggleSwitch.dataset.value = leftOption.dataset.value;
             thumb.style.left = "5px";
             rightOption.classList.toggle("active");
             leftOption.classList.toggle("active");

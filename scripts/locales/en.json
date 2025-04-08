@@ -1,0 +1,158 @@
+{
+  "general": {
+    "title": "Range Anti-Anxiety",
+    "subtitle": "The calculator for BEV related issues"
+  },
+  "tutorial": {
+    "step1": "Start by entering a desired range and basic details about your car.",
+    "step2": "Set the charge power and the price of using it. You can also add another set for comparison.",
+    "step3": "See the results. Play around with values to see how they affect the results."
+  },
+  "inputs": {
+    "distance": {
+      "title": "Desired range (km)",
+      "tooltip": "The distance to your destination / The total length of your trip.",
+      "placeholder": "Enter range (optional)"
+    },
+    "stateOfCharge": {
+      "title": "State of Charge (SOC)"
+    },
+    "batteryCapacity": {
+      "title": "Battery Capacity (kWh)",
+      "placeholder": "Enter or select battery capacity",
+      "tip": "Enter or select a value:",
+      "options": {
+        "small": "Small Batteries (30 kWh)",
+        "light": "Light Batteries (45 kWh)",
+        "midSize": "Mid-size Batteries (60 kWh)",
+        "midSizePlus": "Mid-size+ Batteries (85 kWh)",
+        "large": "Large Batteries (120 kWh)",
+        "extraLarge": "Extra Large Batteries (150 kWh)"
+      }
+    },
+    "energyConsumption": {
+      "title": "Energy Consumption (kWh / 100 km)",
+      "placeholder": "Enter or select energy consumption",
+      "tip": "Enter or select a value:",
+      "options": {
+        "smallCity": "Small & City Cars (12 kWh/100 km)",
+        "light": "Light Vehicles (15 kWh/100 km)",
+        "midSize": "Mid-size Cars (19 kWh /100 km)",
+        "midSizeSUV": "Mid-size SUVs (22 kWh /100 km)",
+        "trucksSUV": "Trucks & Large SUVs (25 kWh /100 km)",
+        "largeTrucks": "Large Trucks (30 kWh /100 km)"
+      }
+    },
+    "chargePower": {
+      "title": "OPTION 1: Charge Power (kW)",
+      "placeholder": "Enter or select charge power",
+      "tip": "Enter or select a value:",
+      "options": {
+        "acSlow1": "[AC] Slow Charging (1.4 kW)",
+        "acSlow3": "[AC] Slow Charging (3 kW)",
+        "acMedium": "[AC] Medium-speed Charging (7.4 kW)",
+        "acFast": "[AC] Fast Charging (22 kW)",
+        "dcSlow": "[DC] Slow Charging (50 kW)",
+        "dcMedium": "[DC] Medium-speed Charging (100 kW)",
+        "dcFast": "[DC] Fast Charging (150 kW)",
+        "dcUltraFast": "[DC] Ultra Fast Charging (250 kW)"
+      }
+    },
+    "price": {
+      "title": "Price",
+      "tooltip": "The price of electricity or the hourly rate set by the charger operator.",
+      "placeholder": "Enter price",
+      "perKWh": "€/kWh",
+      "perHour": "€/h"
+    },
+    "pricingModel": {
+      "title": "Pricing model",
+       "tooltip": "What the price is based on: per kilowatt hour or per hour of use. With €/kWh the charging costs are based on total energy charged. With €/h they are based on charging time.",
+       "tooltipLeft": "Price of electricity in kilowatt hours. Charging cost will be calculated based on energy charged.",
+       "tooltipRight": "Price of electricity per hour of use. Charging cost will be calculated based on charging time."
+    },
+    "comparison": {
+      "addButton": "+ Add Comparison",
+      "removeButton": "Remove",
+      "removeButtonTip": "Removes the comparison",
+      "option2Title": "OPTION 2: Charge Power (kW)"
+    }
+  },
+  "results": {
+    "distance": {
+      "title": "Distance",
+      "tooltip": "Charging Time shows the total time it takes to charge the car for driving the given distance. Charging costs includes the total price of the charge(s) and Energy shows the total energy needed for the aforementioned charge(s)"
+    },
+    "chargingTime": {
+      "title": "Charging Time",
+      "multipleCharges": "(Multiple Charges)",
+      "option1": "Charge time for range option 1: ",
+      "option2": "Charge time for range option 2: ",
+      "notNeeded": "Charging not needed",
+      "batteryNotSet": "Battery capacity not set"
+    },
+    "chargingCosts": {
+      "title": "Charging Costs",
+      "forRange": "Charge cost in €/kWh for desired range: ",
+      "option1": "Charge cost in €/kWh for range option 1: ",
+      "option2": "Charge cost in €/kWh for range option 2: ",
+      "priceNotSet": "Price not set",
+      "chargerNotSet": "Charge power not set"
+    },
+    "numberOfCharges": {
+      "title": "Number of Charges"
+    },
+    "energy": {
+      "title": "Energy",
+      "forRange": "Energy needed for range: "
+    },
+    "untilFull": {
+      "title": "Until Full (SOC)",
+      "tooltip": "Charging time shows the time it takes to fully charge the battery from your current state of charge. Charging costs shows the calculated price of the charge while Energy shows the total amount of energy it takes to charge the battery.",
+      "fullCharge": "100%",
+      "chargingTime": {
+        "title": "Charging Time",
+        "forFull": "Charge time for full charge: ",
+        "option1": "Charge time for full charge option 1: ",
+        "option2": "Charge time for full charge option 2: "
+      },
+      "chargingCosts": {
+        "title": "Charging Costs",
+        "forFull": "Charge cost in €/kWh for full charge: ",
+        "option1": "Charge cost in €/kWh for full charge option 1: ",
+        "option2": "Charge cost in €/kWh for full charge option 2: "
+      },
+      "energy": {
+        "title": "Energy",
+        "forFull": "Energy needed for full charge: "
+      }
+    },
+    "stateOfCharge": {
+      "title": "State of Charge",
+      "tooltip": "State of charge shows the current battery charge and distance shows how far you can drive with it.",
+      "soc": "SOC: "
+    },
+    "operatingRange": {
+      "title": "Distance",
+      "range": "Operation range: "
+    },
+    "optionText": {
+      "option1": "OPTION 1",
+      "option2": "OPTION 2"
+    }
+  },
+  "errors": {
+    "consumption": "Error: BEV energy consumption is 0. Cannot calculate operating range.",
+    "batteryCapacity": "Error: Battery capacity is 0. Cannot calculate charges required.",
+    "chargingPower": "Error: Cannot calculate charge time for range. Charge power is missing.",
+    "pricingModel": "Error: Cannot calculate charge cost for full charge. Pricing model is missing."
+  },
+  "firstUse": {
+  "title": "Welcome",
+  "description": "Easily plan your EV usage",
+  "step1": "Start by entering current state of charge and battery capacity",
+  "step2": " Enter distance and energy consumption of the car to calculate values for a specific trip",
+  "step3": "Compare different charging options and their costs with Add Comparison button ",
+  "startButton": "Start Using Calculator"
+}
+}
