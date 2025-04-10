@@ -27,71 +27,13 @@ const initialValues = {
     ...savedInputData
 };
 
-// Initialize the calculator and inputs
+// Initialize the calculator
 const calculator = new Calculator(initialValues);
 
-// Initialize the localization manager
+// Initialize the page:
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-
-        // TODO: Maybe move first time use functionality to make this bit cleaner
-        // since it is for localization stuff
-        
-        // Get the start button and overlay elements
-        const startButton = document.getElementById('start-calculator');
-        const infoButton = document.getElementById('first-time-info-button');
-        const firstTimeOverlay = document.querySelector('.first-time-use');
-        const resultsContent = document.querySelector('.results-content');
-        // Check if this is the user's first visit
-        const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
-        
-        const inputAreaContainer = document.getElementById("input-area-container");
-        const mobileActive = window.matchMedia("(max-width: 900px)");
-        // If user has visited before, hide the overlay immediately
-        if (hasVisitedBefore === 'true') {
-            firstTimeOverlay.style.display = 'none';
-            resultsContent.style.display = 'flex';
-            inputAreaContainer.style.display = "flex"; 
-        } else {
-            if(mobileActive.matches) {
-                // Input side is hidden on mobile due to scrolling issues
-                // when the introduction is active, TODO: Better fix
-                inputAreaContainer.style.display = "none";
-            } else {
-                inputAreaContainer.style.display = "flex";
-            }
-        }
-        // Add click handler to the start button
-        if (startButton) {
-            startButton.addEventListener('click', function() {
-                    firstTimeOverlay.style.display = 'none';
-                    resultsContent.style.display = 'flex';
-                    inputAreaContainer.style.display = "flex"; 
-
-                    // Store in localStorage that user has visited
-                    localStorage.setItem('hasVisitedBefore', 'true');
-            });
-        }
-        if (infoButton) {
-            infoButton.addEventListener('click', function() {
-                firstTimeOverlay.style.display = 'flex';
-                resultsContent.style.display = 'none';
-                if(mobileActive.matches){
-                    inputAreaContainer.style.display = "none";
-                }    
-            });
-        }
-
-        // For cases where user resizes desktop browser
-        // On desktop inputs are always visible
-        window.addEventListener("resize", () => {
-            let mobile = window.matchMedia("(max-width: 900px)");
-            if(!mobile.matches) {
-                inputAreaContainer.style.display = "flex"; 
-            }
-        });
-
-        // Initialize localization manager and load language
+    try {      
+        // Initialize localization
         await localization.initializeLanguage();
 
         // Set up language switcher if it exists
@@ -101,7 +43,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             languageSwitcher.addEventListener('change', async (changeEvent) => {
                 let newLanguage = changeEvent.target.value; // The selected language option
-                
                 if (newLanguage != localization.currentLanguage) { // No need to update if same language is picked or options only opened
                     localStorage.setItem("language", newLanguage); // Store choice
                     // Update language, then calculations (otherwise placeholder/temp texts show up)
@@ -109,23 +50,84 @@ document.addEventListener('DOMContentLoaded', async () => {
                     calculator.updateCalculations();
                 }
             });
-        }
-
-        // After localization has completed, now we can update calculations
-        // This ensures calculator results are the last thing to modify the DOM
-        setTimeout(() => {
-            calculator.updateCalculations();
-        }, 0);
-        
+        }       
     } catch (error) {
-        console.error("Error during initialization:", error);
+        console.error("Error during localization initialization:", error);
     }
 
+    // Initialize input handlers
     const dropdownInputHandler = new DropdownInputHandler(calculator, initialValues);
     const numberInputHandler = new NumberInputHandler(calculator, initialValues);
     const rangeInputHandler = new RangeInputHandler(calculator, initialValues);
     const toggleInputHandler = new ToggleInputHandler(calculator, initialValues);
+
+    // Initialize the first time use
+    initializeFirstTimeUse();
+
+    // After initialization has completed, now we can update calculations
+    // This ensures calculator results are the last thing to modify the DOM
+    setTimeout(() => {
+        calculator.updateCalculations();
+    }, 0);
 });
+
+function initializeFirstTimeUse() {
+   
+    const firstTimeOverlay = document.querySelector('.first-time-use');
+    const resultsContent = document.querySelector('.results-content');
+    const inputAreaContainer = document.getElementById("input-area-container"); // Input side is hidden on mobile if first time is active
+    const mobileActive = window.matchMedia("(max-width: 900px)"); // Using mobile?
+    
+    // If user has visited before, hide the overlay immediately
+    if (localStorage.getItem('hasVisitedBefore') === 'true') {
+        firstTimeOverlay.style.display = 'none';
+        resultsContent.style.display = 'flex';
+        inputAreaContainer.style.display = "flex";
+    } else {
+        if (mobileActive.matches) {
+            // Input side is hidden on mobile due to scrolling issues
+            // when the introduction is active, TODO: Better fix
+            inputAreaContainer.style.display = "none";
+        } else {
+            inputAreaContainer.style.display = "flex";
+        }
+    }
+
+    // After first time use is intitialized, add functionality to buttons etc:
+
+    // Add click handler to the start button
+    const startButton = document.getElementById('start-calculator');
+    if (startButton) {
+        startButton.addEventListener('click', function () {
+            firstTimeOverlay.style.display = 'none';
+            resultsContent.style.display = 'flex';
+            inputAreaContainer.style.display = "flex";
+
+            // Store in localStorage that user has visited
+            localStorage.setItem('hasVisitedBefore', 'true');
+        });
+    }
+    // And to the info button
+    const infoButton = document.getElementById('first-time-info-button');
+    if (infoButton) {
+        infoButton.addEventListener('click', function () {
+            firstTimeOverlay.style.display = 'flex';
+            resultsContent.style.display = 'none';
+            if (mobileActive.matches) {
+                inputAreaContainer.style.display = "none";
+            }
+        });
+    }
+
+    // For cases where user resizes desktop browser
+    // On desktop inputs are always visible
+    window.addEventListener("resize", () => {
+        let mobile = window.matchMedia("(max-width: 900px)");
+        if (!mobile.matches) {
+            inputAreaContainer.style.display = "flex";
+        }
+    });
+}
   
 // Functionality for add comparison button
 document.getElementById("addChargerPriceComparison").addEventListener("click", (event) => {
@@ -188,6 +190,7 @@ function handleComparisonButtons(button) {
     }
 }
 
+// ** MOBILE RESULT SWIPE FUNCTIONALITY **
 document.addEventListener("DOMContentLoaded", function(){
     let currentIndex = 0;
     const totalScreens = 3;
