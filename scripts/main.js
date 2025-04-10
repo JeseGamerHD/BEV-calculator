@@ -3,7 +3,7 @@ import { DropdownInputHandler } from "./inputs/dropdown.js";
 import { NumberInputHandler } from "./inputs/number-input.js";
 import { RangeInputHandler } from "./inputs/range-input.js";
 import { ToggleInputHandler } from "./inputs/toggle-switch.js";
-import { LocalizationManager } from "./localization.js";
+import localization from "./localization.js";
 
 const BASE_VALUES = {
     desiredRange: 250,
@@ -29,12 +29,7 @@ const initialValues = {
 
 // Initialize the calculator and inputs
 const calculator = new Calculator(initialValues);
-const dropdownInputHandler = new DropdownInputHandler(calculator, initialValues);
-const numberInputHandler = new NumberInputHandler(calculator, initialValues);
-const rangeInputHandler = new RangeInputHandler(calculator, initialValues);
-const toggleInputHandler = new ToggleInputHandler(calculator, initialValues);
 
-const localizationManager = new LocalizationManager();
 // Initialize the localization manager
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -97,20 +92,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         // Initialize localization manager and load language
-        await localizationManager.initializeLanguage();
+        await localization.initializeLanguage();
 
         // Set up language switcher if it exists
         const languageSwitcher = document.getElementById('language-switcher');
         if (languageSwitcher) {
-            languageSwitcher.value = localizationManager.currentLanguage; // Change the selected option to the one set in the localization
+            languageSwitcher.value = localization.currentLanguage; // Change the selected option to the one set in the localization
             
             languageSwitcher.addEventListener('change', async (changeEvent) => {
                 let newLanguage = changeEvent.target.value; // The selected language option
                 
-                if (newLanguage != localizationManager.currentLanguage) { // No need to update if same language is picked or options only opened
+                if (newLanguage != localization.currentLanguage) { // No need to update if same language is picked or options only opened
                     localStorage.setItem("language", newLanguage); // Store choice
                     // Update language, then calculations (otherwise placeholder/temp texts show up)
-                    await localizationManager.loadLanguage(newLanguage);
+                    await localization.loadLanguage(newLanguage);
                     calculator.updateCalculations();
                 }
             });
@@ -125,6 +120,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error("Error during initialization:", error);
     }
+
+    const dropdownInputHandler = new DropdownInputHandler(calculator, initialValues);
+    const numberInputHandler = new NumberInputHandler(calculator, initialValues);
+    const rangeInputHandler = new RangeInputHandler(calculator, initialValues);
+    const toggleInputHandler = new ToggleInputHandler(calculator, initialValues);
 });
   
 // Functionality for add comparison button
@@ -283,7 +283,7 @@ function handleTooltipActivation(element) {
 
 function showTooltip(tipKey, position) {
     // call localization to get the new text using the key
-    tooltip.textContent = localizationManager.getText(tipKey);
+    tooltip.textContent = localization.getText(tipKey);
 
     // Adjust position
     tooltip.style.top = position.top;
