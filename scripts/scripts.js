@@ -558,6 +558,11 @@ class Calculator {
         const energyNeededForRange = (this.bevEnergyConsumption / 100) * this.desiredRange;
         const energyToCharge = energyNeededForRange - currentEnergy;
 
+        if (this.batteryCapacity <= 0) {
+            this.results.chargeCount = 0;
+            document.getElementById("header-span").style.display = "none";
+            return 0;
+        }
         // If desired range is higher than max range on a full battery,
         // we need multiple full charges to reach the target
         if (this.desiredRange > maxOperatingRange) {

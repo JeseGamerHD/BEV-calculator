@@ -7,7 +7,7 @@
     justify-content: left;
     align-items: start;
     text-align: left;
-    overflow: auto; /* Allow scrolling on small screens */
+    
 }
 
 .first-time-content {
@@ -168,25 +168,50 @@
 }
 
 /* Inputs and results wrap when screen not wide enough */
-@media screen and (max-width: 900px) {   
+@media screen and (max-width: 900px) {
+    /*Possible fix to firsttimeuse scrolling being weird, remove scrolling from body when overlay is active */
+    body:has(.first-time-use:not([style*="display: none"])) {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }   
     .first-time-use{
         height: 100vh;
-        z-index: 1000; /*Oikea-puoli-sivusta 999z-index, */
+        z-index: 1000; /*Oikea-puoli-sivusta 999z-index, */   
     }
     
     .first-time-content {
-        padding: 2rem;
+        padding: 0;
         max-width: 90%; /* Adjust for mobile */
         margin: 0 auto; /* Center horizontally */
     }
     .first-time-content h2 {
         font-size: 5vh;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0px;
     }
     .first-time-content h3 {
         font-size: 4vw;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0px;
         text-transform: uppercase;
+    }
+    .first-time-content p {
+        font-size: 4.5vw;
+        line-height: 1.6;
+        white-space: normal; /* Allow text wrapping */
+        color: rgb(240, 238, 238);
+    }
+    .first-time-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 5px
+    }
+    .first-time-step {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-align: left;
+        font-size: 3vw;
     }
 
     .results-content {     
