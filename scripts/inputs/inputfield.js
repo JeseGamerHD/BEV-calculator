@@ -7,6 +7,7 @@ export class InputField {
     #defaultValues = null;
 
     /** Sets the default values for the given elements based on their data-property.
+    * If defaultValues entry contain a null value (new user), sets visible value to empty and internal value to 0.
     * @param {NodeList} elements - A List of all the elements that the handler is responsible for.
     * @param {Object} defaultValues - The object holding the default values that the fields should be initialized with
     */
@@ -15,10 +16,13 @@ export class InputField {
         
         elements.forEach(element => {
             if(element.hasAttribute("data-property")) { // Check if they have a data-property
+                
                 let property = element.dataset.property;
                 if(defaultValues.hasOwnProperty(element.dataset.property)) { // Check if the defaultValue contains the property set for the element
-                    element.value = defaultValues[property];
-                    element.dataset.value = defaultValues[property];
+                    // For new users defaultValues contains mostly null values
+                    // ^^ set visible values to empty and internal values to 0 in these cases
+                    element.value = defaultValues[property] != null ? defaultValues[property] : ''; 
+                    element.dataset.value = defaultValues[property] != null ? defaultValues[property] : 0; 
                 }
                 else {
                     console.warn(element.id + ": data-property mismatch (or missing from defaultValues)");

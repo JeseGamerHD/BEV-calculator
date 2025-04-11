@@ -71,16 +71,23 @@ class Calculator {
     }
     
     calcOperatingRange() {
-        if (this.bevEnergyConsumption === 0) {
+        if (this.bevEnergyConsumption === 0 || this.bevEnergyConsumption === null) {
             console.log("Error: BEV energy consumption is 0. Cannot calculate operating range.");
             this.updateValueForResult("0 km", "currentOperatingRange");
             this.results.currentRange = 0;
             return;
         }
+
         const operatingRange = (this.batteryCapacity / this.bevEnergyConsumption) * (this.stateOfCharge); // in km
-        this.updateValueForResult(operatingRange.toFixed(2) + " km", "currentOperatingRange");
-        this.results.currentRange = operatingRange.toFixed(2);
-        return operatingRange;
+        if(operatingRange === null || isNaN(operatingRange)) {
+            this.updateValueForResult("0.00" + " km", "currentOperatingRange");
+            this.results.currentRange = 0;
+            return operatingRange;
+        } else {
+            this.updateValueForResult(operatingRange.toFixed(2) + " km", "currentOperatingRange");
+            this.results.currentRange = operatingRange.toFixed(2);
+            return operatingRange;
+        }
     }
     
     setStateOfCharge() {
@@ -88,12 +95,22 @@ class Calculator {
     }
     
     setDesiredRange() {
-        this.updateValueForResult(this.desiredRange + " km", "desiredRange");
+        if(this.desiredRange === null) {
+            this.updateValueForResult(0 + " km", "desiredRange");
+        } else {
+            this.updateValueForResult(this.desiredRange + " km", "desiredRange");
+        }
     }
     getChargerPower() {
+        if(this.chargerPower === null) {
+            return 0;
+        }
         return this.chargerPower.toFixed(1);
     }
     getChargerPowerAlt() {
+        if(this.chargerPowerAlt === null) {
+            return 0;
+        }
         return this.chargerPowerAlt.toFixed(1);
     }
     getEnergyPrice() {
@@ -103,7 +120,9 @@ class Calculator {
         } else if (this.pricingModel === "time") {
             model = "€/h";
         }
-        return this.energyPrice.toFixed(2) + " " + model;
+
+        let energyPrice = this.energyPrice === null ? 0 : this.energyPrice.toFixed(2);
+        return  energyPrice + " " + model;
     }
     getEnergyPriceAlt() {
         let model = "";
@@ -112,7 +131,8 @@ class Calculator {
         } else if (this.pricingModelAlt === "time") {
             model = "€/h";
         }
-        return this.energyPriceAlt.toFixed(2) + " " + model;
+        let energyPrice = this.energyPriceAlt === null ? 0 : this.energyPriceAlt.toFixed(2);
+        return energyPrice + " " + model;
     }
 
     calcEnergyNeededForRange(isAlt) {
@@ -286,7 +306,7 @@ class Calculator {
             return 0;
         }
         
-        if (chargerPower === 0 && energyNeeded > 0) {
+        if ((chargerPower === 0 || chargerPower === null) && energyNeeded > 0) {
             console.log("Error: BEV charge power is 0. Cannot calculate charge time for full charge.");
             if (!isAlt) {
                 this.updateValueForResult(chargerNotSetMessage, "chargeTimeForFullCharge");
