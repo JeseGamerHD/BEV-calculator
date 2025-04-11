@@ -429,7 +429,7 @@ class Calculator {
                 this.updateValueForResult(this.getEnergyPrice(), "energyPriceOption1-1");
             } else {
                 this.updateValueForResult(priceNotSetMessage, "chargeCostForRangeOption2");
-                this.updateValueForResult("", "energyPriceOption2-1");
+                this.updateValueForResult(this.getEnergyPriceAlt(), "energyPriceOption2-1");
             }
             return 0;
         }
