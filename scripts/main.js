@@ -87,9 +87,11 @@ function initializeFirstTimeUse() {
         if (mobileActive.matches) {
             // Input side is hidden on mobile due to scrolling issues
             // when the introduction is active, TODO: Better fix
+            resultsContent.style.display = "none";
             inputAreaContainer.style.display = "none";
         } else {
             inputAreaContainer.style.display = "flex";
+            resultsContent.style.display = "flex";
         }
     }
 
