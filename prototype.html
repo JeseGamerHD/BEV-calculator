@@ -38,14 +38,14 @@
                         <div class="tooltip-container" data-tooltipkey="inputs.distance.tooltip"></div>
                     </div>
                     <div class="numberInput-field-wrapper">
-                        <input class="numberInput-field" id="desiredRange-input" data-type="integer" type="text" min="0" max="9999" data-value="" data-property="desiredRange" data-localization-placeholder="inputs.distance.placeholder" placeholder="Enter target range (optional)">
+                        <input class="inputfield numberInput-field" id="desiredRange-input" data-type="integer" type="text" min="0" max="9999" data-value="" data-property="desiredRange" data-localization-placeholder="inputs.distance.placeholder" placeholder="Enter target range (optional)">
                     </div>
                 </div>
         
                 <div class="rangeInput-container">
                     <h3 class="rangeInput-title" data-localization="inputs.stateOfCharge.title"><strong>State of Charge</strong> (SOC)</h3>
                     <div class="rangeInput-field-wrapper">
-                        <input class="rangeInput-field" id="SOC-field" data-type="integer" type="text" data-target="SOC-slider" min="0" max="100" data-value="" data-property="stateOfCharge" placeholder="0">
+                        <input class="inputfield rangeInput-field" id="SOC-field" data-type="integer" type="text" data-target="SOC-slider" min="0" max="100" data-value="" data-property="stateOfCharge" placeholder="0">
                         <span class="rangeInput-field-symbol">%</span>
                     </div> 
                     <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-target="SOC-field" data-property="stateOfCharge">
@@ -59,7 +59,7 @@
                         <button class="dropdown-button" data-options="batteryCapacity-options"></button>
                     </div>
                     <div class="dropdown-wrapper">
-                        <input class="dropdownInput-field" id="batteryCapacity-input" data-property="batteryCapacity" data-options="batteryCapacity-options" data-type="decimal" type="text" min="0" max="9999" data-value="" data-localization-placeholder="inputs.batteryCapacity.placeholder" placeholder="Enter or select battery capacity">             
+                        <input class="inputfield dropdownInput-field" id="batteryCapacity-input" data-property="batteryCapacity" data-options="batteryCapacity-options" data-type="decimal" type="text" min="0" max="9999" data-value="" data-localization-placeholder="inputs.batteryCapacity.placeholder" placeholder="Enter or select battery capacity">             
                         <div class="dropdown-content" id="batteryCapacity-options">
                             <p class="dropdown-tip" data-localization="inputs.batteryCapacity.tip">Enter or select a value:</p>
                             <div class="dropdown-option" data-value="30" data-target="batteryCapacity-input" data-localization="inputs.batteryCapacity.options.small">Small Batteries (30 kWh)</div>
@@ -78,7 +78,7 @@
                         <button class="dropdown-button" data-options="energyConsumption-options"></button>
                     </div>
                     <div class="dropdown-wrapper">
-                        <input class="dropdownInput-field" id="energyConsumption-input" data-property="bevEnergyConsumption" data-options="energyConsumption-options" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.energyConsumption.placeholder" placeholder="Enter or select energy consumption">             
+                        <input class="inputfield dropdownInput-field" id="energyConsumption-input" data-property="bevEnergyConsumption" data-options="energyConsumption-options" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.energyConsumption.placeholder" placeholder="Enter or select energy consumption">             
                         <div class="dropdown-content" id="energyConsumption-options">
                             <p class="dropdown-tip" data-localization="inputs.energyConsumption.tip">Enter or select a value:</p>
                             <div class="dropdown-option" data-value="12" data-target="energyConsumption-input" data-localization="inputs.energyConsumption.options.smallCity">Small & City Cars (12 kWh/100 km)</div>
@@ -101,7 +101,7 @@
                         <button class="dropdown-button" data-options="chargePower-options"></button>
                     </div>
                     <div class="dropdown-wrapper">
-                        <input class="dropdownInput-field" id="chargePower-input" data-property="chargerPower" data-options="chargePower-options" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.chargePower.placeholder" placeholder="Enter or select charge power">             
+                        <input class="inputfield dropdownInput-field" id="chargePower-input" data-property="chargerPower" data-options="chargePower-options" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.chargePower.placeholder" placeholder="Enter or select charge power">             
                         <div class="dropdown-content" id="chargePower-options">
                             <p class="dropdown-tip" data-localization="inputs.chargePower.tip">Enter or select a value:</p>
                             <div class="dropdown-option" data-value="1.4" data-target="chargePower-input" data-localization="inputs.chargePower.options.acSlow1">[AC] Slow Charging (1.4 kW)</div>
@@ -130,7 +130,7 @@
                     </div>
 
                     <div class="toggleInput-wrapper">
-                        <input class="toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-value="" data-property="energyPrice" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
+                        <input class="inputfield toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-value="" data-property="energyPrice" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
                         <div class="toggleInput-switch" id="pricing-toggle" data-property="pricingModel">
                             <div class="toggleInput-track">
                                 <div class="toggleInput-thumb" id="pricing-thumb"></div>
@@ -159,7 +159,7 @@
                             <button class="dropdown-button" data-options="chargePower-options-alt"></button>
                         </div>
                         <div class="dropdown-wrapper">
-                            <input class="dropdownInput-field" id="chargePower-input-alt" data-property="chargerPowerAlt" data-options="chargePower-options-alt" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.chargePower.placeholder" placeholder="Enter or select charge power">             
+                            <input class="inputfield dropdownInput-field" id="chargePower-input-alt" data-property="chargerPowerAlt" data-options="chargePower-options-alt" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.chargePower.placeholder" placeholder="Enter or select charge power">             
                             <div class="dropdown-content" id="chargePower-options-alt">
                                 <p class="dropdown-tip" data-localization="inputs.chargePower.tip">Enter or select a value:</p>
                                 <div class="dropdown-option" data-value="1.4" data-target="chargePower-input-alt" data-localization="inputs.chargePower.options.acSlow1">[AC] Slow Charging (1.4 kW)</div>
@@ -186,7 +186,7 @@
                             </div>
                         </div>
                         <div class="toggleInput-wrapper">
-                            <input class="toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-value="" data-property="energyPriceAlt" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
+                            <input class="inputfield toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-value="" data-property="energyPriceAlt" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
                             <div class="toggleInput-switch" id="pricing-toggle-alt" data-property="pricingModelAlt" data-value="energy">
                                 <div class="toggleInput-track">
                                     <div class="toggleInput-thumb" id="pricing-thumb-alt"></div>
