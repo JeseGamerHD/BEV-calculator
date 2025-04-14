@@ -90,7 +90,7 @@
 }
 
 .results-content {
-    display: none;
+    display: flex;
     flex-direction: row; /* Horizontal layout */
     flex-wrap: wrap; /* Wrap on small screens */
     width: 100%;

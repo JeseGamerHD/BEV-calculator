@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initializeFirstTimeUse() {
    
     const firstTimeOverlay = document.querySelector('.first-time-use');
-    const resultsContent = document.querySelector('.results-content');
+    const resultsContent = document.querySelector('.oikea-puoli-sivusta');
     const inputAreaContainer = document.getElementById("input-area-container"); // Input side is hidden on mobile if first time is active
     const mobileActive = window.matchMedia("(max-width: 900px)"); // Using mobile?
     
