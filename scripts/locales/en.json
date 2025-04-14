@@ -44,7 +44,7 @@
       }
     },
     "chargePower": {
-      "title": "OPTION 1: Charge Power (kW)",
+      "title": "Charge Power (kW)",
       "placeholder": "Enter or select charge power",
       "tip": "Enter or select a value:",
       "options": {
@@ -74,8 +74,7 @@
     "comparison": {
       "addButton": "+ Add Comparison",
       "removeButton": "Remove",
-      "removeButtonTip": "Removes the comparison",
-      "option2Title": "OPTION 2: Charge Power (kW)"
+      "removeButtonTip": "Removes the comparison"
     }
   },
   "results": {

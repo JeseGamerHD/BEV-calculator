@@ -44,7 +44,7 @@
         }
       },
       "chargePower": {
-        "title": "VAIHTOEHTO 1: Latausteho (kW)",
+        "title": "Latausteho (kW)",
         "placeholder": "Syötä tai valitse latausteho",
         "tip": "Syötä tai valitse arvo:",
         "options": {
@@ -74,8 +74,7 @@
       "comparison": {
         "addButton": "+ Lisää vertailu",
         "removeButton": "Poista",
-        "removeButtonTip": "Poistaa vertailun",
-        "option2Title": "VAIHTOEHTO 2: Latausteho (kW)"
+        "removeButtonTip": "Poistaa vertailun"
       }
     },
     "results": {

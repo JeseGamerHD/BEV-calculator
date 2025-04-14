@@ -151,6 +151,10 @@ function handleComparisonButtons(button) {
         setTimeout(() => { // Set display to none after the transition (button smoothly fades and height goes to zero)
             button.style.display = "none"; // Removes it from the document flow, takes no space
         }, 100);
+
+        document.querySelectorAll(".comparison-dot").forEach((dot) => {
+            dot.style.display = "flex";
+        });
         
         document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation"); // Display the alternate charger & pricing
         setTimeout(() => { // So scrollIntoView doesnt jump when the above animation is still in progress
@@ -179,6 +183,10 @@ function handleComparisonButtons(button) {
             addButton.style.opacity = 1;
             addButton.style.maxHeight = "60px";
         }, 100);
+
+        document.querySelectorAll(".comparison-dot").forEach((dot) => {
+            dot.style.display = "none";
+        });
 
         calculator.toggleComparison();
 
