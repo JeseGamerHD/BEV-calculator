@@ -91,7 +91,7 @@ function initializeFirstTimeUse() {
             inputAreaContainer.style.display = "none";
         } else {
             inputAreaContainer.style.display = "flex";
-            resultsContent.style.display = "flex";
+            resultsContent.style.display = "none";
         }
     }
 
