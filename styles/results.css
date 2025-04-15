@@ -121,7 +121,7 @@
     position: sticky;
     top: 0;
     height: 100vh;
-    
+    overflow-y: auto; /* This enables scrolling of right side of page */
     display: flex;
     color: white;
     font-size: clamp(1rem, 2vw, 1.75em);
