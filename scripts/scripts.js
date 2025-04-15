@@ -80,11 +80,11 @@ class Calculator {
 
         const operatingRange = (this.batteryCapacity / this.bevEnergyConsumption) * (this.stateOfCharge); // in km
         if(operatingRange === null || isNaN(operatingRange)) {
-            this.updateValueForResult("0.00" + " km", "currentOperatingRange");
+            this.updateValueForResult("0" + " km", "currentOperatingRange");
             this.results.currentRange = 0;
             return operatingRange;
         } else {
-            this.updateValueForResult(operatingRange.toFixed(2) + " km", "currentOperatingRange");
+            this.updateValueForResult(operatingRange.toFixed(0) + " km", "currentOperatingRange");
             this.results.currentRange = operatingRange.toFixed(2);
             return operatingRange;
         }
