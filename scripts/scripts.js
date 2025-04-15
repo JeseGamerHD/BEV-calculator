@@ -203,7 +203,7 @@ class Calculator {
             return 0;
         }
         
-        if (chargerPower === 0 && energyToCharge > 0) {
+        if ((chargerPower === 0 || chargerPower === null) && energyToCharge > 0) {
             console.log("Error: Cannot calculate charge time for range. Charge power is missing.");
             if (!isAlt) {
                 this.updateValueForResult(chargerNotSetMessage, "chargeTimeForRange");
