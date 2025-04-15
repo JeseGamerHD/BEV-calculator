@@ -423,7 +423,7 @@ describe('test suite: calculating operating range with current battery energy', 
     calculator.bevEnergyConsumption = 15;
     calculator.updateCalculations();
 
-    expect(document.getElementById('currentOperatingRange').textContent).toBe('50.00 km');
+    expect(document.getElementById('currentOperatingRange').textContent).toBe('50 km');
   });
 
 
@@ -442,7 +442,7 @@ describe('test suite: calculating operating range with current battery energy', 
     calculator.bevEnergyConsumption = 13.7;
     calculator.updateCalculations();
 
-    expect(document.getElementById('currentOperatingRange').textContent).toBe('41.97 km');
+    expect(document.getElementById('currentOperatingRange').textContent).toBe('42 km');
   });
 
   it('displays range: 0 when SOC is 0', () => {
@@ -450,7 +450,7 @@ describe('test suite: calculating operating range with current battery energy', 
     calculator.stateOfCharge = 0;
     calculator.updateCalculations();
 
-    expect(document.getElementById('currentOperatingRange').textContent).toContain('0.00 km');
+    expect(document.getElementById('currentOperatingRange').textContent).toContain('0 km');
   });
 });
 
