@@ -408,18 +408,6 @@ class Calculator {
             }
             return 0;
         }
-        // Check if charge power is valid (not 0, NaN, undefined, etc.)
-        if (!chargerPower || isNaN(chargerPower) || chargerPower <= 0) {
-            if (!isAlt) {
-                this.updateValueForResult(chargerNotSetMessage, "chargeCostRange");
-                this.updateValueForResult(chargerNotSetMessage, "chargeCostForRangeOption1");
-                this.updateValueForResult("", "energyPriceOption1-1");
-            } else {
-                this.updateValueForResult(chargerNotSetMessage, "chargeCostForRangeOption2");
-                this.updateValueForResult("", "energyPriceOption2-1");
-            }
-            return 0;
-        }
         
         // Check if price is valid (not 0, NaN, undefined, etc.)
         if (!price || isNaN(price) || price <= 0) {
@@ -438,6 +426,19 @@ class Calculator {
         if (pricingModel === "energy") {
             chargeCost = price * energyToCharge;      
         } else if (pricingModel === "time") {
+            // Check if charger power is valid (not 0, NaN, undefined, etc.)
+            if (!chargerPower || isNaN(chargerPower) || chargerPower <= 0) {
+                if (!isAlt) {
+                    this.updateValueForResult(chargerNotSetMessage, "chargeCostRange");
+                    this.updateValueForResult(chargerNotSetMessage, "chargeCostForRangeOption1");
+                    this.updateValueForResult("", "energyPriceOption1-1");
+                } else {
+                    this.updateValueForResult(chargerNotSetMessage, "chargeCostForRangeOption2");
+                    this.updateValueForResult("", "energyPriceOption2-1");
+                }
+                return 0;
+            }
+
             const chargeTime = energyToCharge / chargerPower; // Calculate charge time
             chargeCost = price * chargeTime;
         } else {
@@ -513,18 +514,6 @@ class Calculator {
             return 0;
         }
 
-        if (!chargerPower || isNaN(chargerPower) || chargerPower <= 0) {
-            console.log("Error: Cannot calculate charge cost for full charge. Charger power is missing.");
-            if (!isAlt) {
-                this.updateValueForResult(chargerNotSetMessage, "chargeCostFullCharge");
-                this.updateValueForResult(chargerNotSetMessage, "chargeCostForFullChargeOption1");
-                this.updateValueForResult("", "energyPriceOption1-2");
-            } else {
-                this.updateValueForResult(chargerNotSetMessage, "chargeCostForFullChargeOption2");
-                this.updateValueForResult("", "energyPriceOption2-2");
-            }
-            return 0;
-        }
         if (price === 0 || price === undefined || price === null) {
             if (!isAlt) {
                 this.updateValueForResult(priceNotSetMessage, "chargeCostFullCharge");
@@ -540,6 +529,19 @@ class Calculator {
         if (pricingModel === "energy") {
             chargeCost = price * energyNeeded;
         } else if (pricingModel === "time") {
+            // Check if charger power is valid (not 0, NaN, undefined, etc.)
+            if (!chargerPower || isNaN(chargerPower) || chargerPower <= 0) {      
+                if (!isAlt) {
+                    this.updateValueForResult(chargerNotSetMessage, "chargeCostFullCharge");
+                    this.updateValueForResult(chargerNotSetMessage, "chargeCostForFullChargeOption1");
+                    this.updateValueForResult("", "energyPriceOption1-2");
+                } else {
+                    this.updateValueForResult(chargerNotSetMessage, "chargeCostForFullChargeOption2");
+                    this.updateValueForResult("", "energyPriceOption2-2");
+                }
+                return 0;
+            }
+            
             const chargeTime = energyNeeded / chargerPower; // Calculate charge time
             chargeCost = price * chargeTime;
         } else {
