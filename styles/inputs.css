@@ -222,6 +222,38 @@ input::placeholder {
     border-radius: 50%;
     cursor: pointer;
 }
+
+/* Mobile/touchscreen, prevent track from changing value, only thumb */
+@media screen and (hover: none) and (pointer: coarse) {
+    
+    .rangeInput {
+        pointer-events: none;
+    }
+    .rangeInput::-webkit-slider-thumb {
+        pointer-events: auto;
+    }
+    .rangeInput::-moz-range-thumb {
+        pointer-events: auto;
+    }
+    .rangeInput::-ms-thumb {
+        pointer-events: auto;
+    }
+}
+@media screen and (hover: hover) and (pointer: coarse) {
+    
+    .rangeInput {
+        pointer-events: none;
+    }
+    .rangeInput::-webkit-slider-thumb {
+        pointer-events: auto;
+    }
+    .rangeInput::-moz-range-thumb {
+        pointer-events: auto;
+    }
+    .rangeInput::-ms-thumb {
+        pointer-events: auto;
+    }
+}
 /*#endregion*/
 
 /*DROPDOWN INPUT STYLING */
