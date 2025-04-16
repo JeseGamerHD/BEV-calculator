@@ -252,8 +252,17 @@ elementsWithTooltip.forEach(element => element.addEventListener("touchstart", (e
 }));
 
 elementsWithTooltip.forEach(element => element.addEventListener("mouseout", () => {
-    hideTooltip();
+    hideTooltip(); // NOTE: when using chrome's dev tools to test mobile this can sometimes trigger, hiding the tooltip instantly
+    // On an actual device this does not happen
 }));
+
+// On mobile hide the tooltip when touching outside of it
+document.addEventListener("touchstart", (touchEvent) => {
+    let element = touchEvent.target;
+    if(!element.classList.contains("tooltip-container") && element.id !== "tooltip" && tooltip.style.display !== "none") {
+        hideTooltip();
+    }
+});
 
 function handleTooltipActivation(element) {
    
@@ -273,7 +282,7 @@ function handleTooltipActivation(element) {
 
     // Offset the tooltip based on which quadrant of the screen the element being hovered is in
     // This is to prevent it from overflowing outside of the page
-    const offSet = 10; // TODO: Maybe adjust? Make it more dynamic?
+    const offSet = window.matchMedia("(max-width: 900px)").matches ? 0 : 10; // Different offset for mobile and desktop
 
     // Check if element is in the top or bottom half of the screen
     if (top > tooltipBounds.height / 2) { // Bottom half
@@ -285,7 +294,7 @@ function handleTooltipActivation(element) {
 
     // Check if the element is in the left or right half of the screen
     if (left > tooltipBounds.width / 2) { // Right half
-        position.right = `${tooltipBounds.width - left + offSet}px`;
+        position.right = `${tooltipBounds.width - left + offSet}px`;      
     }
     else { // Left half
         position.left = `${left + offSet}px`;
