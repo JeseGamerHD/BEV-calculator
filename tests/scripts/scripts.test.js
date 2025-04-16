@@ -6,14 +6,14 @@ import fs from 'fs';
 import path from 'path';
 
 const BASE_VALUES = {
-  desiredRange: 250,
-  batteryCapacity: 60,
-  bevEnergyConsumption: 15,
+  desiredRange: null,
+  batteryCapacity: null,
+  bevEnergyConsumption: null,
   stateOfCharge: 50,
-  chargerPower: 22,
-  chargerPowerAlt: 50,
-  energyPrice: 0.2,
-  energyPriceAlt: 0.2,
+  chargerPower: null,
+  chargerPowerAlt: null,
+  energyPrice: null,
+  energyPriceAlt: null,
   pricingModel: "energy",
   pricingModelAlt: "energy",
 };
@@ -157,6 +157,10 @@ describe('test suite: calculating charge cost for range', () => {
 
   it('displays price is not set when energy based cost is 0', () => {
 
+    calculator.desiredRange = 255;
+    calculator.stateOfCharge = 50;
+    calculator.batteryCapacity = 70;
+    calculator.bevEnergyConsumption = 20;
     calculator.pricingModel = 'energy';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
@@ -166,6 +170,10 @@ describe('test suite: calculating charge cost for range', () => {
 
   it('displays price is not set when time based cost is 0', () => {
 
+    calculator.desiredRange = 255;
+    calculator.stateOfCharge = 20;
+    calculator.batteryCapacity = 70;
+    calculator.bevEnergyConsumption = 20;
     calculator.pricingModel = 'time';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
@@ -259,6 +267,8 @@ describe('test suite: calculating charge time when charging to full', () => {
   });
 
   it('displays charging is not needed when SOC 100%', () => {
+
+    calculator.batteryCapacity = 72;
     calculator.stateOfCharge = 100;
     calculator.updateCalculations();
 
@@ -335,6 +345,8 @@ describe('test suite: calculating cost of charging to full', () => {
 
   it('displays that price is not set when energy based cost is 0', () => {
 
+    calculator.stateOfCharge = 10;
+    calculator.batteryCapacity = 55;
     calculator.pricingModel = 'energy';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
@@ -344,7 +356,10 @@ describe('test suite: calculating cost of charging to full', () => {
 
   it('displays that price is not set when time based cost is 0', () => {
 
+    calculator.stateOfCharge = 5;
+    calculator.batteryCapacity = 60;
     calculator.pricingModel = 'time';
+    calculator.chargerPower = 11;
     calculator.energyPrice = 0;
     calculator.updateCalculations();
 
