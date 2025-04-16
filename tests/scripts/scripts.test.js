@@ -97,6 +97,19 @@ describe('test suite: calculating charge time for range', () => {
 
     expect(document.getElementById('chargeTimeForRange').textContent).toBe('1 h 19 min');
   });
+
+  it('displays charge time <1 min' , () => { 
+
+    calculator.desiredRange = 350;
+    calculator.stateOfCharge = 50;
+    calculator.batteryCapacity = 118;
+    calculator.bevEnergyConsumption = 17;
+    calculator.chargerPower = 150;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForRange').textContent).toBe('<1 min');
+
+  });
 });
 
 describe('test suite: calculating charge cost for range', () => {
@@ -181,7 +194,7 @@ describe('test suite: calculating charge cost for range', () => {
     expect(document.getElementById('chargeCostRange').textContent).toBe('Price not set');
   });
 
-  it('displays Charging not needed when it is not necessary (time-based price)', () => {
+  it('displays charging not needed when it is not necessary (time-based price)', () => {
 
     calculator.stateOfCharge = 100;
     calculator.desiredRange = 100;
@@ -293,6 +306,16 @@ describe('test suite: calculating charge time when charging to full', () => {
 
     expect(document.getElementById('chargeTimeForFullCharge').textContent).toBe('Charge power not set');
   });
+
+  it('displays charge time <1 min', () => {
+    calculator.stateOfCharge = 99;
+    calculator.batteryCapacity = 60;
+    calculator.chargerPower = 200;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForFullCharge').textContent).toBe('<1 min');
+  });
+
 });
 
 describe('test suite: calculating cost of charging to full', () => {
