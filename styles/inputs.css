@@ -101,6 +101,11 @@ input::placeholder {
     font-weight: normal;
 }
 
+/* By default firefox sets placeholder opacity to 0.54 (it picks up the text color)*/
+input::-moz-placeholder { /* Set to black with the same opacity for uniformity between browsers */
+    color: rgba(0, 0, 0, 0.54);
+}
+
 .inputfield:focus {
     outline: 2px solid var(--text-color-inputs);
 }
@@ -291,7 +296,7 @@ input::placeholder {
     background-color: rgba(255, 255, 255, 0);
     border: none;
 
-    height: 100%;
+    height: 1em;
     width: 2em;
     margin-right: 10px;
 
