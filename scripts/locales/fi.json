@@ -74,7 +74,8 @@
       "comparison": {
         "addButton": "+ Lisää vertailu",
         "removeButton": "Poista",
-        "removeButtonTip": "Poistaa vertailun"
+        "removeButtonTip": "Poistaa vertailun",
+        "option2Title": "Latausteho (kW)"
       }
     },
     "results": {
@@ -88,7 +89,8 @@
         "option1": "Latausaika vaihtoehto 1: ",
         "option2": "Latausaika vaihtoehto 2: ",
         "notNeeded": "Latausta ei tarvita",
-        "batteryNotSet": "Akun kapasiteettia ei asetettu"
+        "batteryNotSet": "Akun kapasiteettia ei asetettu",
+        "consumptionNotSet": "Kulutusta ei asetettu"
       },
       "chargingCosts": {
         "title": "Latauskustannus",

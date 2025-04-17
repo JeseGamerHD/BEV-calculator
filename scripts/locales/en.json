@@ -74,7 +74,8 @@
     "comparison": {
       "addButton": "+ Add Comparison",
       "removeButton": "Remove",
-      "removeButtonTip": "Removes the comparison"
+      "removeButtonTip": "Removes the comparison",
+      "option2Title": "Charge Power (kW)"
     }
   },
   "results": {
@@ -88,7 +89,8 @@
       "option1": "Charge time for range option 1: ",
       "option2": "Charge time for range option 2: ",
       "notNeeded": "Charging not needed",
-      "batteryNotSet": "Battery capacity not set"
+      "batteryNotSet": "Battery capacity not set",
+      "consumptionNotSet": "Energy consumption not set"
     },
     "chargingCosts": {
       "title": "Charging Costs",
