@@ -143,7 +143,7 @@ class Calculator {
         
         if (energyToCharge <= 0) {
             if (!isAlt) {
-                this.updateValueForResult("0 kWh", "energyNeededForRange");
+                this.updateValueForResult("0.00 kWh", "energyNeededForRange");
             }
             this.calcChargeTimeForRange(0, isAlt);
             this.results.rangeEnergy = 0;
@@ -388,6 +388,7 @@ class Calculator {
         const priceNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.priceNotSet"]')?.textContent || "Price not set";
         const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
+        const batteryNotSetMessage = document.querySelector('[data-localization="results.chargingTime.batteryNotSet"]')?.textContent || "Battery capacity not set";
         // Calculate energy needed
         const energyNeededForRange = (this.bevEnergyConsumption / 100) * this.desiredRange;
         const currentEnergy = (this.stateOfCharge / 100) * this.batteryCapacity;
