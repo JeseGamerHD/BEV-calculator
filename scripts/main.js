@@ -231,7 +231,8 @@ document.addEventListener("DOMContentLoaded", function(){
         }
 
         initialX = null;
-        e.preventDefault();
+        //e.preventDefault(); Breaks firefox, seemingly not important commented incase required
+        // Alternatively use pointerdown and pointermove to support firefox if the above is important
     }
 
     resultsContent.addEventListener("touchstart", startTouch, false);
