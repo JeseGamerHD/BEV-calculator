@@ -143,7 +143,7 @@ class Calculator {
         
         if (energyToCharge <= 0) {
             if (!isAlt) {
-                this.updateValueForResult("0 kWh", "energyNeededForRange");
+                this.updateValueForResult("0.00 kWh", "energyNeededForRange");
             }
             this.calcChargeTimeForRange(0, isAlt);
             this.results.rangeEnergy = 0;
@@ -188,7 +188,7 @@ class Calculator {
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
         const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
         const batteryNotSetMessage = document.querySelector('[data-localization="results.chargingTime.batteryNotSet"]')?.textContent || "Battery capacity not set";
-        
+        const consumptionNotSetMessage = document.querySelector('[data-localization="results.chargingTime.consumptionNotSet"]')?.textContent || "Consumption not set";
         // Check if battery capacity is valid
         if (this.batteryCapacity <= 0) {
             console.log("Error: Cannot calculate charge time for range. Battery capacity is not set.");
@@ -203,6 +203,18 @@ class Calculator {
             return 0;
         }
         
+        if (this.bevEnergyConsumption <= 0) {
+            if (!isAlt) {
+                this.updateValueForResult(consumptionNotSetMessage, "chargeTimeForRange");
+                this.updateValueForResult(consumptionNotSetMessage, "chargeTimeForRangeOption1");
+                this.updateValueForResult("", "chargerPowerOption1-1");
+            } else {
+                this.updateValueForResult(consumptionNotSetMessage, "chargeTimeForRangeOption2");
+                this.updateValueForResult("", "chargerPowerOption2-1");
+            }
+            return 0;
+        }
+
         if ((chargerPower === 0 || chargerPower === null) && energyToCharge > 0) {
             console.log("Error: Cannot calculate charge time for range. Charge power is missing.");
             if (!isAlt) {
@@ -388,6 +400,7 @@ class Calculator {
         const priceNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.priceNotSet"]')?.textContent || "Price not set";
         const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
+        const consumptionNotSetMessage = document.querySelector('[data-localization="results.chargingTime.consumptionNotSet"]')?.textContent || "Consumption not set";
         // Calculate energy needed
         const energyNeededForRange = (this.bevEnergyConsumption / 100) * this.desiredRange;
         const currentEnergy = (this.stateOfCharge / 100) * this.batteryCapacity;
@@ -397,6 +410,17 @@ class Calculator {
         this.results.rangeCost = isAlt ? this.results.rangeCost : 0;
         this.results.rangeCostAlt = isAlt ? 0 : this.results.rangeCost;
         
+        if(this.bevEnergyConsumption <= 0) {
+            if (!isAlt) {
+                this.updateValueForResult(consumptionNotSetMessage, "chargeCostRange");
+                this.updateValueForResult(consumptionNotSetMessage, "chargeCostForRangeOption1");
+                this.updateValueForResult("", "energyPriceOption1-1");
+            } else {
+                this.updateValueForResult(consumptionNotSetMessage, "chargeCostForRangeOption2");
+                this.updateValueForResult("", "energyPriceOption2-1");
+            }
+            return 0;
+        }
         if (energyToCharge <= 0) {
             if (!isAlt) {
                 this.updateValueForResult(notNeededMessage, "chargeCostRange");
