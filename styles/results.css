@@ -126,7 +126,10 @@
     display: flex;
     color: white;
     font-size: clamp(1rem, 2vw, 1.75em);
-    white-space: nowrap;  
+}
+
+#desiredRange{
+    white-space: nowrap;;
 }
 
 .oikea-puoli-sivusta h1{
@@ -172,6 +175,13 @@
     text-align: right;
     display: inline-flex;
     margin-left: 5px;
+}
+
+.comparison-bar{
+    height: 5px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: fuchsia;
 }
 
 /* Inputs and results wrap when screen not wide enough */
@@ -298,6 +308,17 @@
         margin-top: 10px;
         font-size: 1em;
         margin-bottom: 5px;
+        white-space: nowrap;
+    }
+
+    .mobile-comparison-wrapper{
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+    }
+
+    .comparison-bar{
+        width: 50%;
     }
 
     .optionTextWrapper {
@@ -353,12 +374,7 @@
     display: none;
 }
 
-.comparison-bar{
-    height: 10px;
-    width: 100%;
-    border-radius: 10px;
-    background-color: fuchsia;
-}
+
 
 .left-side{
     background: linear-gradient(165deg, rgb(56,140,204) 0%, rgb(64,84,180) 100%);
