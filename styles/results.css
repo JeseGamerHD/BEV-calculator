@@ -184,6 +184,37 @@
     background-color: fuchsia;
 }
 
+.header-wrapper{
+    display: flex;
+    justify-content:baseline;
+    align-items: baseline;
+}
+
+.results-tooltip-wrapper{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.header-span{
+    font-size: 0.8em;
+    color: lightgray;
+    text-align: right;
+    display: inline-flex;
+    margin-left: 5px;
+    display: none;
+}
+
+.left-side{
+    background: linear-gradient(165deg, rgb(56,140,204) 0%, rgb(64,84,180) 100%);
+}
+.middle{
+    background: linear-gradient(165deg, rgb(40,76,124) 0%, rgb(48,44,116) 100%);
+}
+.right-side{
+    background: linear-gradient(165deg, rgb(64,100,188) 0%, rgb(64,52,172,1) 100%);
+}
+
 /* Inputs and results wrap when screen not wide enough */
 @media screen and (max-width: 900px) {
     /*Possible fix to firsttimeuse scrolling being weird, remove scrolling from body when overlay is active */
@@ -272,7 +303,7 @@
     .middle .swipe-dots .dot:nth-child(2),
     .right-side .swipe-dots .dot:nth-child(3) {
     background-color: #333;
-}
+    }
 
     .left-side, .middle, .right-side {
         min-width: 100vw;
@@ -352,37 +383,3 @@
     }
 
 }
-
-.header-wrapper{
-    display: flex;
-    justify-content:baseline;
-    align-items: baseline;
-}
-
-.results-tooltip-wrapper{
-    display: flex;
-    column-gap: 10px;
-    align-items: center;
-}
-
-.header-span{
-    font-size: 0.8em;
-    color: lightgray;
-    text-align: right;
-    display: inline-flex;
-    margin-left: 5px;
-    display: none;
-}
-
-
-
-.left-side{
-    background: linear-gradient(165deg, rgb(56,140,204) 0%, rgb(64,84,180) 100%);
-}
-.middle{
-    background: linear-gradient(165deg, rgb(40,76,124) 0%, rgb(48,44,116) 100%);
-}
-.right-side{
-    background: linear-gradient(165deg, rgb(64,100,188) 0%, rgb(64,52,172,1) 100%);
-}
-
