@@ -218,11 +218,13 @@
 /* Inputs and results wrap when screen not wide enough */
 @media screen and (max-width: 900px) {
     /*Possible fix to firsttimeuse scrolling being weird, remove scrolling from body when overlay is active */
-    body:has(.first-time-use:not([style*="display: none"])) {
+    /* body:has(.first-time-use:not([style*="display: none"])) {
         overflow: hidden;
         width: 100%;
         height: 100%;
-    }   
+    }    */
+    /*^^ commented 23.4.2025 - the above seemingly no longer required? */
+
     .first-time-use{
         height: 100%;
         width: 100%;
@@ -230,7 +232,7 @@
     }
     
     .first-time-content {
-        padding: 0;
+        padding: 0 0 50px 0; /* Some padding for bottom so button is not at the screens edge in some cases */
         max-width: 90%; /* Adjust for mobile */
         margin: 0 auto; /* Center horizontally */
     }

@@ -271,19 +271,19 @@ function handleTooltipActivation(element) {
     let elementBounds = element.getBoundingClientRect();
     let tooltipBounds = tooltip.parentElement.getBoundingClientRect();
 
-    let left = elementBounds.left - tooltipBounds.left + (elementBounds.width / 2);
-    let top = elementBounds.top - tooltipBounds.top + (elementBounds.height / 2);
+    const offSet = window.matchMedia("(max-width: 900px)").matches ? 0 : 10; // Different offset for mobile and desktop
+    // This calculation relies on that tooltip has position: fixed
+    let left = elementBounds.left + elementBounds.width / 2 + offSet;
+    let top = elementBounds.top + elementBounds.height / 2 + offSet;
 
+    // Position the tooltip based on which quadrant of the screen the element being hovered is in
+    // This is to prevent it from overflowing outside of the page
     let position = {
         top: "auto",
         right: "auto",
         bottom: "auto",
         left: "auto"
     };
-
-    // Offset the tooltip based on which quadrant of the screen the element being hovered is in
-    // This is to prevent it from overflowing outside of the page
-    const offSet = window.matchMedia("(max-width: 900px)").matches ? 0 : 10; // Different offset for mobile and desktop
 
     // Check if element is in the top or bottom half of the screen
     if (top > tooltipBounds.height / 2) { // Bottom half
@@ -301,6 +301,7 @@ function handleTooltipActivation(element) {
         position.left = `${left + offSet}px`;
     }
 
+    // Finally, set the position and the tooltip text
     showTooltip(tooltipKey, position);
 }
 

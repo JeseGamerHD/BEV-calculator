@@ -6,7 +6,6 @@ body, html {
     height: 100vh;
     width: 100%;
     font-family: Arial, Verdana, Tahoma;
-    overflow-x: hidden;
 }
 
 .topbar {
@@ -127,7 +126,7 @@ body, html {
 
 /* Position is dynamically set using javascript */
 #tooltip {
-    position: absolute;
+    position: fixed; /* Important for tooltip script positioning !!*/
     border-radius: 6px;
     padding: 20px;
     max-width: 30vh;
