@@ -15,7 +15,7 @@
     <div class="topbar">
         <div class="topbar-title-container">
             <h3 data-localization="general.title">Range Anti-Anxiety</h3>
-            <p>v0.3.5</p>
+            <p>v0.4.0</p>
         </div>
         <div class="language-selector-container">
             <select id="language-switcher" title="Select language">
@@ -25,7 +25,7 @@
             <button id="first-time-info-button">i</button>
         </div> 
     </div>
-
+    
     <!-- CALCULATOR CONTAINER HOLDS INPUT + RESULTS -->
     <div class="calculator-container">
         
@@ -38,14 +38,14 @@
                         <div class="tooltip-container" data-tooltipkey="inputs.distance.tooltip"></div>
                     </div>
                     <div class="numberInput-field-wrapper">
-                        <input class="numberInput-field" id="desiredRange-input" data-type="integer" type="text" min="0" max="9999" data-value="" data-property="desiredRange" data-localization-placeholder="inputs.distance.placeholder" placeholder="Enter target range (optional)">
+                        <input class="inputfield numberInput-field" id="desiredRange-input" data-type="integer" type="text" min="0" max="9999" data-value="" data-property="desiredRange" data-localization-placeholder="inputs.distance.placeholder" placeholder="Enter target range (optional)">
                     </div>
                 </div>
         
                 <div class="rangeInput-container">
                     <h3 class="rangeInput-title" data-localization="inputs.stateOfCharge.title"><strong>State of Charge</strong> (SOC)</h3>
                     <div class="rangeInput-field-wrapper">
-                        <input class="rangeInput-field" id="SOC-field" data-type="integer" type="text" data-target="SOC-slider" min="0" max="100" data-value="" data-property="stateOfCharge" placeholder="0">
+                        <input class="inputfield rangeInput-field" id="SOC-field" data-type="integer" type="text" data-target="SOC-slider" min="0" max="100" data-value="" data-property="stateOfCharge" placeholder="0">
                         <span class="rangeInput-field-symbol">%</span>
                     </div> 
                     <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-target="SOC-field" data-property="stateOfCharge">
@@ -59,7 +59,7 @@
                         <button class="dropdown-button" data-options="batteryCapacity-options"></button>
                     </div>
                     <div class="dropdown-wrapper">
-                        <input class="dropdownInput-field" id="batteryCapacity-input" data-property="batteryCapacity" data-options="batteryCapacity-options" data-type="decimal" type="text" min="0" max="9999" data-value="" data-localization-placeholder="inputs.batteryCapacity.placeholder" placeholder="Enter or select battery capacity">             
+                        <input class="inputfield dropdownInput-field" id="batteryCapacity-input" data-property="batteryCapacity" data-options="batteryCapacity-options" data-type="decimal" type="text" min="0" max="9999" data-value="" data-localization-placeholder="inputs.batteryCapacity.placeholder" placeholder="Enter or select battery capacity">             
                         <div class="dropdown-content" id="batteryCapacity-options">
                             <p class="dropdown-tip" data-localization="inputs.batteryCapacity.tip">Enter or select a value:</p>
                             <div class="dropdown-option" data-value="30" data-target="batteryCapacity-input" data-localization="inputs.batteryCapacity.options.small">Small Batteries (30 kWh)</div>
@@ -78,7 +78,7 @@
                         <button class="dropdown-button" data-options="energyConsumption-options"></button>
                     </div>
                     <div class="dropdown-wrapper">
-                        <input class="dropdownInput-field" id="energyConsumption-input" data-property="bevEnergyConsumption" data-options="energyConsumption-options" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.energyConsumption.placeholder" placeholder="Enter or select energy consumption">             
+                        <input class="inputfield dropdownInput-field" id="energyConsumption-input" data-property="bevEnergyConsumption" data-options="energyConsumption-options" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.energyConsumption.placeholder" placeholder="Enter or select energy consumption">             
                         <div class="dropdown-content" id="energyConsumption-options">
                             <p class="dropdown-tip" data-localization="inputs.energyConsumption.tip">Enter or select a value:</p>
                             <div class="dropdown-option" data-value="12" data-target="energyConsumption-input" data-localization="inputs.energyConsumption.options.smallCity">Small & City Cars (12 kWh/100 km)</div>
@@ -95,11 +95,13 @@
         
                 <div class="dropdownInput-container">
                     <div class="dropdown-title-wrapper">
-                        <h3 class="dropdown-title" data-localization="inputs.chargePower.title">OPTION 1: <strong>Charge Power</strong> (kW)</h3>
+                        <div class="comparison-dot option1"></div>
+                        <h3 class="dropdown-title" data-localization="inputs.chargePower.title">Charge Power (kW)</h3>
+                        <span class="filler"></span>
                         <button class="dropdown-button" data-options="chargePower-options"></button>
                     </div>
                     <div class="dropdown-wrapper">
-                        <input class="dropdownInput-field" id="chargePower-input" data-property="chargerPower" data-options="chargePower-options" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.chargePower.placeholder" placeholder="Enter or select charge power">             
+                        <input class="inputfield dropdownInput-field" id="chargePower-input" data-property="chargerPower" data-options="chargePower-options" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.chargePower.placeholder" placeholder="Enter or select charge power">             
                         <div class="dropdown-content" id="chargePower-options">
                             <p class="dropdown-tip" data-localization="inputs.chargePower.tip">Enter or select a value:</p>
                             <div class="dropdown-option" data-value="1.4" data-target="chargePower-input" data-localization="inputs.chargePower.options.acSlow1">[AC] Slow Charging (1.4 kW)</div>
@@ -128,7 +130,7 @@
                     </div>
 
                     <div class="toggleInput-wrapper">
-                        <input class="toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-value="" data-property="energyPrice" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
+                        <input class="inputfield toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-value="" data-property="energyPrice" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
                         <div class="toggleInput-switch" id="pricing-toggle" data-property="pricingModel">
                             <div class="toggleInput-track">
                                 <div class="toggleInput-thumb" id="pricing-thumb"></div>
@@ -147,7 +149,8 @@
                 <div class="chargerPricingAlt-wrapper" id="chargerPricingAlt-wrapper" style="visibility: none;">
                     <div class="dropdownInput-container">                    
                         <div class="dropdown-title-wrapper">
-                            <h3 class="dropdown-title" data-localization="inputs.comparison.option2Title">OPTION 2: <strong>Charge Power</strong> (kW)</h3>
+                            <div class="comparison-dot option2"></div>
+                            <h3 class="dropdown-title" data-localization="inputs.chargePower.title">Charge Power (kW)</h3>
                             <button class="removeComparison" id="removeChargerPriceComparison" data-localization-tooltip="inputs.comparison.removeButtonTip" title="Removes the alternate charge power & pricing">
                                 <img src="images/icons/deleteIcon1.png">
                                 <span data-localization="inputs.comparison.removeButton">Remove</span>
@@ -156,7 +159,7 @@
                             <button class="dropdown-button" data-options="chargePower-options-alt"></button>
                         </div>
                         <div class="dropdown-wrapper">
-                            <input class="dropdownInput-field" id="chargePower-input-alt" data-property="chargerPowerAlt" data-options="chargePower-options-alt" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.chargePower.placeholder" placeholder="Enter or select charge power">             
+                            <input class="inputfield dropdownInput-field" id="chargePower-input-alt" data-property="chargerPowerAlt" data-options="chargePower-options-alt" data-type="decimal" type="text" min="0" max="999" data-value="" data-localization-placeholder="inputs.chargePower.placeholder" placeholder="Enter or select charge power">             
                             <div class="dropdown-content" id="chargePower-options-alt">
                                 <p class="dropdown-tip" data-localization="inputs.chargePower.tip">Enter or select a value:</p>
                                 <div class="dropdown-option" data-value="1.4" data-target="chargePower-input-alt" data-localization="inputs.chargePower.options.acSlow1">[AC] Slow Charging (1.4 kW)</div>
@@ -183,7 +186,7 @@
                             </div>
                         </div>
                         <div class="toggleInput-wrapper">
-                            <input class="toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-value="" data-property="energyPriceAlt" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
+                            <input class="inputfield toggleInput-field" data-type="decimal" type="text" min="0" max="999" data-value="" data-property="energyPriceAlt" step="0.01" data-localization-placeholder="inputs.price.placeholder" placeholder="Enter price"></input>
                             <div class="toggleInput-switch" id="pricing-toggle-alt" data-property="pricingModelAlt" data-value="energy">
                                 <div class="toggleInput-track">
                                     <div class="toggleInput-thumb" id="pricing-thumb-alt"></div>
@@ -202,33 +205,34 @@
         </div> 
         <!-- END OF INPUT AREA CONTAINER -->
 
-        <!-- RESULTS AREA CONTAINER -->
-        
-        <div class="oikea-puoli-sivusta">
-            <div class="first-time-use">
-                <div class="first-time-content">
-                    <h2 data-localization="firstUse.title">Welcome to Range Anti-Anxiety</h2>
-                    <h3 data-localization="firstUse.description">Easily budget your ev usage</h3>
-        
-                    <div class="first-time-steps">
-                        <div class="first-time-step">
-                            <div class="step-number">1.</div>
-                            <p data-localization="firstUse.step1">Enter your desired range and car details</p>
-                        </div>
-                        <div class="first-time-step">
-                            <div class="step-number">2.</div>
-                            <p data-localization="firstUse.step2">Set charging power and pricing</p>
-                        </div>
-                        <div class="first-time-step">
-                            <div class="step-number">3.</div>
-                            <p data-localization="firstUse.step3">See detailed results and compare options</p>
-                        </div>
+        <!-- First time use replaces result area when active -->
+        <div class="first-time-use">
+            <div class="first-time-content">
+                <h2 data-localization="firstUse.title">Welcome to Range Anti-Anxiety</h2>
+                <h3 data-localization="firstUse.description">Easily budget your ev usage</h3>
+    
+                <div class="first-time-steps">
+                    <div class="first-time-step">
+                        <div class="step-number">1.</div>
+                        <p data-localization="firstUse.step1">Enter your desired range and car details</p>
                     </div>
-                    <button class="first-time-button" id="start-calculator" data-localization="firstUse.startButton">Start Using
-                        Calculator</button>
+                    <div class="first-time-step">
+                        <div class="step-number">2.</div>
+                        <p data-localization="firstUse.step2">Set charging power and pricing</p>
+                    </div>
+                    <div class="first-time-step">
+                        <div class="step-number">3.</div>
+                        <p data-localization="firstUse.step3">See detailed results and compare options</p>
+                    </div>
                 </div>
+                <button class="first-time-button" id="start-calculator" data-localization="firstUse.startButton">Start Using
+                    Calculator</button>
             </div>
-         
+        </div>
+
+        <!-- RESULTS AREA CONTAINER -->
+        <div class="oikea-puoli-sivusta">
+            
             <div class="results-content">
         
                 <div class="left-side">
@@ -252,19 +256,23 @@
                     </div>
         
                     <div id="chargeTimeComparisonContainer" class="multiple-options" style="display: none;">
-                        <div class="optionTextWrapper">
-                            <div id="chargeTimeForRangeOption1" data-localization="results.chargingTime.option1">Charge time for
-                                range option 1: </div>
-                            <div class="option-span" id="chargerPowerOption1-1"></div>
+                        <div class="mobile-comparison-wrapper">
+                            <div class="optionTextWrapper">
+                                <div id="chargeTimeForRangeOption1" data-localization="results.chargingTime.option1">Charge time for
+                                    range option 1: </div>
+                                <div class="option-span" id="chargerPowerOption1-1"></div>
+                            </div>
+                            <div id="comparisonBarRangeTime1" class="comparison-bar spaced-div"></div>
+                        </div>    
+
+                        <div class="mobile-comparison-wrapper">
+                            <div class="optionTextWrapper">
+                                <div id="chargeTimeForRangeOption2" data-localization="results.chargingTime.option2">Charge time for
+                                    range option 2: </div>
+                                <div class="option-span" id="chargerPowerOption2-1"></div>
+                            </div>
+                            <div id="comparisonBarRangeTime2" class="comparison-bar spaced-div"></div>
                         </div>
-                        <div id="comparisonBarRangeTime1" class="comparison-bar spaced-div"></div>
-        
-                        <div class="optionTextWrapper">
-                            <div id="chargeTimeForRangeOption2" data-localization="results.chargingTime.option2">Charge time for
-                                range option 2: </div>
-                            <div class="option-span" id="chargerPowerOption2-1"></div>
-                        </div>
-                        <div id="comparisonBarRangeTime2" class="comparison-bar spaced-div"></div>
                     </div>
         
                     <div class="results-mobile-wrapper">
@@ -274,19 +282,23 @@
                     </div>
         
                     <div id="chargeCostComparisonContainer" class="multiple-options" style="display: none;">
-                        <div class="optionTextWrapper">
-                            <div id="chargeCostForRangeOption1" data-localization="results.chargingCosts.option1">Charge cost in
-                                €/kWh for range option 1: </div>
-                            <div class="option-span" id="energyPriceOption1-1"></div>
+                        <div class="mobile-comparison-wrapper">
+                            <div class="optionTextWrapper">
+                                <div id="chargeCostForRangeOption1" data-localization="results.chargingCosts.option1">Charge cost in
+                                    €/kWh for range option 1: </div>
+                                <div class="option-span" id="energyPriceOption1-1"></div>
+                            </div>
+                            <div id="comparisonBarRangeCost1" class="comparison-bar spaced-div"></div>
                         </div>
-                        <div id="comparisonBarRangeCost1" class="comparison-bar spaced-div"></div>
         
-                        <div class="optionTextWrapper">
-                            <div id="chargeCostForRangeOption2" data-localization="results.chargingCosts.option2">Charge cost in
-                                €/kWh for range option 2: </div>
-                            <div class="option-span" id="energyPriceOption2-1"></div>
+                        <div class="mobile-comparison-wrapper">
+                            <div class="optionTextWrapper">
+                                <div id="chargeCostForRangeOption2" data-localization="results.chargingCosts.option2">Charge cost in
+                                    €/kWh for range option 2: </div>
+                                <div class="option-span" id="energyPriceOption2-1"></div>
+                            </div>
+                            <div id="comparisonBarRangeCost2" class="comparison-bar spaced-div"></div>
                         </div>
-                        <div id="comparisonBarRangeCost2" class="comparison-bar spaced-div"></div>
                     </div>
         
                     <div class="results-mobile-wrapper">
@@ -320,20 +332,23 @@
                     </div>
         
                     <div id="chargeTimeComparisonContainerFullCharge" class="multiple-options" style="display: none;">
-                        <div class="optionTextWrapper">
-                            <div id="chargeTimeForFullChargeOption1" data-localization="results.untilFull.chargingTime.option1">
-                                Charge time for full charge option 1: </div>
-                            <div class="option-span" id="chargerPowerOption1-2"></div>
+                        <div class="mobile-comparison-wrapper">     
+                            <div class="optionTextWrapper">
+                                <div id="chargeTimeForFullChargeOption1" data-localization="results.untilFull.chargingTime.option1">
+                                    Charge time for full charge option 1: </div>
+                                <div class="option-span" id="chargerPowerOption1-2"></div>
+                            </div>
+                            <div id="comparisonBarFullChargeTime1" class="comparison-bar spaced-div"></div>
                         </div>
-                        <div id="comparisonBarFullChargeTime1" class="comparison-bar spaced-div"></div>
-        
-                        <div class="optionTextWrapper">
-                            <div id="chargeTimeForFullChargeOption2" data-localization="results.untilFull.chargingTime.option2">
-                                Charge time for full charge option 2: </div>
-                            <div class="option-span" id="chargerPowerOption2-2"></div>
+
+                        <div class="mobile-comparison-wrapper">
+                            <div class="optionTextWrapper">
+                                <div id="chargeTimeForFullChargeOption2" data-localization="results.untilFull.chargingTime.option2">
+                                    Charge time for full charge option 2: </div>
+                                <div class="option-span" id="chargerPowerOption2-2"></div>
+                            </div>
+                            <div id="comparisonBarFullChargeTime2" class="comparison-bar spaced-div"></div>
                         </div>
-        
-                        <div id="comparisonBarFullChargeTime2" class="comparison-bar spaced-div"></div>
                     </div>
         
                     <div class="results-mobile-wrapper">
@@ -344,21 +359,25 @@
                     </div>
         
                     <div id="chargeCostComparisonContainerFullCharge" class="multiple-options" style="display: none;">
-                        <div class="optionTextWrapper">
-                            <div id="chargeCostForFullChargeOption1"
-                                data-localization="results.untilFull.chargingCosts.option1">Charge cost in €/kWh for full charge
-                                option 1: </div>
-                            <div class="option-span" id="energyPriceOption1-2"></div>
+                        <div class="mobile-comparison-wrapper">
+                            <div class="optionTextWrapper">
+                                <div id="chargeCostForFullChargeOption1"
+                                    data-localization="results.untilFull.chargingCosts.option1">Charge cost in €/kWh for full charge
+                                    option 1: </div>
+                                <div class="option-span" id="energyPriceOption1-2"></div>
+                            </div>
+                            <div id="comparisonBarFullChargeCost1" class="comparison-bar spaced-div"></div>
                         </div>
-                        <div id="comparisonBarFullChargeCost1" class="comparison-bar spaced-div"></div>
-        
-                        <div class="optionTextWrapper">
-                            <div id="chargeCostForFullChargeOption2"
-                                data-localization="results.untilFull.chargingCosts.option2">Charge cost in €/kWh for full charge
-                                option 2: </div>
-                            <div class="option-span" id="energyPriceOption2-2"></div>
+
+                        <div class="mobile-comparison-wrapper">
+                            <div class="optionTextWrapper">
+                                <div id="chargeCostForFullChargeOption2"
+                                    data-localization="results.untilFull.chargingCosts.option2">Charge cost in €/kWh for full charge
+                                    option 2: </div>
+                                <div class="option-span" id="energyPriceOption2-2"></div>
+                            </div>
+                            <div id="comparisonBarFullChargeCost2" class="comparison-bar spaced-div"></div>
                         </div>
-                        <div id="comparisonBarFullChargeCost2" class="comparison-bar spaced-div"></div>
                     </div>
         
                     <div class="results-mobile-wrapper">
@@ -411,5 +430,6 @@
     <div style="display: none;" data-localization="results.chargingCosts.chargerNotSet">Charge power not set</div>
     <div style="display: none;" data-localization="results.chargingTime.notNeeded">Charging not needed</div>
     <div style="display: none;" data-localization="results.chargingTime.batteryNotSet">Battery capacity not set</div>
+    <div style="display: none;" data-localization="results.chargingTime.consumptionNotSet">Energy consumption not set</div>
 </body>
 </html>
