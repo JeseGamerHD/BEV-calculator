@@ -1,4 +1,5 @@
 import { InputField } from "./inputfield.js";
+import localization from "../localization.js";
 
 export class DropdownInputHandler extends InputField {
 
@@ -27,7 +28,7 @@ export class DropdownInputHandler extends InputField {
             
             for(let option of options) {
                 if(dropdown.value == option.dataset.value) {
-                    dropdown.value = option.textContent;
+                    dropdown.value = localization.getText(option.getAttribute('data-localization'));
                     break;
                 }
             }

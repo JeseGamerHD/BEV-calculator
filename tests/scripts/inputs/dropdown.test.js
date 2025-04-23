@@ -5,14 +5,14 @@ import fs from 'fs';
 import path from 'path';
 
 const BASE_VALUES = {
-  desiredRange: 250,
-  batteryCapacity: 60,
-  bevEnergyConsumption: 15,
+  desiredRange: null,
+  batteryCapacity: null,
+  bevEnergyConsumption: null,
   stateOfCharge: 50,
-  chargerPower: 22,
-  chargerPowerAlt: 50,
-  energyPrice: 0.2,
-  energyPriceAlt: 0.2,
+  chargerPower: null,
+  chargerPowerAlt: null,
+  energyPrice: null,
+  energyPriceAlt: null,
   pricingModel: "energy",
   pricingModelAlt: "energy",
 };

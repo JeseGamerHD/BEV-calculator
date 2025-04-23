@@ -6,14 +6,14 @@ import fs from 'fs';
 import path from 'path';
 
 const BASE_VALUES = {
-  desiredRange: 250,
-  batteryCapacity: 60,
-  bevEnergyConsumption: 15,
+  desiredRange: null,
+  batteryCapacity: null,
+  bevEnergyConsumption: null,
   stateOfCharge: 50,
-  chargerPower: 22,
-  chargerPowerAlt: 50,
-  energyPrice: 0.2,
-  energyPriceAlt: 0.2,
+  chargerPower: null,
+  chargerPowerAlt: null,
+  energyPrice: null,
+  energyPriceAlt: null,
   pricingModel: "energy",
   pricingModelAlt: "energy",
 };
@@ -97,6 +97,19 @@ describe('test suite: calculating charge time for range', () => {
 
     expect(document.getElementById('chargeTimeForRange').textContent).toBe('1 h 19 min');
   });
+
+  it('displays charge time <1 min' , () => { 
+
+    calculator.desiredRange = 350;
+    calculator.stateOfCharge = 50;
+    calculator.batteryCapacity = 118;
+    calculator.bevEnergyConsumption = 17;
+    calculator.chargerPower = 150;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForRange').textContent).toBe('<1 min');
+
+  });
 });
 
 describe('test suite: calculating charge cost for range', () => {
@@ -157,6 +170,10 @@ describe('test suite: calculating charge cost for range', () => {
 
   it('displays price is not set when energy based cost is 0', () => {
 
+    calculator.desiredRange = 255;
+    calculator.stateOfCharge = 50;
+    calculator.batteryCapacity = 70;
+    calculator.bevEnergyConsumption = 20;
     calculator.pricingModel = 'energy';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
@@ -166,6 +183,10 @@ describe('test suite: calculating charge cost for range', () => {
 
   it('displays price is not set when time based cost is 0', () => {
 
+    calculator.desiredRange = 255;
+    calculator.stateOfCharge = 20;
+    calculator.batteryCapacity = 70;
+    calculator.bevEnergyConsumption = 20;
     calculator.pricingModel = 'time';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
@@ -173,7 +194,7 @@ describe('test suite: calculating charge cost for range', () => {
     expect(document.getElementById('chargeCostRange').textContent).toBe('Price not set');
   });
 
-  it('displays Charging not needed when it is not necessary (time-based price)', () => {
+  it('displays charging not needed when it is not necessary (time-based price)', () => {
 
     calculator.stateOfCharge = 100;
     calculator.desiredRange = 100;
@@ -221,7 +242,7 @@ describe('test suite: calculating energy to be charged for required range', () =
     calculator.bevEnergyConsumption = 12;
     calculator.updateCalculations();
 
-    expect(document.getElementById('energyNeededForRange').textContent).toBe('0 kWh');
+    expect(document.getElementById('energyNeededForRange').textContent).toBe('0.00 kWh');
   });
 
   it('calculates energy with values containing decimals', () => {
@@ -259,6 +280,8 @@ describe('test suite: calculating charge time when charging to full', () => {
   });
 
   it('displays charging is not needed when SOC 100%', () => {
+
+    calculator.batteryCapacity = 72;
     calculator.stateOfCharge = 100;
     calculator.updateCalculations();
 
@@ -283,6 +306,16 @@ describe('test suite: calculating charge time when charging to full', () => {
 
     expect(document.getElementById('chargeTimeForFullCharge').textContent).toBe('Charge power not set');
   });
+
+  it('displays charge time <1 min', () => {
+    calculator.stateOfCharge = 99;
+    calculator.batteryCapacity = 60;
+    calculator.chargerPower = 200;
+    calculator.updateCalculations();
+
+    expect(document.getElementById('chargeTimeForFullCharge').textContent).toBe('<1 min');
+  });
+
 });
 
 describe('test suite: calculating cost of charging to full', () => {
@@ -335,6 +368,8 @@ describe('test suite: calculating cost of charging to full', () => {
 
   it('displays that price is not set when energy based cost is 0', () => {
 
+    calculator.stateOfCharge = 10;
+    calculator.batteryCapacity = 55;
     calculator.pricingModel = 'energy';
     calculator.energyPrice = 0;
     calculator.updateCalculations();
@@ -344,7 +379,10 @@ describe('test suite: calculating cost of charging to full', () => {
 
   it('displays that price is not set when time based cost is 0', () => {
 
+    calculator.stateOfCharge = 5;
+    calculator.batteryCapacity = 60;
     calculator.pricingModel = 'time';
+    calculator.chargerPower = 11;
     calculator.energyPrice = 0;
     calculator.updateCalculations();
 
@@ -423,7 +461,7 @@ describe('test suite: calculating operating range with current battery energy', 
     calculator.bevEnergyConsumption = 15;
     calculator.updateCalculations();
 
-    expect(document.getElementById('currentOperatingRange').textContent).toBe('50.00 km');
+    expect(document.getElementById('currentOperatingRange').textContent).toBe('50 km');
   });
 
 
@@ -442,7 +480,7 @@ describe('test suite: calculating operating range with current battery energy', 
     calculator.bevEnergyConsumption = 13.7;
     calculator.updateCalculations();
 
-    expect(document.getElementById('currentOperatingRange').textContent).toBe('41.97 km');
+    expect(document.getElementById('currentOperatingRange').textContent).toBe('42 km');
   });
 
   it('displays range: 0 when SOC is 0', () => {
@@ -450,7 +488,7 @@ describe('test suite: calculating operating range with current battery energy', 
     calculator.stateOfCharge = 0;
     calculator.updateCalculations();
 
-    expect(document.getElementById('currentOperatingRange').textContent).toContain('0.00 km');
+    expect(document.getElementById('currentOperatingRange').textContent).toContain('0 km');
   });
 });
 

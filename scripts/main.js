@@ -3,17 +3,17 @@ import { DropdownInputHandler } from "./inputs/dropdown.js";
 import { NumberInputHandler } from "./inputs/number-input.js";
 import { RangeInputHandler } from "./inputs/range-input.js";
 import { ToggleInputHandler } from "./inputs/toggle-switch.js";
-import { LocalizationManager } from "./localization.js";
+import localization from "./localization.js";
 
 const BASE_VALUES = {
-    desiredRange: 250,
-    batteryCapacity: 60,
-    bevEnergyConsumption: 15,
+    desiredRange: null,
+    batteryCapacity: null,
+    bevEnergyConsumption: null,
     stateOfCharge: 50,
-    chargerPower: 22,
-    chargerPowerAlt: 50,
-    energyPrice: 0.2,
-    energyPriceAlt: 0.2,
+    chargerPower: null,
+    chargerPowerAlt: null,
+    energyPrice: null,
+    energyPriceAlt: null,
     pricingModel: "energy",
     pricingModelAlt: "energy",
 };
@@ -27,105 +27,109 @@ const initialValues = {
     ...savedInputData
 };
 
-// Initialize the calculator and inputs
+// Initialize the calculator
 const calculator = new Calculator(initialValues);
-const dropdownInputHandler = new DropdownInputHandler(calculator, initialValues);
-const numberInputHandler = new NumberInputHandler(calculator, initialValues);
-const rangeInputHandler = new RangeInputHandler(calculator, initialValues);
-const toggleInputHandler = new ToggleInputHandler(calculator, initialValues);
 
-const localizationManager = new LocalizationManager();
-// Initialize the localization manager
+// Initialize the page:
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-
-        // TODO: Maybe move first time use functionality to make this bit cleaner
-        // since it is for localization stuff
-        
-        // Get the start button and overlay elements
-        const startButton = document.getElementById('start-calculator');
-        const infoButton = document.getElementById('first-time-info-button');
-        const firstTimeOverlay = document.querySelector('.first-time-use');
-        const resultsContent = document.querySelector('.results-content');
-        // Check if this is the user's first visit
-        const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
-        
-        const inputAreaContainer = document.getElementById("input-area-container");
-        const mobileActive = window.matchMedia("(max-width: 900px)");
-        // If user has visited before, hide the overlay immediately
-        if (hasVisitedBefore === 'true') {
-            firstTimeOverlay.style.display = 'none';
-            resultsContent.style.display = 'flex';
-            inputAreaContainer.style.display = "flex"; 
-        } else {
-            if(mobileActive.matches) {
-                // Input side is hidden on mobile due to scrolling issues
-                // when the introduction is active, TODO: Better fix
-                inputAreaContainer.style.display = "none";
-            } else {
-                inputAreaContainer.style.display = "flex";
-            }
-        }
-        // Add click handler to the start button
-        if (startButton) {
-            startButton.addEventListener('click', function() {
-                    firstTimeOverlay.style.display = 'none';
-                    resultsContent.style.display = 'flex';
-                    inputAreaContainer.style.display = "flex"; 
-
-                    // Store in localStorage that user has visited
-                    localStorage.setItem('hasVisitedBefore', 'true');
-            });
-        }
-        if (infoButton) {
-            infoButton.addEventListener('click', function() {
-                firstTimeOverlay.style.display = 'flex';
-                resultsContent.style.display = 'none';
-                if(mobileActive.matches){
-                    inputAreaContainer.style.display = "none";
-                }    
-            });
-        }
-
-        // For cases where user resizes desktop browser
-        // On desktop inputs are always visible
-        window.addEventListener("resize", () => {
-            let mobile = window.matchMedia("(max-width: 900px)");
-            if(!mobile.matches) {
-                inputAreaContainer.style.display = "flex"; 
-            }
-        });
-
-        // Initialize localization manager and load language
-        await localizationManager.initializeLanguage();
+    try {      
+        // Initialize localization
+        await localization.initializeLanguage();
 
         // Set up language switcher if it exists
         const languageSwitcher = document.getElementById('language-switcher');
         if (languageSwitcher) {
-            languageSwitcher.value = localizationManager.currentLanguage; // Change the selected option to the one set in the localization
+            languageSwitcher.value = localization.currentLanguage; // Change the selected option to the one set in the localization
             
             languageSwitcher.addEventListener('change', async (changeEvent) => {
                 let newLanguage = changeEvent.target.value; // The selected language option
-                
-                if (newLanguage != localizationManager.currentLanguage) { // No need to update if same language is picked or options only opened
+                if (newLanguage != localization.currentLanguage) { // No need to update if same language is picked or options only opened
                     localStorage.setItem("language", newLanguage); // Store choice
                     // Update language, then calculations (otherwise placeholder/temp texts show up)
-                    await localizationManager.loadLanguage(newLanguage);
+                    await localization.loadLanguage(newLanguage);
                     calculator.updateCalculations();
                 }
             });
-        }
-
-        // After localization has completed, now we can update calculations
-        // This ensures calculator results are the last thing to modify the DOM
-        setTimeout(() => {
-            calculator.updateCalculations();
-        }, 0);
-        
+        }       
     } catch (error) {
-        console.error("Error during initialization:", error);
+        console.error("Error during localization initialization:", error);
     }
+
+    // Initialize input handlers
+    const dropdownInputHandler = new DropdownInputHandler(calculator, initialValues);
+    const numberInputHandler = new NumberInputHandler(calculator, initialValues);
+    const rangeInputHandler = new RangeInputHandler(calculator, initialValues);
+    const toggleInputHandler = new ToggleInputHandler(calculator, initialValues);
+
+    // Initialize the first time use
+    initializeFirstTimeUse();
+
+    // After initialization has completed, now we can update calculations
+    // This ensures calculator results are the last thing to modify the DOM
+    setTimeout(() => {
+        calculator.updateCalculations();
+    }, 0);
 });
+
+function initializeFirstTimeUse() {
+   
+    const firstTimeOverlay = document.querySelector('.first-time-use');
+    const resultsContent = document.querySelector('.oikea-puoli-sivusta');
+    const inputAreaContainer = document.getElementById("input-area-container"); // Input side is hidden on mobile if first time is active
+    const mobileActive = window.matchMedia("(max-width: 900px)"); // Using mobile?
+    
+    // If user has visited before, hide the overlay immediately
+    if (localStorage.getItem('hasVisitedBefore') === 'true') {
+        firstTimeOverlay.style.display = 'none';
+        resultsContent.style.display = 'flex';
+        inputAreaContainer.style.display = "flex";
+    } else {
+        if (mobileActive.matches) {
+            // Input side is hidden on mobile due to scrolling issues
+            // when the introduction is active, TODO: Better fix
+            resultsContent.style.display = "none";
+            inputAreaContainer.style.display = "none";
+        } else {
+            inputAreaContainer.style.display = "flex";
+            resultsContent.style.display = "none";
+        }
+    }
+
+    // After first time use is intitialized, add functionality to buttons etc:
+
+    // Add click handler to the start button
+    const startButton = document.getElementById('start-calculator');
+    if (startButton) {
+        startButton.addEventListener('click', function () {
+            firstTimeOverlay.style.display = 'none';
+            resultsContent.style.display = 'flex';
+            inputAreaContainer.style.display = "flex";
+
+            // Store in localStorage that user has visited
+            localStorage.setItem('hasVisitedBefore', 'true');
+        });
+    }
+    // And to the info button
+    const infoButton = document.getElementById('first-time-info-button');
+    if (infoButton) {
+        infoButton.addEventListener('click', function () {
+            firstTimeOverlay.style.display = 'flex';
+            resultsContent.style.display = 'none';
+            if (mobileActive.matches) {
+                inputAreaContainer.style.display = "none";
+            }
+        });
+    }
+
+    // For cases where user resizes desktop browser
+    // On desktop inputs are always visible
+    window.addEventListener("resize", () => {
+        let mobile = window.matchMedia("(max-width: 900px)");
+        if (!mobile.matches) {
+            inputAreaContainer.style.display = "flex";
+        }
+    });
+}
   
 // Functionality for add comparison button
 document.getElementById("addChargerPriceComparison").addEventListener("click", (event) => {
@@ -147,6 +151,10 @@ function handleComparisonButtons(button) {
         setTimeout(() => { // Set display to none after the transition (button smoothly fades and height goes to zero)
             button.style.display = "none"; // Removes it from the document flow, takes no space
         }, 100);
+
+        document.querySelectorAll(".comparison-dot").forEach((dot) => {
+            dot.style.display = "flex";
+        });
         
         document.getElementById("chargerPricingAlt-wrapper").classList.toggle("animation"); // Display the alternate charger & pricing
         setTimeout(() => { // So scrollIntoView doesnt jump when the above animation is still in progress
@@ -176,6 +184,10 @@ function handleComparisonButtons(button) {
             addButton.style.maxHeight = "60px";
         }, 100);
 
+        document.querySelectorAll(".comparison-dot").forEach((dot) => {
+            dot.style.display = "none";
+        });
+
         calculator.toggleComparison();
 
         // Toggle the result options
@@ -188,24 +200,31 @@ function handleComparisonButtons(button) {
     }
 }
 
+// ** MOBILE RESULT SWIPE FUNCTIONALITY ** DOES NOT WORK AND SWIPING IS MADE POSSIBLE BY ONLY CSS CURRENTLY
 document.addEventListener("DOMContentLoaded", function(){
     let currentIndex = 0;
     const totalScreens = 3;
     const resultsContent = document.querySelectorAll(".results-content")[0];
 
     let initialX = null;
+    let finalX = null;
 
     function startTouch(e){
         initialX = e.touches[0].clientX;
     }
 
     function moveTouch(e){
-        if (initialX === null) {
+        finalX = e.touches[0].clientX;
+    }
+
+    function endTouch(){
+        if (initialX === null || finalX === null) {
+            initialX = null;
+            finalX = null;
             return;
         }
 
-        let currentX = e.touches[0].clientX;
-        let diffX = initialX - currentX;
+        let diffX = initialX - finalX;
 
         if(Math.abs(diffX) > 50){
             if(diffX > 0 && currentIndex < totalScreens - 1){
@@ -214,15 +233,17 @@ document.addEventListener("DOMContentLoaded", function(){
                 currentIndex--;
             }
 
-            resultsContent.style.transform = `translateX(-${currentIndex * 100}vw)`;
+            //resultsContent.style.transform = `translateX(-${currentIndex * 100}vw)`; Makes the resultsContent disappear
         }
-
         initialX = null;
-        e.preventDefault();
+        finalX = null;
+        //e.preventDefault(); Breaks firefox, seemingly not important commented incase required
+        // Alternatively use pointerdown and pointermove to support firefox if the above is important
     }
 
     resultsContent.addEventListener("touchstart", startTouch, false);
     resultsContent.addEventListener("touchmove", moveTouch, false);
+    resultsContent.addEventListener("touchend", endTouch, false);
 });
 
 // ** TOOLTIP FUNCTIONALITY **
@@ -239,8 +260,17 @@ elementsWithTooltip.forEach(element => element.addEventListener("touchstart", (e
 }));
 
 elementsWithTooltip.forEach(element => element.addEventListener("mouseout", () => {
-    hideTooltip();
+    hideTooltip(); // NOTE: when using chrome's dev tools to test mobile this can sometimes trigger, hiding the tooltip instantly
+    // On an actual device this does not happen
 }));
+
+// On mobile hide the tooltip when touching outside of it
+document.addEventListener("touchstart", (touchEvent) => {
+    let element = touchEvent.target;
+    if(!element.classList.contains("tooltip-container") && element.id !== "tooltip" && tooltip.style.display !== "none") {
+        hideTooltip();
+    }
+});
 
 function handleTooltipActivation(element) {
    
@@ -248,19 +278,19 @@ function handleTooltipActivation(element) {
     let elementBounds = element.getBoundingClientRect();
     let tooltipBounds = tooltip.parentElement.getBoundingClientRect();
 
-    let left = elementBounds.left - tooltipBounds.left + (elementBounds.width / 2);
-    let top = elementBounds.top - tooltipBounds.top + (elementBounds.height / 2);
+    const offSet = window.matchMedia("(max-width: 900px)").matches ? 0 : 10; // Different offset for mobile and desktop
+    // This calculation relies on that tooltip has position: fixed
+    let left = elementBounds.left + elementBounds.width / 2 + offSet;
+    let top = elementBounds.top + elementBounds.height / 2 + offSet;
 
+    // Position the tooltip based on which quadrant of the screen the element being hovered is in
+    // This is to prevent it from overflowing outside of the page
     let position = {
         top: "auto",
         right: "auto",
         bottom: "auto",
         left: "auto"
     };
-
-    // Offset the tooltip based on which quadrant of the screen the element being hovered is in
-    // This is to prevent it from overflowing outside of the page
-    const offSet = 10; // TODO: Maybe adjust? Make it more dynamic?
 
     // Check if element is in the top or bottom half of the screen
     if (top > tooltipBounds.height / 2) { // Bottom half
@@ -272,18 +302,19 @@ function handleTooltipActivation(element) {
 
     // Check if the element is in the left or right half of the screen
     if (left > tooltipBounds.width / 2) { // Right half
-        position.right = `${tooltipBounds.width - left + offSet}px`;
+        position.right = `${tooltipBounds.width - left + offSet}px`;      
     }
     else { // Left half
         position.left = `${left + offSet}px`;
     }
 
+    // Finally, set the position and the tooltip text
     showTooltip(tooltipKey, position);
 }
 
 function showTooltip(tipKey, position) {
     // call localization to get the new text using the key
-    tooltip.textContent = localizationManager.getText(tipKey);
+    tooltip.textContent = localization.getText(tipKey);
 
     // Adjust position
     tooltip.style.top = position.top;

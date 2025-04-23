@@ -1,11 +1,18 @@
 /**
 * This class is responsible for handling the localization of the page.
 * Language is initialized, set and updated using this class.
+*
+* **LocalizationManager is a singleton which should be accessed via modules**: ```import localization from "path"```
+* and then ```localization.someMethod```
 */
-export class LocalizationManager {
+class LocalizationManager {
   constructor() {
-    this.currentLanguage = 'en';
-    this.translations = {};
+    if(!LocalizationManager.instance) { // Singleton pattern utilizing modules
+      this.currentLanguage = 'en';
+      this.translations = {};
+      LocalizationManager.instance = this;
+    }
+    return LocalizationManager.instance;
   }
 
   /**
@@ -90,5 +97,27 @@ export class LocalizationManager {
       const key = element.getAttribute('data-localization-tooltip');
       element.title = this.getText(key);
     });
+
+    // Updates the visible value in dropdowns (if the value is one of the options)
+    document.querySelectorAll(".dropdownInput-field").forEach(dropdown => {
+      let dropdownContent = document.getElementById(dropdown.dataset.options);
+      let options = dropdownContent.querySelectorAll(".dropdown-option");
+      for (let option of options) {
+        if (dropdown.dataset.value == option.dataset.value) {
+          dropdown.value = this.getText(option.getAttribute('data-localization'));
+          break;
+        }
+      }
+    });
   }
 }
+
+/**
+* The LocalizationManager singleton instance.
+*
+* It is responsible for handling the localization of the page.
+* Language is initialized, set and updated using this class.
+*/
+const localization = new LocalizationManager();
+export default localization;
+// ^^ Whenever this module is exported an instance is created if one does not exist (see contructor)

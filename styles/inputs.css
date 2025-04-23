@@ -7,77 +7,76 @@
 .input-area-container {
     display: flex;
     flex-direction: column;
-
     width: 33%;
     padding: 60px 0px 60px 0px;
     background-color: var(--input-area-bg);
-
-    .input-area-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-self: center;
-        row-gap: 30px;
-        width: 80%;
-    }
-
-    /* The ----------- Lines between groups of inputs */
-    .divider-line {
-        border-bottom: 2px solid #6c6c6c92;
-    }
-
-    /* The new pair of charge power & price added to comparison*/
-    .chargerPricingAlt-wrapper {
-        visibility: none;
-        /* max-height: 0; */
-        transform: scale(0);
-        transition: all 0.2s ease-in;
-        z-index: 998; /* transform creates a new stacking context meaning it messes up the stacking of the elements */
-        /* In this case it would mean that the tooltip inside the alternative charger&pricing would render under the results */
-        /* Adding z-index to this seems to fix it */
-        /* ^^ value should be below the one inside a tooltip in main.css (999) to prevent issues where tooltips outside this wrapper render below it */
-    }
-
-    .chargerPricingAlt-wrapper.animation {
-        visibility: visible;
-        display: flex;
-        flex-direction: column;
-        row-gap: 30px;
-        transform: scale(1);
-        max-height: 999px;
-    }
-
-    /* The button which adds a new pair of charger power + price */
-    #addChargerPriceComparison {
-        width: 33%;
-        min-width: 130px;
-        height: 3em;
-        overflow: hidden;
-
-        border: none;
-        border-radius: 25px;
-        box-shadow: 0 0 2px 2px;
-
-        color: var(--text-color-inputs);
-        font-size: 1em;
-        cursor: pointer;
-        font-weight: bold;
-        transition: all 0.1s linear;
-    }
-
-    #addChargerPriceComparison:hover {
-        transform: scale(1.05);
-    }
-
-    /* a span which takes as much space as possible */
-    /* Example usage: in comparison between the remove and the dropdown arrow */
-    .filler {
-        flex: 1;
-    }
 
     /*TODO: Maybe scale font a bit? */
     /* h3 {
         font-size: clamp(0.95em, min(1vw, 1.17em), 1.17em);
     } */
+}
+
+.input-area-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    row-gap: 30px;
+    width: 80%;
+}
+
+/* The ----------- Lines between groups of inputs */
+.divider-line {
+    border-bottom: 2px solid #6c6c6c92;
+}
+
+/* The new pair of charge power & price added to comparison*/
+.chargerPricingAlt-wrapper {
+    visibility: none;
+    /* max-height: 0; */
+    transform: scale(0);
+    transition: all 0.2s ease-in;
+    z-index: 998; /* transform creates a new stacking context meaning it messes up the stacking of the elements */
+    /* In this case it would mean that the tooltip inside the alternative charger&pricing would render under the results */
+    /* Adding z-index to this seems to fix it */
+    /* ^^ value should be below the one inside a tooltip in main.css (999) to prevent issues where tooltips outside this wrapper render below it */
+}
+
+.chargerPricingAlt-wrapper.animation {
+    visibility: visible;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    transform: scale(1);
+    max-height: 999px;
+}
+
+/* The button which adds a new pair of charger power + price */
+#addChargerPriceComparison {
+    width: 33%;
+    min-width: 130px;
+    height: 3em;
+    overflow: hidden;
+
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 0 2px 2px;
+
+    color: var(--text-color-inputs);
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.1s linear;
+}
+
+#addChargerPriceComparison:hover {
+    transform: scale(1.05);
+}
+
+/* a span which takes as much space as possible */
+/* Example usage: in comparison between the remove and the dropdown arrow */
+.filler {
+    flex: 1;
 }
 
 /* MOBILE SCREENS, set the container styling, rest will follow */
@@ -89,7 +88,7 @@
 }
 
 /* GENERAL INPUT STYLING */
-input[type=text], input[type=number] {
+.inputfield {
     height: 30px;
     padding: 10px;
     border-radius: 5px;
@@ -102,256 +101,302 @@ input::placeholder {
     font-weight: normal;
 }
 
-input[type=text]:focus, input[type=number]:focus {
+/* By default firefox sets placeholder opacity to 0.54 (it picks up the text color)*/
+input::-moz-placeholder { /* Set to black with the same opacity for uniformity between browsers */
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.inputfield:focus {
     outline: 2px solid var(--text-color-inputs);
 }
 
-/* NUMBER INPUT STYLING (BASIC INPUT FIELDS) */
+/* NUMBER INPUT STYLING */
+/*#region NumberInput */
 .numberInput-container {
     display: flex;
     flex-direction: column;
     width: 100%;
-
-    .numberInput-title-wrapper {
-        display: flex;
-        column-gap: 10px;
-        align-items: center;
-    }
-
-    .numberInput-field-wrapper {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 2.5em;
-
-        .numberInput-field {
-            flex: 1; /* Input field grows to take as much width as possible */
-            min-width: 0; /* Required to override input field default behaviour to resist shrinking below their content size */
-            border: none;
-            color: var(--text-color-inputs);
-        }
-    }
 }
 
-/* RANGE INPUT STYLING */
+.numberInput-title-wrapper {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.numberInput-field-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 2.5em;
+}
+
+.numberInput-field {
+    flex: 1; /* Input field grows to take as much width as possible */
+    min-width: 0; /* Required to override input field default behaviour to resist shrinking below their content size */
+    border: none;
+    color: var(--text-color-inputs);
+}
+/*#endregion*/
+
+/*RANGE INPUT STYLING */
+/*#region RangeInput */
 .rangeInput-container {
-    
     display: flex;
     flex-direction: column;
     row-gap: 10px;
     width: 100%;
-
-    .rangeInput-title {
-        margin-bottom: 0;
-    }
-
-    .rangeInput-wrapper {
-        
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        column-gap: 5px;
-        width: 90%;
-    }
-
-    .rangeInput-field-wrapper {
-
-        display: flex;
-        flex-direction: row;
-        width: min-content; /* Needed so focus-within trick works */
-        overflow: hidden;
-        
-        .rangeInput-field {
-            display: flex;
-            text-align: center;
-            width: 2.5em;
-            
-            border: none;
-            border-radius: 5px 0 0 5px;
-            color: var(--text-color-inputs);
-    
-            padding: 10px 0 10px 0px;
-        }
-        
-        .rangeInput-field-symbol {
-
-            display: flex;
-            align-items: center;
-            background-color: white;
-            
-            border: none;
-            border-radius: 0 5px 5px 0;
-
-            font-size: larger;
-            font-weight: bold;
-            color: var(--text-color-inputs);
-    
-            padding: 10px 10px 10px 0;
-        }
-    }
-
-    /* When the input field inside the wrapper gets focus, create an outline */
-    /* for both the input and the symbol span */
-    .rangeInput-field-wrapper:focus-within {
-        outline: 2px solid var(--text-color-inputs);
-        border-radius: 5px;
-    }
-
-    .rangeInput {
-        appearance: none; /* Override default look */
-        height: 10px;
-        border-radius: 5px;
-        width: 100%;
-        background-attachment: fixed;
-        /* box-shadow: 5px 10px 10px #00000040; */
-    }
-    
-    .rangeInput::-webkit-slider-thumb {
-        appearance: none; /* Override default look */
-        width: 30px;
-        height: 30px;
-        background: #4bb7fe;
-        border-radius: 50%;
-        cursor: pointer;
-        -webkit-transition: .1s;
-    }
-
-    .rangeInput::-webkit-slider-thumb:hover {
-        box-shadow: 0 0 0 10px #3b8cf039;
-    }
-    
-    .rangeInput::-moz-range-thumb {
-        appearance: none; /* Override default look */
-        width: 30px;
-        height: 30px;
-        background: #589eff;
-        border-radius: 50%;
-        cursor: pointer;
-    }
 }
 
-/* DROPDOWN INPUT STYLING */
+.rangeInput-title {
+    margin-bottom: 0;
+}
+
+.rangeInput-wrapper {
+    
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 5px;
+    width: 90%;
+}
+
+.rangeInput-field-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: min-content; /* Needed so focus-within trick works */
+    overflow: hidden;
+}
+
+.rangeInput-field {
+    display: flex;
+    text-align: center;
+    width: 2.5em;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    color: var(--text-color-inputs);
+    padding: 10px 0 10px 0px;
+}
+
+.rangeInput-field-symbol {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    font-size: larger;
+    font-weight: bold;
+    color: var(--text-color-inputs);
+    padding: 10px 10px 10px 0;
+}
+
+/* When the input field inside the wrapper gets focus, create an outline */
+/* for both the input and the symbol span */
+.rangeInput-field-wrapper:focus-within {
+    outline: 2px solid var(--text-color-inputs);
+    border-radius: 5px;
+}
+
+.rangeInput {
+    appearance: none; /* Override default look */
+    height: 10px;
+    border-radius: 5px;
+    width: 100%;
+    background-attachment: fixed;
+}
+
+.rangeInput::-webkit-slider-thumb {
+    appearance: none; /* Override default look */
+    width: 30px;
+    height: 30px;
+    background: #4bb7fe;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-transition: .1s;
+}
+
+.rangeInput::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 10px #3b8cf039;
+}
+
+.rangeInput::-moz-range-thumb {
+    appearance: none; /* Override default look */
+    width: 30px;
+    height: 30px;
+    background: #589eff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Mobile/touchscreen, prevent track from changing value, only thumb */
+@media screen and (hover: none) and (pointer: coarse) {
+    
+    .rangeInput {
+        pointer-events: none;
+    }
+    .rangeInput::-webkit-slider-thumb {
+        pointer-events: auto;
+    }
+    .rangeInput::-moz-range-thumb {
+        pointer-events: auto;
+    }
+    .rangeInput::-ms-thumb {
+        pointer-events: auto;
+    }
+}
+@media screen and (hover: hover) and (pointer: coarse) {
+    
+    .rangeInput {
+        pointer-events: none;
+    }
+    .rangeInput::-webkit-slider-thumb {
+        pointer-events: auto;
+    }
+    .rangeInput::-moz-range-thumb {
+        pointer-events: auto;
+    }
+    .rangeInput::-ms-thumb {
+        pointer-events: auto;
+    }
+}
+/*#endregion*/
+
+/*DROPDOWN INPUT STYLING */
+/*#region DropdownInput */
 .dropdownInput-container {
     display: flex;
     flex-direction: column;
-
     width: 100%;
+}
 
-    .dropdown-title-wrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+.dropdown-title-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .dropdown-title {
-            font-weight: normal;
-        }
+.comparison-dot {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: none;       
+    border-radius: 50%;
+    box-shadow: 0 0px 5px 1px rgba(0, 0, 0, 0.3);
+    margin-right: 10px;
+}
+.comparison-dot.option1 {
+    background-color: rgb(255, 0, 255);
+}
+.comparison-dot.option2 {
+    background-color: rgb(208,252,68);
+}
 
-        .dropdown-button {
-            background-color: rgba(255, 255, 255, 0);
-            border: none;
+.dropdown-button {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
 
-            height: 100%;
-            width: 2em;
-            margin-right: 10px;
+    height: 1em;
+    width: 2em;
+    margin-right: 10px;
 
-            background-image: url("/images/icons/ArrowDown.svg");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+    background-image: url("/images/icons/ArrowDown.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 
-            cursor: pointer;
-            touch-action: none;
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.1s ease-in;
-        }
+    cursor: pointer;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.1s ease-in;
+}
 
-        .dropdown-button:hover {
-            filter: invert(0.5);
-        }
+.dropdown-button:hover {
+    filter: invert(0.5);
+}
 
-        .dropdown-button.rotate {
-            transform: rotate(180deg);
-        }
+.dropdown-button.rotate {
+    transform: rotate(180deg);
+}
 
-        /* The button which removes the alternate pair of charger power + price */
-        #removeChargerPriceComparison {
-            color: red;
-            background-color: var(--input-area-bg);
-            border: none;
-            font-size: medium;
-            font-weight: bold;
-            cursor: pointer;
-            padding-left: 10px;
+/* The button which removes the alternate pair of charger power + price */
+#removeChargerPriceComparison {
+    color: red;
+    background-color: var(--input-area-bg);
+    border: none;
+    font-size: medium;
+    font-weight: bold;
+    cursor: pointer;
+    padding-left: 10px;
 
-            img {
-                width: 16px;
-                object-fit: cover;
-            }
-        }
-
-        #removeChargerPriceComparison:hover {
-            color: rgb(153, 0, 0);
-
-            img {
-                filter: brightness(0.5);
-            }
-        }
-    }
-
-    .dropdown-wrapper {
-        display: flex;
-        flex-direction: column;
-        background-color: white;
-        padding: 10px;
-        border-radius: 5px;
-
-        .dropdown-content {
-            display: flex;
-            row-gap: 5px;
-            flex-direction: column;
-            max-height: 0;
-            transition: max-height 0.1s linear;
-            overflow: hidden;
-
-            .dropdown-option {
-                padding: 10px;
-                height: 2.5em;
-                cursor: pointer;
-                touch-action: manipulation;
-            }
-
-            .dropdown-option:hover {
-                background-color: #85cbfad5;
-            }
-
-            .dropdown-tip {
-                margin-bottom: 5px;
-                margin-left: 10px;
-                font-style: italic;
-                font-weight: bold;
-            }
-        }
-
-        .dropdown-content.animation {
-            max-height: var(--dropdownHeight);
-        }
-
-        .dropdownInput-field {
-            font-weight: normal;
-            height: 30px;
-            border: none;
-            border-radius: 5px;
-            background-color: rgba(215, 215, 215, 0.546);
-            touch-action: manipulation;
-            z-index: 10;
-            /* scrollbar would otherwise be on top of the outline on focus */
-            /* alternative way is to add some margin etc */
-        }
+    img {
+        width: 16px;
+        object-fit: cover;
     }
 }
 
-/* TOGGLE INPUT STYLING */
+#removeChargerPriceComparison:hover {
+    color: rgb(153, 0, 0);
+
+    img {
+        filter: brightness(0.5);
+    }
+}
+
+.dropdown-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.dropdown-content {
+    display: flex;
+    row-gap: 5px;
+    flex-direction: column;
+    max-height: 0;
+    transition: max-height 0.1s linear;
+    overflow: hidden;
+}
+
+.dropdown-option {
+    padding: 10px;
+    height: 2.5em;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.dropdown-option:hover {
+    background-color: #85cbfad5;
+}
+
+.dropdown-tip {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.dropdown-content.animation {
+    max-height: var(--dropdownHeight);
+}
+
+.dropdownInput-field {
+    font-weight: normal;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(215, 215, 215, 0.546);
+    touch-action: manipulation;
+    z-index: 10;
+    /* scrollbar would otherwise be on top of the outline on focus */
+    /* alternative way is to add some margin etc */
+}
+/*#endregion*/
+
+/*TOGGLE INPUT STYLING */
+/*#region ToggleInput*/
 .toggleInput-container {
     display: flex;
     flex-direction: column;
@@ -450,3 +495,4 @@ input[type=text]:focus, input[type=number]:focus {
     color: var(--text-color-inputs);
     font-weight: bold;
 }
+/*#endregion*/
