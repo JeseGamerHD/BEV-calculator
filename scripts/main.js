@@ -207,18 +207,24 @@ document.addEventListener("DOMContentLoaded", function(){
     const resultsContent = document.querySelectorAll(".results-content")[0];
 
     let initialX = null;
+    let finalX = null;
 
     function startTouch(e){
         initialX = e.touches[0].clientX;
     }
 
     function moveTouch(e){
-        if (initialX === null) {
+        initialX = e.touches[0].clientX;
+    }
+
+    function endTouch(){
+        if (initialX === null || finalX === null) {
+            initialX = null;
+            finalX = null;
             return;
         }
 
-        let currentX = e.touches[0].clientX;
-        let diffX = initialX - currentX;
+        let diffX = initialX - finalX;
 
         if(Math.abs(diffX) > 50){
             if(diffX > 0 && currentIndex < totalScreens - 1){
@@ -229,14 +235,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
             resultsContent.style.transform = `translateX(-${currentIndex * 100}vw)`;
         }
-
         initialX = null;
+        finalX = null;
         //e.preventDefault(); Breaks firefox, seemingly not important commented incase required
         // Alternatively use pointerdown and pointermove to support firefox if the above is important
     }
 
     resultsContent.addEventListener("touchstart", startTouch, false);
     resultsContent.addEventListener("touchmove", moveTouch, false);
+    resultsContent.addEventListener("touchend", endTouch, false);
 });
 
 // ** TOOLTIP FUNCTIONALITY **
