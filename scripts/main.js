@@ -200,7 +200,7 @@ function handleComparisonButtons(button) {
     }
 }
 
-// ** MOBILE RESULT SWIPE FUNCTIONALITY **
+// ** MOBILE RESULT SWIPE FUNCTIONALITY ** DOES NOT WORK AND SWIPING IS MADE POSSIBLE BY ONLY CSS CURRENTLY
 document.addEventListener("DOMContentLoaded", function(){
     let currentIndex = 0;
     const totalScreens = 3;
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
     function moveTouch(e){
-        initialX = e.touches[0].clientX;
+        finalX = e.touches[0].clientX;
     }
 
     function endTouch(){
@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 currentIndex--;
             }
 
-            resultsContent.style.transform = `translateX(-${currentIndex * 100}vw)`;
+            //resultsContent.style.transform = `translateX(-${currentIndex * 100}vw)`; Makes the resultsContent disappear
         }
         initialX = null;
         finalX = null;

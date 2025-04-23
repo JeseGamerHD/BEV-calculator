@@ -140,6 +140,7 @@
 
 .oikea-puoli-sivusta h5{
     font-size: clamp(0.8rem, 1.2vw, 1.5em);
+    white-space: nowrap;
 }
 
 .spaced-div{
@@ -356,6 +357,8 @@
 
     .optionTextWrapper {
         margin-bottom: 5px;
+        margin-right: 5px;
+        width: 50%
     }
 
     .option-span{
