@@ -242,7 +242,7 @@ describe('test suite: calculating energy to be charged for required range', () =
     calculator.bevEnergyConsumption = 12;
     calculator.updateCalculations();
 
-    expect(document.getElementById('energyNeededForRange').textContent).toBe('0 kWh');
+    expect(document.getElementById('energyNeededForRange').textContent).toBe('0.00 kWh');
   });
 
   it('calculates energy with values containing decimals', () => {
