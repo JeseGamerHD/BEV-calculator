@@ -44,11 +44,13 @@
         
                 <div class="rangeInput-container">
                     <h3 class="rangeInput-title" data-localization="inputs.stateOfCharge.title"><strong>State of Charge</strong> (SOC)</h3>
-                    <div class="rangeInput-field-wrapper">
-                        <input class="inputfield rangeInput-field" id="SOC-field" data-type="integer" type="text" data-target="SOC-slider" min="0" max="100" data-value="" data-property="stateOfCharge" placeholder="0">
-                        <span class="rangeInput-field-symbol">%</span>
-                    </div> 
-                    <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-target="SOC-field" data-property="stateOfCharge">
+                    <div class="rangeInput-wrapper">
+                        <div class="rangeInput-field-wrapper">
+                            <input class="inputfield rangeInput-field" id="SOC-field" data-type="integer" type="text" data-target="SOC-slider" min="0" max="100" data-value="" data-property="stateOfCharge" placeholder="0">
+                            <span class="rangeInput-field-symbol">%</span>
+                        </div> 
+                        <input class="rangeInput" id="SOC-slider" type="range" min="0" max="100" data-target="SOC-field" data-property="stateOfCharge">
+                    </div>
                 </div>
     
                 <span class="divider-line"></span>
