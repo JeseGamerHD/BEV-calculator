@@ -15,7 +15,7 @@
         "placeholder": "Syötä tavoitematka (valinnainen)"
       },
       "stateOfCharge": {
-        "title": "Akun varausaste (SOC)"
+        "title": "Akun varausaste"
       },
       "batteryCapacity": {
         "title": "Akun kapasiteetti (kWh)",
@@ -109,7 +109,7 @@
         "forRange": "Tarvittava energia matkalle: "
       },
       "untilFull": {
-        "title": "Täyteen asti (SOC)",
+        "title": "Täyteen asti",
         "tooltip": "Latausaika näyttää ajan akun täyteen lataamiseen sen nykyisestä varausasteesta. Latauskustannus näyttää latauksen hinnan ja energia kertoo akun täyteen lataamiseen tarvittavan energian määrän.",
         "fullCharge": "100%",
         "chargingTime": {

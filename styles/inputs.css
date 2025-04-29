@@ -370,6 +370,12 @@ input::-moz-placeholder { /* Set to black with the same opacity for uniformity b
     border-radius: 10px;
 }
 
+@media screen and (max-width: 900px) {
+    .dropdown-wrapper {
+        flex-direction: column-reverse;
+    }
+}
+
 .dropdown-content {
     display: flex;
     row-gap: 5px;
@@ -408,6 +414,7 @@ input::-moz-placeholder { /* Set to black with the same opacity for uniformity b
     background-color: rgb(255, 255, 255);
     touch-action: manipulation;
     z-index: 10;
+    outline: 2px solid #b0b0b092;
     /* scrollbar would otherwise be on top of the outline on focus */
     /* alternative way is to add some margin etc */
 }
