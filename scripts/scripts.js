@@ -1,3 +1,4 @@
+/*This file contains the main logic for the calculator. It handles the calculations and updates the UI with the results.*/
 import { Results } from "./results.js";
 
 class Calculator {
@@ -62,14 +63,15 @@ class Calculator {
             this.updateComparisonBars("comparisonBarFullChargeCost1", "comparisonBarFullChargeCost2", "chargeCostForFullChargeOption1", "chargeCostForFullChargeOption2");
         }
     }
-    
+    // Calculates the maximum operating range based on battery capacity and energy consumption
+    // and updates the charges required for the desired range.
     calcMaxOperatingRange() {
         const maxOperatingRange = (this.batteryCapacity / this.bevEnergyConsumption) * 100; // in km
     
         this.updateChargesRequired();
         return maxOperatingRange;
     }
-    
+    // Calculates the current operating range based on battery capacity, energy consumption, and state of charge.
     calcOperatingRange() {
         if (this.bevEnergyConsumption === 0 || this.bevEnergyConsumption === null) {
             console.log("Error: BEV energy consumption is 0. Cannot calculate operating range.");
@@ -89,11 +91,11 @@ class Calculator {
             return operatingRange;
         }
     }
-    
+    // Updates the state of charge display in the UI.
     setStateOfCharge() {
         this.updateValueForResult(this.stateOfCharge.toFixed(0) + " %", "stateOfCharge");
     }
-    
+    // Updates the desired range (Distance) display in the UI.
     setDesiredRange() {
         if(this.desiredRange === null) {
             this.updateValueForResult(0 + " km", "desiredRange");
@@ -101,18 +103,25 @@ class Calculator {
             this.updateValueForResult(this.desiredRange + " km", "desiredRange");
         }
     }
+
+    /** Getter for charger power  
+    *   @returns {chargerPower} chargerPower*/
     getChargerPower() {
         if(this.chargerPower === null) {
             return 0;
         }
         return this.chargerPower.toFixed(1);
     }
+    /** Getter for charger power alternative
+     *  @returns {chargerPowerAlt} chargerPowerAlt*/
     getChargerPowerAlt() {
         if(this.chargerPowerAlt === null) {
             return 0;
         }
         return this.chargerPowerAlt.toFixed(1);
     }
+    /** Getter for energy price
+     * *  @returns {energyPrice} energyPrice*/
     getEnergyPrice() {
         let model = "";
         if (this.pricingModel === "energy") {
@@ -124,6 +133,8 @@ class Calculator {
         let energyPrice = this.energyPrice === null ? 0 : this.energyPrice.toFixed(2);
         return  energyPrice + " " + model;
     }
+    /** Getter for energy price alternative
+     * *  @returns {energyPriceAlt} energyPriceAlt*/
     getEnergyPriceAlt() {
         let model = "";
         if (this.pricingModelAlt === "energy") {
@@ -134,7 +145,8 @@ class Calculator {
         let energyPrice = this.energyPriceAlt === null ? 0 : this.energyPriceAlt.toFixed(2);
         return energyPrice + " " + model;
     }
-
+    // Calculates the energy needed for the desired range and updates the UI
+    // Calls calcChargeTimeForRange
     calcEnergyNeededForRange(isAlt) {
         const energyNeededForRange = (this.bevEnergyConsumption / 100) * this.desiredRange;
         const currentEnergy = (this.stateOfCharge / 100) * this.batteryCapacity;
@@ -158,7 +170,8 @@ class Calculator {
         this.results.rangeEnergy = energyToCharge;
         return energyToCharge;
     }
-    
+    // Calculates the energy needed to fully charge the battery and updates the UI
+    // Calls calcChargeTimeForFullCharge
     calcEnergytoFullCharge(isAlt) {
         const energyToFullCharge = this.batteryCapacity - ((this.stateOfCharge / 100) * this.batteryCapacity);
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
@@ -172,7 +185,7 @@ class Calculator {
         this.results.fullChargeEnergy = energyToFullCharge;
         return energyToFullCharge;
     }
-    
+    // Calculates the charge time for a given range and updates the UI
     calcChargeTimeForRange(energyToCharge, isAlt) {
         
         if(!isAlt) { // set to zero so wont have to put these in every if else segment
@@ -184,7 +197,7 @@ class Calculator {
         }
         
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
-        // Get the localization key for "Charging not needed" and "Charger power not set"
+        // Get the localization keys to update messages in the UI based on locale
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
         const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
         const batteryNotSetMessage = document.querySelector('[data-localization="results.chargingTime.batteryNotSet"]')?.textContent || "Battery capacity not set";
@@ -287,7 +300,8 @@ class Calculator {
         
         return chargeTimeForRange;
     }
-    
+
+    // Calculates the charge time for a full charge and updates the UI
     calcChargeTimeForFullCharge(energyNeeded, isAlt) {
         
         if(!isAlt) { // set to zero so wont have to put these in every if else segment
@@ -297,9 +311,8 @@ class Calculator {
             this.results.fullChargeTimeAlt.hours = 0;
             this.results.fullChargeTimeAlt.minutes = 0;
         }
-        
+        // Get the localization keys to update messages in the UI based on locale
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
-        // Get the localization key for "Charging not needed"
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
         const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";   
         const batteryNotSetMessage = document.querySelector('[data-localization="results.chargingTime.batteryNotSet"]')?.textContent || "Battery capacity not set"; 
@@ -390,13 +403,13 @@ class Calculator {
         
         return chargeTimeForFullCharge;
     }
-    
+    // Calculates the charge cost for a given range and updates the UI
     calcChargeCostRange(isAlt) {
         const price = isAlt ? this.energyPriceAlt : this.energyPrice;
         const pricingModel = isAlt ? this.pricingModelAlt : this.pricingModel;
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
         
-        // Get localized messages
+        // Get the localization keys to update messages in the UI based on locale
         const priceNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.priceNotSet"]')?.textContent || "Price not set";
         const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
@@ -499,12 +512,13 @@ class Calculator {
         
         return chargeCost;
     }
-    
+    // Calculates the charge cost for a full charge and updates the UI
     calcChargeCostFullCharge(isAlt) {
         const price = isAlt ? this.energyPriceAlt : this.energyPrice;
         const pricingModel = isAlt ? this.pricingModelAlt : this.pricingModel;
         const chargerPower = isAlt ? this.chargerPowerAlt : this.chargerPower;
-        // Get localized message for missing price and charge power
+        
+        // Get the localization keys to update messages in the UI based on locale
         const priceNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.priceNotSet"]')?.textContent || "Price not set";
         const chargerNotSetMessage = document.querySelector('[data-localization="results.chargingCosts.chargerNotSet"]')?.textContent || "Charger power not set";
         const notNeededMessage = document.querySelector('[data-localization="results.chargingTime.notNeeded"]')?.textContent || "Charging not needed";
@@ -594,7 +608,7 @@ class Calculator {
               
         return chargeCost;
     }
-    
+    // Updates the UI in case multiple charges are needed for the desired range
     updateChargesRequired() {
         // Calculate maximum range with a full battery
         const maxOperatingRange = (this.batteryCapacity / this.bevEnergyConsumption) * 100; // in km
@@ -636,6 +650,8 @@ class Calculator {
         }
     }
     
+    // Updates the comparison bars in the UI based on the values of two elements
+    // Used to update the comparison bars for charging time and cost
     updateComparisonBars(bar1ID, bar2ID, value1ID, value2ID) {
         const bar1 = document.getElementById(bar1ID);
         const bar2 = document.getElementById(bar2ID);
@@ -677,7 +693,10 @@ class Calculator {
             bar2.style.background = `rgb(208,252,68)`;
         }
     }
-    
+    /** Helper function for updateComparisonBars to parse the values from the text content of the elements
+     * @returns {number} number parsed value in minutes or kWh
+     * @param {string} valueStr - The string to parse, e.g. "1h 34min", "6.90", "0.40", "€6.90"
+     */
     parseValue(valueStr) {
         // Remove currency symbols and trim whitespace
         let cleanedStr = valueStr.replace(/[€$£]/g, '').trim();
@@ -699,7 +718,9 @@ class Calculator {
         // Return NaN if parsing fails
         return NaN;
     }
-    
+    /** Updates the value for a given result id in the UI
+     * @param {string}  newValue - The new value to set for the result element
+     * @param {string} resultid - The id of the result element to update */
     updateValueForResult(newValue, resultid) {
         if(newValue === null || resultid === null) {
             console.log("Error: updateValueForResult() requires both a value and a result id.");

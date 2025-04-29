@@ -78,7 +78,7 @@ class LocalizationManager {
     
     return result;
   }
-
+  // Sets the language in local storage and updates the page text to the new language
   updatePageText() {
     // Update all elements with data-localization attribute
     document.querySelectorAll('[data-localization]').forEach(element => {
