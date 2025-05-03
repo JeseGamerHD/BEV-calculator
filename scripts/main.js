@@ -200,7 +200,7 @@ function handleComparisonButtons(button) {
     }
 }
 
-// ** MOBILE RESULT SWIPE FUNCTIONALITY ** DOES NOT WORK AND SWIPING IS MADE POSSIBLE BY ONLY CSS CURRENTLY
+// ** MOBILE RESULT SWIPE FUNCTIONALITY ** DOES NOT WORK AND SWIPING IS MADE POSSIBLE BY ONLY CSS CURRENTLY. Detecting swipes already works but changing the view based on those swipes is not implemented.
 document.addEventListener("DOMContentLoaded", function(){
     let currentIndex = 0;
     const totalScreens = 3;

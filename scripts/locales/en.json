@@ -81,7 +81,7 @@
   "results": {
     "distance": {
       "title": "Distance",
-      "tooltip": "Charging Time shows the total time it takes to charge the car for driving the given distance. Charging costs includes the total price of the charge(s) and Energy shows the total energy needed for the aforementioned charge(s)"
+      "tooltip": "Charging Time shows the total time it takes to charge the car for driving the given distance. Charging costs includes the total price of the charge(s), and Energy shows the total energy needed for the aforementioned charge(s)."
     },
     "chargingTime": {
       "title": "Charging Time",
@@ -109,7 +109,7 @@
     },
     "untilFull": {
       "title": "Until Full (SOC)",
-      "tooltip": "Charging time shows the time it takes to fully charge the battery from your current state of charge. Charging costs shows the calculated price of the charge while Energy shows the total amount of energy it takes to charge the battery.",
+      "tooltip": "Charging Time shows the time it takes to fully charge the battery from your current state of charge. Charging Costs shows the calculated price of the charge while Energy shows the total amount of energy it takes to charge the battery.",
       "fullCharge": "100%",
       "chargingTime": {
         "title": "Charging Time",
@@ -130,7 +130,7 @@
     },
     "stateOfCharge": {
       "title": "State of Charge",
-      "tooltip": "State of charge shows the current battery charge and distance shows how far you can drive with it.",
+      "tooltip": "State of Charge shows the current battery charge and Distance shows how far you can drive with it.",
       "soc": "SOC: "
     },
     "operatingRange": {
