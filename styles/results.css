@@ -344,13 +344,13 @@
         white-space: nowrap;
     }
 
-   /* .header-wrapper{ 
+    .header-wrapper{ 
         width: 50%;
     }
 
     #header-span.header-span{
         white-space: wrap;
-    } */
+    } 
 
     .mobile-comparison-wrapper{
         display: flex;
