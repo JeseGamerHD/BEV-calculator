@@ -343,14 +343,14 @@ input::-moz-placeholder { /* Set to black with the same opacity for uniformity b
     color: red;
     background-color: var(--input-area-bg);
     border: none;
-    font-size: medium;
+    font-size: 0.85em;
     font-weight: bold;
     cursor: pointer;
     padding-left: 10px;
 
     img {
         width: 16px;
-        object-fit: cover;
+        object-fit: contain;
     }
 }
 

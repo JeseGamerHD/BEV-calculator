@@ -185,9 +185,9 @@
     background-color: fuchsia;
 }
 
-.header-wrapper{
+.header-wrapper {
     display: flex;
-    justify-content:baseline;
+    column-gap: 5px;
     align-items: baseline;
 }
 
@@ -346,10 +346,12 @@
 
     .header-wrapper{ 
         width: 50%;
+        flex-wrap: wrap;
     }
 
     #header-span.header-span{
-        white-space: wrap;
+        /* white-space: wrap; */
+        margin: 0;
     } 
 
     .mobile-comparison-wrapper{
