@@ -3,11 +3,6 @@
     "title": "Range Anti-Anxiety",
     "subtitle": "The calculator for BEV related issues"
   },
-  "tutorial": {
-    "step1": "Start by entering a desired range and basic details about your car.",
-    "step2": "Set the charge power and the price of using it. You can also add another set for comparison.",
-    "step3": "See the results. Play around with values to see how they affect the results."
-  },
   "inputs": {
     "distance": {
       "title": "Desired range (km)",
@@ -67,9 +62,9 @@
     },
     "pricingModel": {
       "title": "Pricing model",
-       "tooltip": "What the price is based on: per kilowatt hour or per hour of use. With €/kWh the charging costs are based on total energy charged. With €/h they are based on charging time.",
-       "tooltipLeft": "Price of electricity in kilowatt hours. Charging cost will be calculated based on energy charged.",
-       "tooltipRight": "Price of electricity per hour of use. Charging cost will be calculated based on charging time."
+      "tooltip": "What the price is based on: per kilowatt hour or per hour of use. With €/kWh the charging costs are based on total energy charged. With €/h they are based on charging time.",
+      "tooltipLeft": "Price of electricity in kilowatt hours. Charging cost will be calculated based on energy charged.",
+      "tooltipRight": "Price of electricity per hour of use. Charging cost will be calculated based on charging time."
     },
     "comparison": {
       "addButton": "+ Add Comparison",
@@ -149,11 +144,11 @@
     "pricingModel": "Error: Cannot calculate charge cost for full charge. Pricing model is missing."
   },
   "firstUse": {
-  "title": "Welcome",
-  "description": "Easily plan your EV usage",
-  "step1": "Start by entering current state of charge and battery capacity",
-  "step2": " Enter distance and energy consumption of the car to calculate values for a specific trip",
-  "step3": "Compare different charging options and their costs with Add Comparison button ",
-  "startButton": "Start Using Calculator"
-}
+    "title": "Welcome",
+    "description": "Easily plan your EV usage",
+    "step1": "Start by entering current state of charge and battery capacity",
+    "step2": " Enter distance and energy consumption of the car to calculate values for a specific trip",
+    "step3": "Compare different charging options and their costs with Add Comparison button ",
+    "startButton": "Start Using Calculator"
+  }
 }

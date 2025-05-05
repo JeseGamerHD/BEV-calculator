@@ -1,160 +1,154 @@
 {
-    "general": {
-      "title": "Range Anti-Anxiety",
-      "subtitle": "Laskuri sähköautoiluun liittyviin kysymyksiin"
+  "general": {
+    "title": "Range Anti-Anxiety",
+    "subtitle": "Laskuri sähköautoiluun liittyviin kysymyksiin"
+  },
+  "inputs": {
+    "distance": {
+      "title": "Matka (km)",
+      "tooltip": "Etäisyys määränpäähän / Matkan kokonaispituus.",
+      "placeholder": "Syötä tavoitematka (valinnainen)"
     },
-    "tutorial": {
-      "step1": "Aloita syöttämällä haluttu matka ja perustiedot autostasi.",
-      "step2": "Aseta latausteho ja sen käyttöhinta. Voit myös lisätä toisen laturin ja hinnan vertailua varten.",
-      "step3": "Katso tulokset. Kokeile eri arvoja nähdäksesi, miten ne vaikuttavat tuloksiin."
+    "stateOfCharge": {
+      "title": "Akun varausaste"
     },
-    "inputs": {
-      "distance": {
-        "title": "Matka (km)",
-        "tooltip": "Etäisyys määränpäähän / Matkan kokonaispituus.",
-        "placeholder": "Syötä tavoitematka (valinnainen)"
-      },
-      "stateOfCharge": {
-        "title": "Akun varausaste"
-      },
-      "batteryCapacity": {
-        "title": "Akun kapasiteetti (kWh)",
-        "placeholder": "Syötä tai valitse akun kapasiteetti",
-        "tip": "Syötä tai valitse arvo:",
-        "options": {
-          "small": "Pienet akut (30 kWh)",
-          "light": "Kevyet akut (45 kWh)",
-          "midSize": "Keskikokoiset akut (60 kWh)",
-          "midSizePlus": "Keskikokoiset+ akut (85 kWh)",
-          "large": "Suuret akut (120 kWh)",
-          "extraLarge": "Erittäin suuret akut (150 kWh)"
-        }
-      },
-      "energyConsumption": {
-        "title": "Energiankulutus (kWh / 100 km)",
-        "placeholder": "Syötä tai valitse energiankulutus",
-        "tip": "Syötä tai valitse arvo:",
-        "options": {
-          "smallCity": "Pienet ja kaupunkiautot (12 kWh/100 km)",
-          "light": "Kevyet ajoneuvot (15 kWh/100 km)",
-          "midSize": "Keskikokoiset autot (19 kWh /100 km)",
-          "midSizeSUV": "Keskikokoiset SUV:t (22 kWh /100 km)",
-          "trucksSUV": "Kuorma-autot ja suuret SUV:t (25 kWh /100 km)",
-          "largeTrucks": "Suuret kuorma-autot (30 kWh /100 km)"
-        }
-      },
-      "chargePower": {
-        "title": "Latausteho (kW)",
-        "placeholder": "Syötä tai valitse latausteho",
-        "tip": "Syötä tai valitse arvo:",
-        "options": {
-          "acSlow1": "[AC] Hidas lataus (1.4 kW)",
-          "acSlow3": "[AC] Hidas lataus (3 kW)",
-          "acMedium": "[AC] Keskitehoinen lataus (7.4 kW)",
-          "acFast": "[AC] Nopea lataus (22 kW)",
-          "dcSlow": "[DC] Hidas lataus (50 kW)",
-          "dcMedium": "[DC] Keskitehoinen lataus (100 kW)",
-          "dcFast": "[DC] Nopea lataus (150 kW)",
-          "dcUltraFast": "[DC] Erittäin nopea lataus (250 kW)"
-        }
-      },
-      "price": {
-        "title": "Hinta",
-        "tooltip": "Sähkön hinta tai latausaseman operaattorin asettama tuntihinta.",
-        "placeholder": "Syötä hinta",
-        "perKWh": "€/kWh",
-        "perHour": "€/h"
-      },
-      "pricingModel": {
-        "title": "Hinnoittelumalli",
-         "tooltip": "Mihin hinta perustuu: kilowattituntihintaan tai tuntihintaan. Käyttämällä €/kWh latauskustannus perustuu ladatun energian määrään ja käyttämällä €/h latausaikaan.",
-         "tooltipLeft": "Sähkön kilowattituntihinta. Latauskustannus lasketaan ladatun energian pohjalta.",
-         "tooltipRight": "Sähkön tuntihinta. Latauskustannus lasketaan latausajan mukaan."
-      },
-      "comparison": {
-        "addButton": "+ Lisää vertailu",
-        "removeButton": "Poista",
-        "removeButtonTip": "Poistaa vertailun",
-        "option2Title": "Latausteho (kW)"
+    "batteryCapacity": {
+      "title": "Akun kapasiteetti (kWh)",
+      "placeholder": "Syötä tai valitse akun kapasiteetti",
+      "tip": "Syötä tai valitse arvo:",
+      "options": {
+        "small": "Pienet akut (30 kWh)",
+        "light": "Kevyet akut (45 kWh)",
+        "midSize": "Keskikokoiset akut (60 kWh)",
+        "midSizePlus": "Keskikokoiset+ akut (85 kWh)",
+        "large": "Suuret akut (120 kWh)",
+        "extraLarge": "Erittäin suuret akut (150 kWh)"
       }
     },
-    "results": {
-      "distance": {
-        "title": "Matka",
-        "tooltip": "Latausaika kertoo kokonaisajan, joka kuluu auton lataamiseen halutun matkan ajamiseksi. Latauskustannus puolestaan kertoo kyseisten latausten kokonaishinnan ja Energia kertoo lataukseen menevän energian määrän summan"
-      },
+    "energyConsumption": {
+      "title": "Energiankulutus (kWh / 100 km)",
+      "placeholder": "Syötä tai valitse energiankulutus",
+      "tip": "Syötä tai valitse arvo:",
+      "options": {
+        "smallCity": "Pienet ja kaupunkiautot (12 kWh/100 km)",
+        "light": "Kevyet ajoneuvot (15 kWh/100 km)",
+        "midSize": "Keskikokoiset autot (19 kWh /100 km)",
+        "midSizeSUV": "Keskikokoiset SUV:t (22 kWh /100 km)",
+        "trucksSUV": "Kuorma-autot ja suuret SUV:t (25 kWh /100 km)",
+        "largeTrucks": "Suuret kuorma-autot (30 kWh /100 km)"
+      }
+    },
+    "chargePower": {
+      "title": "Latausteho (kW)",
+      "placeholder": "Syötä tai valitse latausteho",
+      "tip": "Syötä tai valitse arvo:",
+      "options": {
+        "acSlow1": "[AC] Hidas lataus (1.4 kW)",
+        "acSlow3": "[AC] Hidas lataus (3 kW)",
+        "acMedium": "[AC] Keskitehoinen lataus (7.4 kW)",
+        "acFast": "[AC] Nopea lataus (22 kW)",
+        "dcSlow": "[DC] Hidas lataus (50 kW)",
+        "dcMedium": "[DC] Keskitehoinen lataus (100 kW)",
+        "dcFast": "[DC] Nopea lataus (150 kW)",
+        "dcUltraFast": "[DC] Erittäin nopea lataus (250 kW)"
+      }
+    },
+    "price": {
+      "title": "Hinta",
+      "tooltip": "Sähkön hinta tai latausaseman operaattorin asettama tuntihinta.",
+      "placeholder": "Syötä hinta",
+      "perKWh": "€/kWh",
+      "perHour": "€/h"
+    },
+    "pricingModel": {
+      "title": "Hinnoittelumalli",
+      "tooltip": "Mihin hinta perustuu: kilowattituntihintaan tai tuntihintaan. Käyttämällä €/kWh latauskustannus perustuu ladatun energian määrään ja käyttämällä €/h latausaikaan.",
+      "tooltipLeft": "Sähkön kilowattituntihinta. Latauskustannus lasketaan ladatun energian pohjalta.",
+      "tooltipRight": "Sähkön tuntihinta. Latauskustannus lasketaan latausajan mukaan."
+    },
+    "comparison": {
+      "addButton": "+ Lisää vertailu",
+      "removeButton": "Poista",
+      "removeButtonTip": "Poistaa vertailun",
+      "option2Title": "Latausteho (kW)"
+    }
+  },
+  "results": {
+    "distance": {
+      "title": "Matka",
+      "tooltip": "Latausaika kertoo kokonaisajan, joka kuluu auton lataamiseen halutun matkan ajamiseksi. Latauskustannus puolestaan kertoo kyseisten latausten kokonaishinnan ja Energia kertoo lataukseen menevän energian määrän summan"
+    },
+    "chargingTime": {
+      "title": "Latausaika",
+      "multipleCharges": "(Useita latauksia)",
+      "option1": "Latausaika vaihtoehto 1: ",
+      "option2": "Latausaika vaihtoehto 2: ",
+      "notNeeded": "Latausta ei tarvita",
+      "batteryNotSet": "Akku puuttuu",
+      "consumptionNotSet": "Energiankulutus puuttuu"
+    },
+    "chargingCosts": {
+      "title": "Latauskustannus",
+      "forRange": "Latauskustannukset €/kWh halutulle matkalle: ",
+      "option1": "Latauskustannukset €/kWh vaihtoehto 1: ",
+      "option2": "Latauskustannukset €/kWh vaihtoehto 2: ",
+      "priceNotSet": "Hintaa puuttuu",
+      "chargerNotSet": "Latausteho puuttuu"
+    },
+    "numberOfCharges": {
+      "title": "Latausten määrä"
+    },
+    "energy": {
+      "title": "Energia",
+      "forRange": "Tarvittava energia matkalle: "
+    },
+    "untilFull": {
+      "title": "Täyteen asti",
+      "tooltip": "Latausaika näyttää ajan akun täyteen lataamiseen sen nykyisestä varausasteesta. Latauskustannus näyttää latauksen hinnan ja Energia kertoo akun täyteen lataamiseen tarvittavan energian määrän.",
+      "fullCharge": "100%",
       "chargingTime": {
         "title": "Latausaika",
-        "multipleCharges": "(Useita latauksia)",
-        "option1": "Latausaika vaihtoehto 1: ",
-        "option2": "Latausaika vaihtoehto 2: ",
-        "notNeeded": "Latausta ei tarvita",
-        "batteryNotSet": "Akku puuttuu",
-        "consumptionNotSet": "Energiankulutus puuttuu"
+        "forFull": "Latausaika täyteen lataukseen: ",
+        "option1": "Latausaika täyteen lataukseen vaihtoehto 1: ",
+        "option2": "Latausaika täyteen lataukseen vaihtoehto 2: "
       },
       "chargingCosts": {
         "title": "Latauskustannus",
-        "forRange": "Latauskustannukset €/kWh halutulle matkalle: ",
-        "option1": "Latauskustannukset €/kWh vaihtoehto 1: ",
-        "option2": "Latauskustannukset €/kWh vaihtoehto 2: ",
-        "priceNotSet": "Hintaa puuttuu",
-        "chargerNotSet": "Latausteho puuttuu"
-        
-      },
-      "numberOfCharges": {
-        "title": "Latausten määrä"
+        "forFull": "Latauskustannukset €/kWh täyteen lataukseen: ",
+        "option1": "Latauskustannukset €/kWh täyteen lataukseen vaihtoehto 1: ",
+        "option2": "Latauskustannukset €/kWh täyteen lataukseen vaihtoehto 2: "
       },
       "energy": {
         "title": "Energia",
-        "forRange": "Tarvittava energia matkalle: "
-      },
-      "untilFull": {
-        "title": "Täyteen asti",
-        "tooltip": "Latausaika näyttää ajan akun täyteen lataamiseen sen nykyisestä varausasteesta. Latauskustannus näyttää latauksen hinnan ja Energia kertoo akun täyteen lataamiseen tarvittavan energian määrän.",
-        "fullCharge": "100%",
-        "chargingTime": {
-          "title": "Latausaika",
-          "forFull": "Latausaika täyteen lataukseen: ",
-          "option1": "Latausaika täyteen lataukseen vaihtoehto 1: ",
-          "option2": "Latausaika täyteen lataukseen vaihtoehto 2: "
-        },
-        "chargingCosts": {
-          "title": "Latauskustannus",
-          "forFull": "Latauskustannukset €/kWh täyteen lataukseen: ",
-          "option1": "Latauskustannukset €/kWh täyteen lataukseen vaihtoehto 1: ",
-          "option2": "Latauskustannukset €/kWh täyteen lataukseen vaihtoehto 2: "
-        },
-        "energy": {
-          "title": "Energia",
-          "forFull": "Tarvittava energia täyteen lataukseen: "
-        }
-      },
-      "stateOfCharge": {
-        "title": "Varausaste",
-        "tooltip": "Varausaste kertoo akun nykyisen varauksen prosentteina ja Matka näyttää kuinka pitkälle sen hetkisellä varauksella pystyy ajamaan",
-        "soc": "SOC: "
-      },
-      "operatingRange": {
-        "title": "Matka",
-        "range": "Toimintamatka: "
-      },
-      "optionText": {
-        "option1": "VAIHTOEHTO 1",
-        "option2": "VAIHTOEHTO 2"
+        "forFull": "Tarvittava energia täyteen lataukseen: "
       }
     },
-    "errors": {
-      "consumption": "Virhe: BEV-energiankulutus on 0. Toimintamatkaa ei voida laskea.",
-      "batteryCapacity": "Virhe: Akun kapasiteetti on 0. Latausten määrää ei voida laskea.",
-      "chargingPower": "Virhe: Latausaikaa matkalle ei voida laskea. Latausteho puuttuu.",
-      "pricingModel": "Virhe: Latauskustannuksia täyteen lataukseen ei voida laskea. Hinnoittelumalli puuttuu."
+    "stateOfCharge": {
+      "title": "Varausaste",
+      "tooltip": "Varausaste kertoo akun nykyisen varauksen prosentteina ja Matka näyttää kuinka pitkälle sen hetkisellä varauksella pystyy ajamaan",
+      "soc": "SOC: "
     },
+    "operatingRange": {
+      "title": "Matka",
+      "range": "Toimintamatka: "
+    },
+    "optionText": {
+      "option1": "VAIHTOEHTO 1",
+      "option2": "VAIHTOEHTO 2"
+    }
+  },
+  "errors": {
+    "consumption": "Virhe: BEV-energiankulutus on 0. Toimintamatkaa ei voida laskea.",
+    "batteryCapacity": "Virhe: Akun kapasiteetti on 0. Latausten määrää ei voida laskea.",
+    "chargingPower": "Virhe: Latausaikaa matkalle ei voida laskea. Latausteho puuttuu.",
+    "pricingModel": "Virhe: Latauskustannuksia täyteen lataukseen ei voida laskea. Hinnoittelumalli puuttuu."
+  },
   "firstUse": {
-  "title": "Tervetuloa",
-  "description": "Suunnittele sähköautoiluasi helposti",
-  "step1": "Aloita syöttämällä auton tämänhetkinen akun varaus ja akun kapasiteetti",
-  "step2": "Jos haluat laskea arvoja tietylle matkalle, syötä lisäksi matkan pituus ja auton energian kulutus",
-  "step3": "Latauksia voi vertailla eri lataustehoilla ja hinnoilla valitsemalla “Lisää vertailu”",
-  "startButton": "Aloita käyttö"
-}
+    "title": "Tervetuloa",
+    "description": "Suunnittele sähköautoiluasi helposti",
+    "step1": "Aloita syöttämällä auton tämänhetkinen akun varaus ja akun kapasiteetti",
+    "step2": "Jos haluat laskea arvoja tietylle matkalle, syötä lisäksi matkan pituus ja auton energian kulutus",
+    "step3": "Latauksia voi vertailla eri lataustehoilla ja hinnoilla valitsemalla “Lisää vertailu”",
+    "startButton": "Aloita käyttö"
   }
+}
