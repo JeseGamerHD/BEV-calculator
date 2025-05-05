@@ -89,16 +89,16 @@
         "option1": "Latausaika vaihtoehto 1: ",
         "option2": "Latausaika vaihtoehto 2: ",
         "notNeeded": "Latausta ei tarvita",
-        "batteryNotSet": "Akun kapasiteettia ei asetettu",
-        "consumptionNotSet": "Kulutusta ei asetettu"
+        "batteryNotSet": "Akku puuttuu",
+        "consumptionNotSet": "Energiankulutus puuttuu"
       },
       "chargingCosts": {
         "title": "Latauskustannus",
         "forRange": "Latauskustannukset €/kWh halutulle matkalle: ",
         "option1": "Latauskustannukset €/kWh vaihtoehto 1: ",
         "option2": "Latauskustannukset €/kWh vaihtoehto 2: ",
-        "priceNotSet": "Hintaa ei asetettu",
-        "chargerNotSet": "Laturin tehoa ei asetettu"
+        "priceNotSet": "Hintaa puuttuu",
+        "chargerNotSet": "Latausteho puuttuu"
         
       },
       "numberOfCharges": {
