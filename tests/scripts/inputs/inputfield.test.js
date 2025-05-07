@@ -1,3 +1,5 @@
+//File for testing how inputs are handled using generic input field and user-event testing library
+
 import { InputField } from '../../../scripts/inputs/inputfield.js';
 import userEvent from '@testing-library/user-event';
 
@@ -5,13 +7,17 @@ let testContainer;
 
 beforeEach(() => {
 
+    //Creates a div where generic input field is placed
     testContainer = document.createElement('div');
 
     testContainer.innerHTML = `<input id="testInputField" data-type="decimal" data-value="0" type="text" min="0" max="9999">`;
+
+    //Adds test container to DOM
     document.body.appendChild(testContainer);
 });
 
 afterEach(() => {
+    //Removes test container from DOM
     document.body.removeChild(testContainer);
 });
 
@@ -19,15 +25,19 @@ afterEach(() => {
 describe('test suite: testing input handling', () => {
     it('changes special characters automatically', async () => {
 
-        const inputFieldHandler = new InputField();
+        //Creates an input field handler and searches input element from DOM
+        const inputField = new InputField();
         const inputElement = document.getElementById('testInputField');
 
+        // Listens to input events and calls for handleInput when an event is fired
         inputElement.addEventListener('input', () => {
-            inputFieldHandler.handleInput(inputElement);
+            inputField.handleInput(inputElement);
         });
 
+        //Types special characters input to inputElement
         await userEvent.type(inputElement, '!"#¤%');
 
+        //The input should be changed to 0.
         expect(inputElement.value).toBe('0');
     });
 
