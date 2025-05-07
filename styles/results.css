@@ -185,9 +185,9 @@
     background-color: fuchsia;
 }
 
-.header-wrapper{
+.header-wrapper {
     display: flex;
-    justify-content:baseline;
+    column-gap: 5px;
     align-items: baseline;
 }
 
@@ -270,7 +270,7 @@
         flex-direction: row;
         flex-wrap: nowrap;
         width: 100%;
-        overflow-x: scroll;
+        overflow-x: scroll; /* This part makes it possible to swipe the results in mobile view */ 
         position: relative;
         scroll-snap-type: x mandatory;
         border-bottom-left-radius: 45px;
@@ -324,11 +324,10 @@
 
     .oikea-puoli-sivusta {
         width: 100%;
-        background-color: rgb(228, 228, 228);
+        background-color: rgb(228, 228, 228); /* This matches the colour showing behind the rounded corners of results to the colour of input background */
         font-size: 1rem;
         display: flex;
         flex-wrap: wrap;
-
         z-index: 999;
         height: auto;
     }
@@ -344,6 +343,16 @@
         margin-bottom: 5px;
         white-space: nowrap;
     }
+
+    .header-wrapper{ 
+        width: 50%;
+        flex-wrap: wrap;
+    }
+
+    #header-span.header-span{
+        /* white-space: wrap; */
+        margin: 0;
+    } 
 
     .mobile-comparison-wrapper{
         display: flex;
@@ -382,7 +391,7 @@
     }
 
     .spaced-div{
-        margin-bottom: 5px;
+        margin-bottom: 5px; /* Increase this to make the gaps between different results bigger in their columns */
         margin-left: auto;
         margin-right: 0;
     }

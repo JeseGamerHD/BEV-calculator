@@ -1,9 +1,13 @@
+//File for testing dropdown menus and how their inputs are handled using user-event testing library.
+
 import { DropdownInputHandler } from '../../../scripts/inputs/dropdown';
 import Calculator from '../../../scripts/scripts';
 import userEvent from '@testing-library/user-event';
 import fs from 'fs';
 import path from 'path';
 
+
+//Sets base values as in main.js
 const BASE_VALUES = {
   desiredRange: null,
   batteryCapacity: null,
@@ -36,12 +40,15 @@ beforeAll(() => {
   html = fs.readFileSync(htmlPath, "utf8");
   document.body.innerHTML = html;
 
+  //Initializes calculator and dropdowninputhandler with initial values
   calculator = new Calculator(initialValues);
   const dropdownInputHandler = new DropdownInputHandler(calculator, initialValues);
 
 });
 
 afterEach(() => {
+
+  //Clears the contents of innerHTML
   document.body.innerHTML = html; 
 });
 
@@ -49,12 +56,15 @@ describe('test suite: testing dropdown inputs',  () => {
 
   it('selects an option from dropdown menu', async () => {
 
+    //Selects battery capacity dropdown menu
     const dropdownButton = document.querySelector(('[data-options="batteryCapacity-options"]'));
     await userEvent.click(dropdownButton);
 
+    //Selects option from dropdown menu
     const option = document.querySelector(('.dropdown-option[data-value="30"]'));
     await userEvent.click(option);
   
+    //The selected option should be updated
     expect((document.getElementById('batteryCapacity-input')).value).toBe('Small Batteries (30 kWh)');
   });
 

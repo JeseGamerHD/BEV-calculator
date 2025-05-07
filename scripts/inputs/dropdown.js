@@ -67,6 +67,7 @@ export class DropdownInputHandler extends InputField {
     }
 
     handleClickEvent(clickEvent) {
+
         // User selects an option from the dropdown:
         if (clickEvent.target.classList.contains("dropdown-option")) {
             let option = clickEvent.target; // The option that was clicked
@@ -100,14 +101,16 @@ export class DropdownInputHandler extends InputField {
         else if (clickEvent.target.classList.contains("dropdown-button")) {
             let button = clickEvent.target;
             this.toggleDropdown(button.dataset.options);
+        } 
+        else {
+            this.closeActiveDropdown();
         }
     }
 
     toggleDropdown(dropdownID) {
-        let dropdown = document.getElementById(dropdownID);
+        let dropdown = document.getElementById(dropdownID);       
         let height = dropdown.scrollHeight; // Height of all the options inside the container
-
-        // TODO: adjust if needed
+        
         // Limit the height in cases where there are a lot of options
         // Enable scrolling in those cases
         if(height > 180) {
@@ -124,5 +127,14 @@ export class DropdownInputHandler extends InputField {
         // Each button has data-options which is the same as the id of the dropdown
         let button = document.querySelector(`.dropdown-button[data-options="${dropdown.id}"]`);
         button.classList.toggle("rotate");
+    }
+
+    closeActiveDropdown() {
+        let dropdowns = document.querySelectorAll(".dropdown-content");
+        dropdowns.forEach(dropdown => {
+            if(dropdown.classList.contains("animation")) {
+                this.toggleDropdown(dropdown.id);
+            }
+        });
     }
 }
