@@ -33,8 +33,8 @@
         "smallCity": "Pienet ja kaupunkiautot (12 kWh/100 km)",
         "light": "Kevyet ajoneuvot (15 kWh/100 km)",
         "midSize": "Keskikokoiset autot (19 kWh /100 km)",
-        "midSizeSUV": "Keskikokoiset SUV:t (22 kWh /100 km)",
-        "trucksSUV": "Kuorma-autot ja suuret SUV:t (25 kWh /100 km)",
+        "midSizeSUV": "Keskikokoiset katumaasturit (22 kWh /100 km)",
+        "trucksSUV": "Kuorma-autot ja suuret katumaasturit (25 kWh /100 km)",
         "largeTrucks": "Suuret kuorma-autot (30 kWh /100 km)"
       }
     },
@@ -76,7 +76,7 @@
   "results": {
     "distance": {
       "title": "Matka",
-      "tooltip": "Latausaika kertoo kokonaisajan, joka kuluu auton lataamiseen halutun matkan ajamiseksi. Latauskustannus puolestaan kertoo kyseisten latausten kokonaishinnan ja Energia kertoo lataukseen menevän energian määrän summan"
+      "tooltip": "Latausaika kertoo kokonaisajan, joka kuluu auton lataamiseen halutun matkan ajamiseksi. Latauskustannus puolestaan kertoo kyseisten latausten kokonaishinnan ja Energia kertoo lataukseen menevän energian määrän summan."
     },
     "chargingTime": {
       "title": "Latausaika",
@@ -125,8 +125,8 @@
     },
     "stateOfCharge": {
       "title": "Varausaste",
-      "tooltip": "Varausaste kertoo akun nykyisen varauksen prosentteina ja Matka näyttää kuinka pitkälle sen hetkisellä varauksella pystyy ajamaan",
-      "soc": "SOC: "
+      "tooltip": "Varausaste kertoo akun nykyisen varauksen prosentteina ja Matka näyttää kuinka pitkälle sen hetkisellä varauksella pystyy ajamaan.",
+      "soc": "Varausaste: "
     },
     "operatingRange": {
       "title": "Matka",
